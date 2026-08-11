@@ -1,0 +1,12 @@
+Filetype: Flipper SubRem Map file
+Version: 1
+UP: /ext/subghz/Sextoy_ALL/ALL_UP.sub
+ULABEL: PWR + / LVL UP
+DOWN: /ext/subghz/Sextoy_ALL/ALL_DOWN.sub
+DLABEL: PWR - / LVL DN
+LEFT: /ext/subghz/Sextoy_ALL/ALL_MODE.sub
+LLABEL: MODE / PATTERN
+RIGHT: /ext/subghz/Sextoy_ALL/ALL_OFF.sub
+RLABEL: OFF ALL
+OK: /ext/subghz/Sextoy_ALL/ALL_PWR.sub
+OKLABEL: PWR ALL

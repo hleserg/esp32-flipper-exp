@@ -1,0 +1,19 @@
+# PlatformIO build output (kept off the Cyrillic home dir at C:/bb, C:/pio)
+.pio/
+build/
+*.bin
+*.elf
+*.o
+
+# Python
+__pycache__/
+*.pyc
+
+# Firmware libraries downloaded at build time
+firmware/*/lib/
+firmware/*/.pio/
+
+# Editor / OS
+.vscode/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,491 @@
+<meta charset="utf-8">
+<title>Шапка Flipper Zero — три радиомодуля</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+  :root{
+    --bg:#e9e5db; --panel:#f4f0e8; --board:#efeae0;
+    --ink:#221f19; --muted:#6f685c; --hairline:#d3ccbd; --grid-dot:#d7d0c1;
+    --power:#2c6e77; --ir:#cc3d1a; --ir-soft:rgba(204,61,26,.13);
+    --shadow:0 1px 0 rgba(0,0,0,.04),0 18px 40px -28px rgba(40,30,10,.4);
+    --font-mono:ui-monospace,"Cascadia Code","JetBrains Mono","SF Mono",Menlo,Consolas,monospace;
+    --font-sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#141310; --panel:#1e1b16; --board:#1a1712;
+      --ink:#ece6da; --muted:#9b9284; --hairline:#332f27; --grid-dot:#2a251e;
+      --power:#74b9c2; --ir:#ff6a43; --ir-soft:rgba(255,106,67,.15);
+      --shadow:0 1px 0 rgba(0,0,0,.3),0 20px 46px -30px rgba(0,0,0,.8);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#141310; --panel:#1e1b16; --board:#1a1712;
+    --ink:#ece6da; --muted:#9b9284; --hairline:#332f27; --grid-dot:#2a251e;
+    --power:#74b9c2; --ir:#ff6a43; --ir-soft:rgba(255,106,67,.15);
+    --shadow:0 1px 0 rgba(0,0,0,.3),0 20px 46px -30px rgba(0,0,0,.8);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:var(--font-sans); line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1060px; margin:0 auto; padding:clamp(28px,5vw,64px) clamp(18px,4vw,40px) 80px;}
+
+  /* ---- header ---- */
+  .eyebrow{
+    font-family:var(--font-mono); font-size:.72rem; letter-spacing:.22em;
+    text-transform:uppercase; color:var(--ir); margin:0 0 14px;
+  }
+  h1{
+    font-family:var(--font-sans); font-weight:700; text-wrap:balance;
+    font-size:clamp(2.1rem,6vw,3.4rem); line-height:1.04; letter-spacing:-.02em;
+    margin:0 0 18px;
+  }
+  .lede{font-size:clamp(1.02rem,2.3vw,1.2rem); color:var(--muted); max-width:60ch; margin:0 0 22px;}
+  .chain{
+    font-family:var(--font-mono); font-size:.86rem; color:var(--ink);
+    background:var(--panel); border:1px solid var(--hairline); border-radius:10px;
+    padding:12px 16px; display:inline-block; overflow-x:auto; max-width:100%;
+    box-shadow:var(--shadow);
+  }
+  .chain b{color:var(--ir); font-weight:700}
+  .chips{display:flex; flex-wrap:wrap; gap:8px; margin:22px 0 0; padding:0; list-style:none}
+  .chips li{
+    font-family:var(--font-mono); font-size:.72rem; letter-spacing:.04em;
+    border:1px solid var(--hairline); border-radius:999px; padding:5px 12px;
+    color:var(--muted); background:var(--panel);
+  }
+  .chips li b{color:var(--ink); font-weight:600}
+
+  /* ---- figure ---- */
+  figure{margin:clamp(30px,5vw,52px) 0; padding:0}
+  .board{
+    background:var(--board); border:1px solid var(--hairline); border-radius:16px;
+    box-shadow:var(--shadow); padding:20px 20px 12px; overflow-x:auto;
+  }
+  .board svg{display:block; width:100%; min-width:940px; height:auto; color:var(--ink)}
+  .legend{
+    display:flex; flex-wrap:wrap; gap:18px 24px; align-items:center;
+    font-family:var(--font-mono); font-size:.74rem; color:var(--muted);
+    padding:2px 4px 14px;
+  }
+  .legend span{display:inline-flex; align-items:center; gap:8px}
+  .legend i{width:22px; height:0; border-top-width:2.5px; border-top-style:solid; display:inline-block}
+  .lg-ir i{border-color:var(--ir)}
+  .lg-sig i{border-color:var(--ink)}
+  .lg-pwr i{border-color:var(--power)}
+  .lg-ir i.dash{border-top-style:dashed}
+  figcaption{font-size:.88rem; color:var(--muted); margin-top:14px; max-width:70ch}
+  figcaption b{color:var(--ink); font-weight:600}
+
+  /* ---- section heading ---- */
+  h2{
+    font-size:1.35rem; letter-spacing:-.01em; margin:52px 0 4px;
+  }
+  .sub{color:var(--muted); margin:0 0 20px; font-size:.95rem}
+
+  /* ---- BOM table ---- */
+  .tablewrap{overflow-x:auto; border:1px solid var(--hairline); border-radius:12px; box-shadow:var(--shadow)}
+  table{border-collapse:collapse; width:100%; min-width:560px; font-size:.9rem; background:var(--panel)}
+  th,td{text-align:left; padding:11px 16px; border-bottom:1px solid var(--hairline); vertical-align:top}
+  thead th{
+    font-family:var(--font-mono); font-size:.68rem; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--muted); font-weight:600; background:var(--board);
+  }
+  tbody tr:last-child td{border-bottom:0}
+  td.ref{font-family:var(--font-mono); font-weight:700; color:var(--ir); white-space:nowrap}
+  td.val{font-family:var(--font-mono); font-variant-numeric:tabular-nums; color:var(--ink)}
+  td.role{color:var(--muted)}
+
+  /* ---- notes ---- */
+  .notes{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; margin-top:22px}
+  .note{
+    background:var(--panel); border:1px solid var(--hairline); border-radius:12px;
+    padding:18px 18px 20px; box-shadow:var(--shadow); position:relative;
+  }
+  .note h3{margin:0 0 8px; font-size:1rem; display:flex; align-items:center; gap:9px}
+  .note h3 .dot{width:9px; height:9px; border-radius:50%; background:var(--ir); flex:none}
+  .note p{margin:0; font-size:.9rem; color:var(--muted)}
+  .note p b{color:var(--ink); font-weight:600}
+
+  /* ---- ordered build steps ---- */
+  ol.steps{counter-reset:s; list-style:none; margin:22px 0 0; padding:0; display:grid; gap:12px}
+  ol.steps li{
+    counter-increment:s; position:relative; background:var(--panel);
+    border:1px solid var(--hairline); border-radius:12px; padding:16px 18px 16px 58px;
+    box-shadow:var(--shadow); font-size:.9rem; color:var(--muted);
+  }
+  ol.steps li::before{
+    content:counter(s); position:absolute; left:20px; top:15px;
+    font-family:var(--font-mono); font-weight:700; font-size:1rem; color:var(--ir);
+  }
+  ol.steps li b{color:var(--ink); font-weight:600; display:block; margin-bottom:4px}
+  .aside{
+    margin-top:16px; font-size:.88rem; color:var(--muted);
+    border-left:2px solid var(--hairline); padding:2px 0 2px 16px; max-width:70ch;
+  }
+  .aside b{color:var(--ink); font-weight:600}
+
+  footer{margin-top:56px; padding-top:22px; border-top:1px solid var(--hairline); color:var(--muted); font-size:.82rem; font-family:var(--font-mono)}
+  footer a{color:var(--ir); text-decoration:none}
+
+  /* ---- motion (subtle, opt-in) ---- */
+  .ir-beam{stroke-dasharray:7 5}
+  .glow{opacity:.6}
+  @media (prefers-reduced-motion:no-preference){
+    .ir-beam{animation:march 1.4s linear infinite}
+    .glow{animation:pulse 3.4s ease-in-out infinite}
+    @keyframes march{to{stroke-dashoffset:-24}}
+    @keyframes pulse{0%,100%{opacity:.35}50%{opacity:.75}}
+  }
+</style>
+
+<div class="wrap">
+
+  <p class="eyebrow">Flipper Zero · шапка на GPIO</p>
+  <h1>Три радиомодуля на одной плате</h1>
+  <p class="lede">
+    Шапка несёт CC1101 (sub-GHz), ESP32 (BLE) и оптический ИК-бластер. Конфликта по выводам
+    нет: SPI, UART и оптика не пересекаются. Основная сложность не в распиновке,
+    а в том, что силовой ключ ИК-кольца и приёмник sub-GHz оказываются в сантиметрах друг
+    от друга и на общей земле.
+  </p>
+  <p class="chain">
+    CC1101 ─▶ <b>SPI</b> &nbsp;·&nbsp; ESP32 ─▶ <b>UART</b> &nbsp;·&nbsp; ИК-бластер ─▶ <b>оптика</b>
+  </p>
+  <ul class="chips">
+    <li><b>3</b> радиомодуля</li>
+    <li><b>1</b> разъём GPIO</li>
+    <li>земля <b>звездой</b></li>
+    <li>питание <b>2× 18650</b></li>
+  </ul>
+
+  <h2>Блок-схема</h2>
+  <p class="sub">
+    Два узла подключены электрически, третий — только светом.
+  </p>
+  <figure>
+    <div class="legend" aria-hidden="true">
+      <span class="lg-sig"><i></i> сигнал</span>
+      <span class="lg-pwr"><i></i> питание и земля</span>
+      <span class="lg-ir"><i class="dash"></i> оптическая связь</span>
+    </div>
+    <div class="board">
+      <svg viewBox="0 0 1240 800" role="img"
+           aria-label="Блок-схема шапки. Разъём GPIO Flipper Zero слева. От него идут: шина SPI из четырёх линий плюс GDO0 на модуль CC1101; питание 3.3 вольта на тот же CC1101; двухпроводной UART 115200 на модуль ESP32; общая земля с выводов 8, 11 и 18 на общую земляную линию. ИК-бластер расположен под Флиппером и не подключён к GPIO ни одним проводом: связь только оптическая, штатный ИК-диод Флиппера засвечивает фотодиод бластера. Справа автономное питание: две банки 18650 последовательно, плата защиты BMS, понижающий преобразователь на 5 вольт, который питает ESP32 и ИК-бластер. Все земли сходятся в одной точке звезды внизу схемы.">
+        <defs>
+          <marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="4.2" orient="auto">
+            <path d="M0,0 L8,4.2 L0,8.4 Z" fill="currentColor"/>
+          </marker>
+          <marker id="arP" markerWidth="9" markerHeight="9" refX="7" refY="4.2" orient="auto">
+            <path d="M0,0 L8,4.2 L0,8.4 Z" fill="var(--power)"/>
+          </marker>
+          <marker id="arC" markerWidth="9" markerHeight="9" refX="7" refY="4.2" orient="auto">
+            <path d="M0,0 L8,4.2 L0,8.4 Z" fill="var(--ir)"/>
+          </marker>
+          <pattern id="dots2" width="22" height="22" patternUnits="userSpaceOnUse">
+            <circle cx="1.4" cy="1.4" r="1.1" fill="var(--grid-dot)"/>
+          </pattern>
+        </defs>
+        <rect x="0" y="0" width="1240" height="800" fill="url(#dots2)" opacity="0.9"/>
+
+        <!-- ============ ФЛИППЕР ============ -->
+        <text x="120" y="105" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="13" fill="currentColor">FLIPPER ZERO</text>
+        <rect x="60" y="120" width="120" height="330" rx="10" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
+        <text x="120" y="290" text-anchor="middle" font-family="var(--font-mono)" font-size="12" fill="var(--muted)">разъём</text>
+        <text x="120" y="307" text-anchor="middle" font-family="var(--font-mono)" font-size="12" fill="var(--muted)">GPIO</text>
+        <text x="120" y="470" text-anchor="middle" font-family="var(--font-mono)" font-size="10.5" fill="var(--ir)">ИК-окно</text>
+
+        <!-- SPI -->
+        <line x1="180" y1="165" x2="420" y2="165" stroke="currentColor" stroke-width="2.4" marker-end="url(#ar)"/>
+        <text x="300" y="156" text-anchor="middle" font-family="var(--font-mono)" font-size="11" fill="currentColor">SPI ×4 + GDO0</text>
+        <text x="196" y="182" font-family="var(--font-mono)" font-size="9.5" fill="var(--muted)">2·3·4·5·7</text>
+        <!-- 3V3 -->
+        <line x1="180" y1="228" x2="420" y2="228" stroke="var(--power)" stroke-width="2.2" marker-end="url(#arP)"/>
+        <text x="300" y="220" text-anchor="middle" font-family="var(--font-mono)" font-size="11" fill="var(--power)">3.3 В</text>
+        <text x="196" y="245" font-family="var(--font-mono)" font-size="9.5" fill="var(--muted)">9</text>
+        <!-- UART -->
+        <line x1="180" y1="400" x2="357" y2="400" stroke="currentColor" stroke-width="2.4"/>
+        <path d="M357,400 A6.5,6.5 0 0 1 383,400" fill="none" stroke="currentColor" stroke-width="2.4"/>
+        <line x1="383" y1="400" x2="420" y2="400" stroke="currentColor" stroke-width="2.4" marker-end="url(#ar)"/>
+        <text x="285" y="392" text-anchor="middle" font-family="var(--font-mono)" font-size="11" fill="currentColor">UART 115200</text>
+        <text x="196" y="417" font-family="var(--font-mono)" font-size="9.5" fill="var(--muted)">13·14</text>
+        <!-- GND -->
+        <line x1="180" y1="440" x2="370" y2="440" stroke="var(--power)" stroke-width="2.2"/>
+        <circle cx="370" cy="440" r="3.4" fill="var(--power)"/>
+        <text x="275" y="459" text-anchor="middle" font-family="var(--font-mono)" font-size="11" fill="var(--power)">GND</text>
+        <text x="196" y="432" font-family="var(--font-mono)" font-size="9.5" fill="var(--muted)">8·11·18</text>
+
+        <!-- ============ CC1101 ============ -->
+        <rect x="420" y="120" width="260" height="150" rx="10" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
+        <text x="550" y="172" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="14" fill="currentColor">CC1101</text>
+        <text x="550" y="194" text-anchor="middle" font-family="var(--font-sans)" font-size="11" fill="var(--muted)">sub-GHz 433 / 868 МГц</text>
+        <text x="550" y="216" text-anchor="middle" font-family="var(--font-sans)" font-size="11" fill="var(--muted)">приём — самый чувствительный</text>
+        <text x="550" y="238" text-anchor="middle" font-family="var(--font-sans)" font-size="11" fill="var(--muted)">узел на плате</text>
+        <text x="550" y="258" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--power)">питание от Флиппера</text>
+
+        <!-- ============ ESP32 ============ -->
+        <rect x="420" y="330" width="260" height="150" rx="10" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
+        <text x="550" y="382" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="14" fill="currentColor">ESP32</text>
+        <text x="550" y="404" text-anchor="middle" font-family="var(--font-sans)" font-size="11" fill="var(--muted)">BLE-бластер</text>
+        <text x="550" y="426" text-anchor="middle" font-family="var(--font-sans)" font-size="11" fill="var(--muted)">GPIO16 ← TX · GPIO17 → RX</text>
+        <text x="550" y="450" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--power)">питание от батареи</text>
+        <text x="550" y="468" text-anchor="middle" font-family="var(--font-sans)" font-size="10" fill="var(--ir)">именно он связывает земли</text>
+
+        <!-- ============ ИК-БЛАСТЕР ============ -->
+        <rect x="60" y="560" width="280" height="150" rx="10" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
+        <text x="200" y="606" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="14" fill="currentColor">ИК-БЛАСТЕР</text>
+        <text x="200" y="628" text-anchor="middle" font-family="var(--font-sans)" font-size="11" fill="var(--muted)">BPW34 → LM393 → IRLZ44N</text>
+        <text x="200" y="650" text-anchor="middle" font-family="var(--font-sans)" font-size="11" fill="var(--muted)">кольцо 6× 940 нм</text>
+        <text x="200" y="674" text-anchor="middle" font-family="var(--font-mono)" font-size="10.5" fill="var(--ir)">GPIO не занимает</text>
+        <text x="200" y="692" text-anchor="middle" font-family="var(--font-sans)" font-size="10" fill="var(--muted)">источник помехи 300 мА</text>
+
+        <!-- оптическая связь -->
+        <line x1="120" y1="480" x2="150" y2="552" stroke="var(--ir)" stroke-width="2.6"
+              stroke-dasharray="7 5" marker-end="url(#arC)"/>
+        <text x="238" y="516" text-anchor="middle" font-family="var(--font-mono)" font-size="11" fill="var(--ir)">940 нм · провода нет</text>
+
+        <!-- ============ ПИТАНИЕ ============ -->
+        <rect x="880" y="120" width="260" height="90" rx="10" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
+        <text x="1010" y="155" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="13" fill="currentColor">2× 18650 · 2S</text>
+        <text x="1010" y="177" text-anchor="middle" font-family="var(--font-sans)" font-size="11" fill="var(--muted)">7.4 В номинал</text>
+        <line x1="1010" y1="210" x2="1010" y2="245" stroke="var(--power)" stroke-width="2.2"/>
+        <rect x="880" y="245" width="260" height="65" rx="10" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
+        <text x="1010" y="285" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="13" fill="currentColor">BMS 2S</text>
+        <line x1="1010" y1="310" x2="1010" y2="345" stroke="var(--power)" stroke-width="2.2"/>
+        <rect x="880" y="345" width="260" height="95" rx="10" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
+        <text x="1010" y="382" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="13" fill="currentColor">DC-DC → 5.00 В</text>
+        <text x="1010" y="404" text-anchor="middle" font-family="var(--font-sans)" font-size="11" fill="var(--muted)">LM2596 · до 2 А</text>
+        <text x="1010" y="424" text-anchor="middle" font-family="var(--font-sans)" font-size="10" fill="var(--ir)">в Флиппер не подавать</text>
+
+        <!-- 5 В к ESP32 и ИК -->
+        <line x1="880" y1="392" x2="770" y2="392" stroke="var(--power)" stroke-width="2.2"/>
+        <line x1="770" y1="392" x2="770" y2="665" stroke="var(--power)" stroke-width="2.2"/>
+        <line x1="770" y1="405" x2="680" y2="405" stroke="var(--power)" stroke-width="2.2"/>
+        <text x="812" y="384" text-anchor="middle" font-family="var(--font-mono)" font-size="11" fill="var(--power)">+5 В</text>
+        <line x1="770" y1="665" x2="383" y2="665" stroke="var(--power)" stroke-width="2.2"/>
+        <path d="M383,665 A6.5,6.5 0 0 1 357,665" fill="none" stroke="var(--power)" stroke-width="2.2"/>
+        <line x1="357" y1="665" x2="340" y2="665" stroke="var(--power)" stroke-width="2.2"/>
+
+        <!-- ============ ЗЕМЛЯ ============ -->
+        <line x1="370" y1="245" x2="420" y2="245" stroke="var(--power)" stroke-width="2.2"/>
+        <line x1="370" y1="455" x2="420" y2="455" stroke="var(--power)" stroke-width="2.2"/>
+        <line x1="370" y1="640" x2="340" y2="640" stroke="var(--power)" stroke-width="2.2"/>
+        <line x1="370" y1="245" x2="370" y2="745" stroke="var(--power)" stroke-width="2.2"/>
+        <circle cx="370" cy="245" r="3.4" fill="var(--power)"/>
+        <circle cx="370" cy="455" r="3.4" fill="var(--power)"/>
+        <circle cx="370" cy="640" r="3.4" fill="var(--power)"/>
+        <line x1="370" y1="745" x2="1010" y2="745" stroke="var(--power)" stroke-width="2.2"/>
+        <line x1="1010" y1="440" x2="1010" y2="745" stroke="var(--power)" stroke-width="2.2"/>
+
+        <!-- звезда -->
+        <circle cx="700" cy="745" r="6" fill="var(--power)"/>
+        <g stroke="var(--power)" stroke-width="2.2">
+          <line x1="686" y1="757" x2="714" y2="757"/>
+          <line x1="691" y1="765" x2="709" y2="765"/>
+          <line x1="696" y1="773" x2="704" y2="773"/>
+        </g>
+        <text x="730" y="740" font-family="var(--font-mono)" font-weight="700" font-size="12" fill="var(--power)">★ звезда</text>
+        <text x="730" y="757" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">единственная точка, где сходятся земли</text>
+      </svg>
+    </div>
+    <figcaption>
+      CC1101 питается от Флиппера и висит на его SPI. ESP32 питается от батареи, но
+      обменивается с Флиппером по UART — и <b>именно он связывает две земли</b>.
+      ИК-бластер не занимает ни одного вывода GPIO, однако сидит на той же батарейной земле,
+      что и ESP32, поэтому его импульсы 300&nbsp;мА получают путь возврата рядом с CC1101.
+    </figcaption>
+  </figure>
+
+  <h2>Распределение выводов</h2>
+  <p class="sub">
+    Пересечений нет: SPI, UART и питание разведены по разным выводам разъёма.
+  </p>
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr><th>Вывод</th><th>Сигнал</th><th>Назначение</th><th>Узел</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="ref">2</td><td class="val">PA7</td><td>MOSI</td><td class="role">CC1101</td></tr>
+        <tr><td class="ref">3</td><td class="val">PA6</td><td>MISO</td><td class="role">CC1101</td></tr>
+        <tr><td class="ref">4</td><td class="val">PA4</td><td>CS</td><td class="role">CC1101</td></tr>
+        <tr><td class="ref">5</td><td class="val">PB3</td><td>SCK</td><td class="role">CC1101</td></tr>
+        <tr><td class="ref">7</td><td class="val">PC3</td><td>GDO0</td><td class="role">CC1101 — сверить с рабочим модулем</td></tr>
+        <tr><td class="ref">9</td><td class="val">3V3</td><td>питание</td><td class="role">CC1101, ≈35 мА</td></tr>
+        <tr><td class="ref">13</td><td class="val">PB6</td><td>TX →</td><td class="role">ESP32 GPIO16 (RX2)</td></tr>
+        <tr><td class="ref">14</td><td class="val">PB7</td><td>RX ←</td><td class="role">ESP32 GPIO17 (TX2)</td></tr>
+        <tr><td class="ref">8·11·18</td><td class="val">GND</td><td>общая земля</td><td class="role">сводить в одну точку, см. ниже</td></tr>
+        <tr><td class="ref">1</td><td class="val">5V</td><td>не задействован</td><td class="role">батарейные 5 В сюда не подавать</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="aside">
+    Номера выводов для CC1101 приведены по стандартной раскладке разъёма. В репозитории
+    зафиксированы только имена сигналов, поэтому <b>перед перепайкой сверить с уже работающим
+    модулем</b> — рабочая конфигурация важнее таблицы.
+  </p>
+
+  <h2>Топология земли</h2>
+  <p class="sub">
+    Ключевой узел всей конструкции. Ошибка здесь не ломает схему, а тихо снижает
+    чувствительность приёма.
+  </p>
+  <figure>
+    <div class="board">
+      <svg viewBox="0 0 1240 560" role="img"
+           aria-label="Топология земли. В центре точка звезды, к которой сходятся четыре луча: земля Флиппера с выводов 8, 11 и 18; земля CC1101; земля ESP32; земля батарейного питания. Отдельно справа внизу показан локальный импульсный контур кольца: конденсатор C4 220 микрофарад, ветки светодиодов и ключ Q1 образуют замкнутую петлю, по которой циркулирует импульсный ток 300 миллиампер частотой 38 килогерц. От источника питания в этот контур поступает только постоянная составляющая. Внизу предупреждение: не заливать сплошной полигон земли одновременно под кольцом и под CC1101.">
+        <rect x="0" y="0" width="1240" height="560" fill="url(#dots2)" opacity="0.9"/>
+
+        <!-- звезда в центре -->
+        <circle cx="600" cy="250" r="8" fill="var(--power)"/>
+        <text x="600" y="228" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="13" fill="var(--power)">★ ЗВЕЗДА</text>
+
+        <!-- луч 1: Флиппер (слева) -->
+        <rect x="70" y="215" width="220" height="70" rx="10" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
+        <text x="180" y="245" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="12" fill="currentColor">ЗЕМЛЯ ФЛИППЕРА</text>
+        <text x="180" y="266" text-anchor="middle" font-family="var(--font-mono)" font-size="11" fill="var(--muted)">выводы 8 · 11 · 18</text>
+        <line x1="290" y1="250" x2="592" y2="250" stroke="var(--power)" stroke-width="2.4"/>
+
+        <!-- луч 2: CC1101 (сверху) -->
+        <rect x="490" y="60" width="220" height="65" rx="10" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
+        <text x="600" y="88" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="12" fill="currentColor">ЗЕМЛЯ CC1101</text>
+        <text x="600" y="110" text-anchor="middle" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">короче — тем лучше</text>
+        <line x1="600" y1="125" x2="600" y2="242" stroke="var(--power)" stroke-width="2.4"/>
+
+        <!-- луч 3: ESP32 (снизу) -->
+        <rect x="490" y="380" width="220" height="65" rx="10" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
+        <text x="600" y="408" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="12" fill="currentColor">ЗЕМЛЯ ESP32</text>
+        <text x="600" y="430" text-anchor="middle" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">опорная для UART</text>
+        <line x1="600" y1="258" x2="600" y2="380" stroke="var(--power)" stroke-width="2.4"/>
+
+        <!-- луч 4: питание (справа) -->
+        <rect x="900" y="215" width="240" height="70" rx="10" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
+        <text x="1020" y="245" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="12" fill="currentColor">ЗЕМЛЯ БАТАРЕИ</text>
+        <text x="1020" y="266" text-anchor="middle" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">DC-DC · BMS · банки</text>
+        <line x1="608" y1="250" x2="900" y2="250" stroke="var(--power)" stroke-width="2.4"/>
+
+        <!-- локальный контур кольца -->
+        <rect x="830" y="330" width="330" height="180" rx="12" fill="var(--ir-soft)" stroke="var(--ir)" stroke-width="1.6"/>
+        <text x="995" y="358" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="12" fill="var(--ir)">ЛОКАЛЬНЫЙ КОНТУР КОЛЬЦА</text>
+        <!-- петля -->
+        <rect x="885" y="378" width="220" height="86" rx="4" fill="none" stroke="var(--ir)" stroke-width="2.6"/>
+        <text x="878" y="424" text-anchor="end" font-family="var(--font-mono)" font-size="11" fill="var(--ir)">C4</text>
+        <text x="995" y="372" text-anchor="middle" font-family="var(--font-mono)" font-size="10.5" fill="var(--ir)">кольцо</text>
+        <text x="1114" y="424" font-family="var(--font-mono)" font-size="11" fill="var(--ir)">Q1</text>
+        <text x="995" y="428" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="13" fill="var(--ir)">300 мА</text>
+        <text x="995" y="448" text-anchor="middle" font-family="var(--font-sans)" font-size="10.5" fill="var(--ir)">импульс замкнут здесь</text>
+        <text x="995" y="486" text-anchor="middle" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">чем меньше петля физически,</text>
+        <text x="995" y="501" text-anchor="middle" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">тем меньше попадёт в общую землю</text>
+        <!-- только постоянная составляющая -->
+        <line x1="1020" y1="285" x2="1020" y2="330" stroke="var(--power)" stroke-width="1.8" stroke-dasharray="6 4"/>
+        <text x="1032" y="312" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">только постоянная</text>
+
+        <!-- предупреждение -->
+        <rect x="70" y="400" width="380" height="80" rx="10" fill="var(--ir-soft)" stroke="var(--ir)" stroke-width="1.4"/>
+        <text x="92" y="428" font-family="var(--font-mono)" font-weight="700" font-size="12" fill="var(--ir)">✕ Чего не делать</text>
+        <text x="92" y="449" font-family="var(--font-sans)" font-size="11" fill="var(--ir)">Сплошной полигон земли сразу под кольцом</text>
+        <text x="92" y="466" font-family="var(--font-sans)" font-size="11" fill="var(--ir)">и под CC1101 — это и есть общий путь возврата.</text>
+      </svg>
+    </div>
+    <figcaption>
+      Земли сходятся <b>в одной точке</b>, а не соединяются где придётся. Импульсный ток кольца
+      при этом обязан циркулировать в собственной петле <b>C4 → кольцо → Q1 → C4</b>: если она
+      компактна, наружу уходит почти только постоянная составляющая. Именно поэтому
+      C4&nbsp;220&nbsp;мкФ ставится вплотную к ключу, а не «где-нибудь у преобразователя».
+    </figcaption>
+  </figure>
+
+  <h2>Зонирование платы</h2>
+  <p class="sub">
+    Приёмник и силовой ключ разносятся физически — это дешевле любого фильтра.
+  </p>
+  <figure>
+    <div class="board">
+      <svg viewBox="0 0 1240 430" role="img"
+           aria-label="План платы. Слева по краю разъём GPIO. Далее зона входа с фотодиодом BPW34 и компаратором LM393. В центре сверху цифровая зона с ESP32. Справа сверху радиочастотная зона с CC1101 и его антенной, вокруг антенны зона, свободная от меди. Внизу справа силовая зона с ключом Q1, резисторами кольца, конденсатором C4 и преобразователем DC-DC. Между антенной CC1101 и ключом Q1 показана стрелка максимального разнесения.">
+        <rect x="0" y="0" width="1240" height="430" fill="url(#dots2)" opacity="0.9"/>
+
+        <!-- плата -->
+        <rect x="70" y="50" width="1100" height="330" rx="14" fill="var(--board)" stroke="currentColor" stroke-width="2"/>
+
+        <!-- разъём -->
+        <rect x="70" y="50" width="52" height="330" rx="0" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
+        <text x="96" y="200" text-anchor="middle" font-family="var(--font-mono)" font-size="10.5" fill="var(--muted)" transform="rotate(-90 96 200)">РАЗЪЁМ GPIO</text>
+
+        <!-- зона входа -->
+        <rect x="145" y="80" width="230" height="270" rx="10" fill="var(--panel)" stroke="var(--hairline)" stroke-width="1.6"/>
+        <text x="260" y="112" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="12" fill="currentColor">ВХОД</text>
+        <text x="260" y="134" text-anchor="middle" font-family="var(--font-sans)" font-size="11" fill="var(--muted)">BPW34 · LM393</text>
+        <text x="260" y="154" text-anchor="middle" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">слаботочный аналог</text>
+        <text x="260" y="330" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--ir)">окно на Флиппер</text>
+
+        <!-- цифровая зона -->
+        <rect x="400" y="80" width="290" height="130" rx="10" fill="var(--panel)" stroke="var(--hairline)" stroke-width="1.6"/>
+        <text x="545" y="112" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="12" fill="currentColor">ЦИФРА</text>
+        <text x="545" y="134" text-anchor="middle" font-family="var(--font-sans)" font-size="11" fill="var(--muted)">ESP32 · UART</text>
+        <text x="545" y="156" text-anchor="middle" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">помеху терпит</text>
+
+        <!-- РЧ зона -->
+        <rect x="715" y="80" width="430" height="130" rx="10" fill="var(--panel)" stroke="var(--power)" stroke-width="2"/>
+        <text x="930" y="112" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="12" fill="var(--power)">РАДИОЧАСТОТНАЯ ЗОНА</text>
+        <text x="930" y="134" text-anchor="middle" font-family="var(--font-sans)" font-size="11" fill="var(--muted)">CC1101 + антенна</text>
+        <text x="930" y="156" text-anchor="middle" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">под антенной меди нет</text>
+        <circle cx="1090" cy="145" r="30" fill="none" stroke="var(--power)" stroke-width="1.6" stroke-dasharray="5 4"/>
+
+        <!-- силовая зона -->
+        <rect x="400" y="240" width="745" height="110" rx="10" fill="var(--ir-soft)" stroke="var(--ir)" stroke-width="1.6"/>
+        <text x="772" y="272" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="12" fill="var(--ir)">СИЛОВАЯ ЗОНА — ИСТОЧНИК ПОМЕХИ</text>
+        <text x="772" y="294" text-anchor="middle" font-family="var(--font-sans)" font-size="11" fill="var(--ir)">Q1 · R6–R8 · C4 · DC-DC</text>
+        <text x="772" y="316" text-anchor="middle" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">провода кольца — витой парой, коротко</text>
+
+        <!-- разнесение -->
+        <line x1="1090" y1="180" x2="1090" y2="238" stroke="var(--ir)" stroke-width="2" stroke-dasharray="6 4"/>
+        <text x="1082" y="232" text-anchor="end" font-family="var(--font-sans)" font-size="10.5" fill="var(--ir)">максимальное разнесение</text>
+      </svg>
+    </div>
+    <figcaption>
+      Антенна CC1101 — в дальнем от ключа углу, под ней <b>не должно быть меди</b>.
+      Силовая зона собрана компактно вокруг Q1. Трассы SPI не идут параллельно проводам
+      кольца: только пересечения под прямым углом.
+    </figcaption>
+  </figure>
+
+  <h2>Что учесть при сборке</h2>
+  <div class="notes">
+    <div class="note">
+      <h3><span class="dot"></span> Развязка ИК-бластера частичная</h3>
+      <p>Сигнальный тракт остаётся чисто оптическим — к Флипперу по-прежнему не идёт ни один
+      провод от бластера. Но с установкой ESP32 <b>батарейная земля привязывается к земле
+      Флиппера</b>, и общий обратный путь появляется. Полная развязка сохраняется, только
+      если ESP32 не установлен.</p>
+    </div>
+    <div class="note">
+      <h3><span class="dot"></span> Одновременная работа</h3>
+      <p>Пока кольцо излучает, чувствительность приёма CC1101 снижена — это физика, полностью
+      не устраняется. На практике не мешает: ИК-повтор и приём эфира не нужны одновременно.
+      Сценарий «слушать 433 и параллельно бить ИК» — единственный, где это вылезет.</p>
+    </div>
+    <div class="note">
+      <h3><span class="dot"></span> Фронты затвора</h3>
+      <p>R3&nbsp;100&nbsp;Ω замедляет фронты на затворе Q1 и тем снижает уровень гармоник,
+      уходящих в диапазон 433&nbsp;МГц. В соседстве с приёмником это <b>ещё один довод не
+      уменьшать</b> номинал ради скорости.</p>
+    </div>
+    <div class="note">
+      <h3><span class="dot"></span> Питание разделено</h3>
+      <p>CC1101 берёт 3.3&nbsp;В от Флиппера (≈35&nbsp;мА, разъём тянет спокойно). ESP32 и
+      ИК-бластер — от батареи через понижающий преобразователь. Батарейные 5&nbsp;В
+      <b>в Флиппер не подаются ни при каких условиях</b>, общей остаётся только земля.</p>
+    </div>
+  </div>
+
+  <footer>
+    esp32-flipper-exp · шапка на GPIO · схема ИК-бластера — отдельный документ ·
+    <a href="https://github.com/hleserg/esp32-flipper-exp">hleserg/esp32-flipper-exp</a>
+  </footer>
+
+</div>

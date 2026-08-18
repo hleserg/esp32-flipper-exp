@@ -111,6 +111,24 @@
   .note p{margin:0; font-size:.9rem; color:var(--muted)}
   .note p b{color:var(--ink); font-weight:600}
 
+  /* ---- ordered build steps ---- */
+  ol.steps{counter-reset:s; list-style:none; margin:22px 0 0; padding:0; display:grid; gap:12px}
+  ol.steps li{
+    counter-increment:s; position:relative; background:var(--panel);
+    border:1px solid var(--hairline); border-radius:12px; padding:16px 18px 16px 58px;
+    box-shadow:var(--shadow); font-size:.9rem; color:var(--muted);
+  }
+  ol.steps li::before{
+    content:counter(s); position:absolute; left:20px; top:15px;
+    font-family:var(--font-mono); font-weight:700; font-size:1rem; color:var(--ir);
+  }
+  ol.steps li b{color:var(--ink); font-weight:600; display:block; margin-bottom:4px}
+  .aside{
+    margin-top:16px; font-size:.88rem; color:var(--muted);
+    border-left:2px solid var(--hairline); padding:2px 0 2px 16px; max-width:70ch;
+  }
+  .aside b{color:var(--ink); font-weight:600}
+
   footer{margin-top:56px; padding-top:22px; border-top:1px solid var(--hairline); color:var(--muted); font-size:.82rem; font-family:var(--font-mono)}
   footer a{color:var(--ir); text-decoration:none}
 
@@ -719,6 +737,40 @@
       кольцо от фона, заниженная теряет слабые посылки.</p>
     </div>
   </div>
+
+  <h2>Порядок первого включения</h2>
+  <p class="sub">Последовательность существенна: два первых шага защищают схему от неё самой.</p>
+  <ol class="steps">
+    <li>
+      <b>Выставить 5.00 В на преобразователе при отключённой схеме</b>
+      Заводское положение подстроечника произвольное и может отвечать двум десяткам вольт.
+      Батарея подключается к модулю, нагрузка — нет; выход доводится до 5.00 В по индикатору
+      (кнопка переключает показ на OUT). Схема подключается только после этого.
+    </li>
+    <li>
+      <b>Установить оптический экран между кольцом и фотодиодом</b>
+      До первого включения кольца, а не после. Кольцо излучает те же 940 нм, на которые реагирует
+      BPW34: без перегородки узел замыкается сам на себя — кольцо зажглось, фотодиод принял
+      собственное излучение, компаратор удерживает ключ открытым. Схема залипает и перестаёт
+      реагировать на Флиппер; при настройке порога это выглядит как неисправность.
+    </li>
+    <li>
+      <b>Подключить схему и подать питание</b>
+      Ток покоя ≈6 мА, при работающем кольце ≈320 мА. Значительное отклонение — повод
+      искать ошибку монтажа до дальнейшей настройки.
+    </li>
+    <li>
+      <b>Выставить порог подстроечником RV1</b>
+      Устойчивое срабатывание на посылку Флиппера при отсутствии ложных на комнатном
+      и дневном свете. Единственная регулировка после сборки.
+    </li>
+  </ol>
+  <p class="aside">
+    <b>Если наблюдается дребезг</b> — кольцо мелко пульсирует либо ложно срабатывает на границе
+    порога — у LM393 нет собственного гистерезиса. Он добавляется резистором <b>1 МОм с вывода 1
+    на вывод 3</b>: положительная обратная связь разводит пороги включения и отключения примерно
+    на 50 мВ. Штатно не требуется, фронты ИК-посылки достаточно крутые.
+  </p>
 
   <footer>
     esp32-flipper-exp · подсистема шапки — CC1101 + этот всенаправленный ИК-бустер + ESP32 BLE ·

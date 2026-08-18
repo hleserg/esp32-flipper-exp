@@ -1,4 +1,4 @@
-<title>Optical IR Blaster — Flipper Zero GPIO-free booster</title>
+<title>Оптический ИК-бластер — Flipper Zero</title>
 <!--
   DESIGN PLAN
   Subject: the optical IR repeater/booster for the Flipper Zero. The crux: the
@@ -142,34 +142,34 @@
 
 <div class="wrap">
 
-  <p class="eyebrow">Flipper Zero · hat subsystem</p>
-  <h1>The Optical IR Blaster</h1>
+  <p class="eyebrow">Flipper Zero · подсистема шапки</p>
+  <h1>Оптический ИК-бластер</h1>
   <p class="lede">
-    The Flipper's own infrared LED is weak and points one way. This booster
-    <b>listens to that beam with a photodiode</b>, cleans it up, and fires it back out
-    at high power in every direction — with <b>no GPIO tap, no firmware change, and not
-    a single wire running to the Flipper.</b> The only input is light.
+    Собственный ИК-диод Флиппера слабый и светит в одну сторону. Этот бустер
+    <b>ловит его луч фотодиодом</b>, очищает сигнал и выстреливает обратно
+    на полной мощности во все стороны — <b>без задействования GPIO, без правки прошивки
+    и без единого провода к Флипперу.</b> Единственный вход — свет.
   </p>
   <p class="chain">
-    <b>Flipper IR</b> ─▶ BPW34 ─▶ LM393 ─▶ IRLZ44N ─▶ <b>6× 940 nm ring ≈360°</b>
+    <b>ИК Флиппера</b> ─▶ BPW34 ─▶ LM393 ─▶ IRLZ44N ─▶ <b>кольцо 6× 940 нм ≈360°</b>
   </p>
   <ul class="chips">
-    <li><b>940 nm</b> near-IR</li>
-    <li><b>≈360°</b> coverage</li>
-    <li><b>0 wires</b> to Flipper</li>
-    <li>runs off <b>18650</b></li>
-    <li>galvanically <b>isolated</b></li>
+    <li><b>940 нм</b> ближний ИК</li>
+    <li><b>≈360°</b> покрытие</li>
+    <li><b>0 проводов</b> к Флипперу</li>
+    <li>питание от <b>18650</b></li>
+    <li>гальв. <b>развязка</b></li>
   </ul>
 
   <figure>
     <div class="legend" aria-hidden="true">
-      <span class="lg-ir"><i class="dash"></i> IR light path</span>
-      <span class="lg-sig"><i></i> signal / wiring</span>
-      <span class="lg-pwr"><i></i> power (+5&nbsp;V / GND)</span>
+      <span class="lg-ir"><i class="dash"></i> путь ИК-света</span>
+      <span class="lg-sig"><i></i> сигнал / провода</span>
+      <span class="lg-pwr"><i></i> питание (+5&nbsp;В / GND)</span>
     </div>
     <div class="board">
       <svg viewBox="0 0 1240 662" role="img"
-           aria-label="Schematic: the Flipper Zero's internal IR LED emits a 940nm beam that is picked up by a BPW34 photodiode (reverse-biased, with a 10k load and 100nF cap). The signal drives the non-inverting input of an LM393 comparator whose threshold is set by a 10k 3296W trimmer; an open-collector output with a 10k pull-up drives the gate of an IRLZ44N logic-level MOSFET through a 100 ohm series resistor and 10k pulldown. The MOSFET low-side switches three parallel branches of two IR-5238C 940nm LEDs plus a 22 ohm resistor each, arranged in a ring for roughly 360 degree coverage. Power is a +5V rail from an 18650 through a DC-DC converter, with a common ground. An opaque optical shield blocks the ring's own IR from reaching the photodiode to prevent feedback.">
+           aria-label="Схема: внутренний ИК-диод Flipper Zero излучает луч 940 нм, который ловит фотодиод BPW34 (обратное смещение, нагрузка 10 кОм и конденсатор 100 нФ). Сигнал идёт на неинвертирующий вход компаратора LM393, порог которого задаёт подстроечник 3296W 10 кОм; выход с открытым коллектором и подтяжкой 10 кОм через резистор затвора 100 Ом и подтяжку вниз 10 кОм управляет затвором логического MOSFET IRLZ44N. MOSFET по нижнему плечу коммутирует три параллельные ветки из двух ИК-диодов IR-5238C 940 нм и резистора 22 Ом каждая, собранные в кольцо для покрытия примерно 360 градусов. Питание — шина +5 В от банки 18650 через DC-DC преобразователь, с общей землёй. Непрозрачный оптический экран не даёт собственному ИК кольца попасть обратно на фотодиод и вызвать самовозбуждение.">
         <defs>
           <marker id="arw" markerWidth="9" markerHeight="9" refX="7" refY="4.2" orient="auto">
             <path d="M0,0 L8,4.2 L0,8.4 Z" fill="currentColor"/>
@@ -197,7 +197,7 @@
           <line x1="108" y1="72" x2="1170" y2="72"/>
           <line x1="108" y1="602" x2="1170" y2="602"/>
         </g>
-        <text x="108" y="60" fill="var(--power)" font-family="var(--font-mono)" font-size="13" font-weight="700">+5 V</text>
+        <text x="108" y="60" fill="var(--power)" font-family="var(--font-mono)" font-size="13" font-weight="700">+5 В</text>
         <!-- ground symbol at left of GND rail -->
         <g stroke="var(--power)" stroke-width="2.4" fill="none">
           <line x1="150" y1="602" x2="150" y2="616"/>
@@ -205,32 +205,32 @@
           <line x1="141" y1="622" x2="159" y2="622"/>
           <line x1="146" y1="628" x2="154" y2="628"/>
         </g>
-        <text x="176" y="622" fill="var(--power)" font-family="var(--font-mono)" font-size="12">GND — shared 0 V</text>
+        <text x="176" y="622" fill="var(--power)" font-family="var(--font-mono)" font-size="12">GND — общий 0 В</text>
 
         <!-- ============ STAGE 1 · FLIPPER ============ -->
         <g>
           <rect x="60" y="250" width="120" height="212" rx="18" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
           <text x="120" y="322" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="16" fill="currentColor">FLIPPER</text>
           <text x="120" y="344" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="16" fill="currentColor">ZERO</text>
-          <text x="120" y="430" text-anchor="middle" font-family="var(--font-sans)" font-size="11.5" fill="var(--muted)">no GPIO tap</text>
-          <text x="120" y="447" text-anchor="middle" font-family="var(--font-sans)" font-size="11.5" fill="var(--muted)">no firmware mod</text>
+          <text x="120" y="430" text-anchor="middle" font-family="var(--font-sans)" font-size="11.5" fill="var(--muted)">без GPIO</text>
+          <text x="120" y="447" text-anchor="middle" font-family="var(--font-sans)" font-size="11.5" fill="var(--muted)">без прошивки</text>
           <!-- internal IR LED at right edge -->
           <g stroke="var(--ir)" stroke-width="2" fill="none">
             <path d="M180,300 h10" />
             <path d="M190,292 v16 l12,-8 z" fill="var(--ir)" stroke="none"/>
           </g>
-          <text x="150" y="243" text-anchor="middle" font-family="var(--font-mono)" font-size="10.5" fill="var(--ir)">int. IR LED</text>
+          <text x="150" y="243" text-anchor="middle" font-family="var(--font-mono)" font-size="10.5" fill="var(--ir)">внутр. ИК-диод</text>
         </g>
 
         <!-- wanted optical beam: the Flipper's own IR travels up into the photodiode -->
         <line class="ir-beam" x1="212" y1="298" x2="295" y2="201"
               stroke="var(--ir)" stroke-width="2.6" fill="none" marker-end="url(#arwC)"/>
-        <text x="205" y="262" font-family="var(--font-mono)" font-size="11" fill="var(--ir)">940 nm</text>
+        <text x="205" y="262" font-family="var(--font-mono)" font-size="11" fill="var(--ir)">940 нм</text>
 
         <!-- ============ STAGE 2 · PHOTODIODE FRONT-END ============ -->
         <g>
           <text x="300" y="128" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="13" fill="currentColor">D1 · BPW34</text>
-          <text x="300" y="144" text-anchor="middle" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">photodiode · reverse-biased</text>
+          <text x="300" y="144" text-anchor="middle" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">фотодиод · обр. смещение</text>
 
           <!-- +5V drop to cathode -->
           <line x1="300" y1="72" x2="300" y2="164" stroke="var(--power)" stroke-width="2.2"/>
@@ -271,14 +271,14 @@
                   stroke-dasharray="5 4" fill="none"/>
             <!-- baffle bar -->
             <line x1="332" y1="166" x2="350" y2="188" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
-            <text x="358" y="188" font-family="var(--font-mono)" font-size="10" fill="var(--ir)">✕ shield</text>
+            <text x="358" y="188" font-family="var(--font-mono)" font-size="10" fill="var(--ir)">✕ экран</text>
           </g>
         </g>
 
         <!-- ============ STAGE 3 · LM393 COMPARATOR ============ -->
         <g>
           <text x="552" y="240" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="13" fill="currentColor">U1 · LM393</text>
-          <text x="610" y="270" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">open-collector</text>
+          <text x="610" y="270" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">откр. коллектор</text>
 
           <!-- triangle -->
           <path d="M500,254 L500,346 L602,300 Z" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
@@ -298,14 +298,14 @@
           <line x1="632" y1="118" x2="632" y2="72" stroke="var(--power)" stroke-width="2.2"/>
           <circle cx="632" cy="72" r="3.2" fill="var(--power)"/>
           <text x="652" y="140" font-family="var(--font-mono)" font-size="11.5" fill="currentColor">R2 10k</text>
-          <text x="652" y="156" font-family="var(--font-mono)" font-size="11" fill="var(--muted)">pull-up</text>
+          <text x="652" y="156" font-family="var(--font-mono)" font-size="11" fill="var(--muted)">подтяжка</text>
 
           <!-- trimmer RV1 with local power flags (keeps the wiring clear of node A) -->
           <g>
             <!-- +5V flag -->
             <line x1="460" y1="342" x2="460" y2="360" stroke="var(--power)" stroke-width="2.2"/>
             <path d="M452,342 L468,342 L460,332 Z" fill="var(--power)"/>
-            <text x="474" y="341" font-family="var(--font-mono)" font-size="10" fill="var(--power)">+5V</text>
+            <text x="474" y="341" font-family="var(--font-mono)" font-size="10" fill="var(--power)">+5В</text>
             <!-- pot body -->
             <rect x="448" y="360" width="24" height="64" rx="3" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
             <!-- wiper arrow into body -->
@@ -320,14 +320,14 @@
             <text x="436" y="378" text-anchor="end" font-family="var(--font-mono)" font-size="11.5" fill="currentColor">RV1</text>
             <text x="436" y="394" text-anchor="end" font-family="var(--font-mono)" font-size="11" fill="var(--muted)">10k</text>
             <text x="436" y="410" text-anchor="end" font-family="var(--font-mono)" font-size="11" fill="var(--muted)">3296W</text>
-            <text x="436" y="426" text-anchor="end" font-family="var(--font-sans)" font-size="10.5" fill="var(--ir)">threshold</text>
+            <text x="436" y="426" text-anchor="end" font-family="var(--font-sans)" font-size="10.5" fill="var(--ir)">порог</text>
           </g>
         </g>
 
         <!-- ============ STAGE 4 · IRLZ44N MOSFET ============ -->
         <g>
-          <text x="792" y="224" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="13" fill="currentColor">Q1 · IRLZ44N</text>
-          <text x="792" y="240" text-anchor="middle" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">logic-level N-MOSFET</text>
+          <text x="792" y="219" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="13" fill="currentColor">Q1 · IRLZ44N</text>
+          <text x="792" y="234" text-anchor="middle" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">N-MOSFET, лог. уровень</text>
 
           <!-- gate series R3 -->
           <line x1="676" y1="300" x2="694" y2="300" stroke="currentColor" stroke-width="2"/>
@@ -420,9 +420,9 @@
           </g>
 
           <text x="1104" y="200" font-family="var(--font-mono)" font-size="11.5" fill="currentColor">22 Ω ×3</text>
-          <text x="1104" y="216" font-family="var(--font-mono)" font-size="11" fill="var(--muted)">0.5 W</text>
+          <text x="1104" y="216" font-family="var(--font-mono)" font-size="11" fill="var(--muted)">0.5 Вт</text>
           <text x="1104" y="300" font-family="var(--font-mono)" font-size="11.5" fill="currentColor">IR-5238C</text>
-          <text x="1104" y="316" font-family="var(--font-mono)" font-size="11" fill="var(--muted)">940 nm ×6</text>
+          <text x="1104" y="316" font-family="var(--font-mono)" font-size="11" fill="var(--muted)">940 нм ×6</text>
 
           <!-- 360-degree payoff glyph -->
           <g transform="translate(1000,556)">
@@ -437,70 +437,70 @@
             </g>
             <text x="0" y="4" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="currentColor">360°</text>
           </g>
-          <text x="1080" y="560" font-family="var(--font-sans)" font-size="11" fill="var(--muted)">6 LEDs in a ring</text>
-          <text x="1080" y="576" font-family="var(--font-sans)" font-size="11" fill="var(--muted)">→ omnidirectional</text>
+          <text x="1080" y="560" font-family="var(--font-sans)" font-size="11" fill="var(--muted)">6 диодов кольцом</text>
+          <text x="1080" y="576" font-family="var(--font-sans)" font-size="11" fill="var(--muted)">→ во все стороны</text>
         </g>
 
       </svg>
     </div>
     <figcaption>
-      <b>One figure, one claim:</b> the Flipper's own IR is picked up optically (coral, left),
-      squared up by the comparator against an adjustable threshold, and low-side switched
-      onto a high-power 940&nbsp;nm ring (coral, right). Power is a private 18650 rail (teal);
-      nothing but light crosses to the Flipper. The <b>✕ shield</b> at the photodiode is the
-      one part you can't skip — see the notes.
+      <b>Одна картинка — одна мысль:</b> собственный ИК Флиппера ловится оптически (коралловый, слева),
+      формируется компаратором по настраиваемому порогу и через ключ нижнего плеча подаётся
+      на мощное кольцо 940&nbsp;нм (коралловый, справа). Питание — отдельная банка 18650 (тил);
+      к Флипперу не идёт ничего, кроме света. <b>✕ экран</b> у фотодиода — единственное,
+      что нельзя пропустить, см. заметки ниже.
     </figcaption>
   </figure>
 
-  <h2>Bill of materials</h2>
-  <p class="sub">Everything runs from a single +5&nbsp;V rail. Values are starting points — trim RV1 to taste.</p>
+  <h2>Спецификация (BOM)</h2>
+  <p class="sub">Всё питается от единой шины +5&nbsp;В. Номиналы — стартовые, RV1 подстраивается на месте.</p>
   <div class="tablewrap">
     <table>
       <thead>
-        <tr><th>Ref</th><th>Part</th><th>Value / spec</th><th>Role</th></tr>
+        <tr><th>Обозн.</th><th>Компонент</th><th>Номинал</th><th>Назначение</th></tr>
       </thead>
       <tbody>
-        <tr><td class="ref">D1</td><td>BPW34</td><td class="val">PIN, 940 nm</td><td class="role">optical pickup — sees the Flipper's beam</td></tr>
-        <tr><td class="ref">U1</td><td>LM393 (DIP)</td><td class="val">dual comparator</td><td class="role">squares the signal, rejects ambient light</td></tr>
-        <tr><td class="ref">RV1</td><td>3296W trimmer</td><td class="val">10 kΩ</td><td class="role">threshold / sensitivity knob</td></tr>
-        <tr><td class="ref">Q1</td><td>IRLZ44N</td><td class="val">logic-level N-MOSFET</td><td class="role">high-current low-side switch for the ring</td></tr>
-        <tr><td class="ref">LED1–6</td><td>IR-5238C</td><td class="val">940 nm × 6</td><td class="role">emitter ring, ≈360° coverage</td></tr>
-        <tr><td class="ref">—</td><td>ring resistors</td><td class="val">22 Ω 0.5 W × 3</td><td class="role">≈100 mA per 2-LED branch</td></tr>
-        <tr><td class="ref">R1</td><td>resistor</td><td class="val">10 kΩ</td><td class="role">photodiode load</td></tr>
-        <tr><td class="ref">R2</td><td>resistor</td><td class="val">10 kΩ</td><td class="role">open-collector pull-up</td></tr>
-        <tr><td class="ref">R3</td><td>resistor</td><td class="val">100 Ω</td><td class="role">gate series (edge damping)</td></tr>
-        <tr><td class="ref">R4</td><td>resistor</td><td class="val">10 kΩ</td><td class="role">gate pulldown — keeps Q1 off</td></tr>
-        <tr><td class="ref">C1</td><td>capacitor</td><td class="val">100 nF</td><td class="role">node decoupling</td></tr>
-        <tr><td class="ref">PWR</td><td>18650 + DC-DC</td><td class="val">→ +5 V</td><td class="role">own battery; only GND is (optionally) shared</td></tr>
+        <tr><td class="ref">D1</td><td>BPW34</td><td class="val">PIN, 940 нм</td><td class="role">оптический приёмник — ловит луч Флиппера</td></tr>
+        <tr><td class="ref">U1</td><td>LM393 (DIP)</td><td class="val">сдвоенный компаратор</td><td class="role">формирует сигнал, режет фоновый свет</td></tr>
+        <tr><td class="ref">RV1</td><td>подстроечник 3296W</td><td class="val">10 кОм</td><td class="role">порог / чувствительность</td></tr>
+        <tr><td class="ref">Q1</td><td>IRLZ44N</td><td class="val">N-MOSFET, лог. уровень</td><td class="role">сильноточный ключ нижнего плеча</td></tr>
+        <tr><td class="ref">LED1–6</td><td>IR-5238C</td><td class="val">940 нм × 6</td><td class="role">кольцо-излучатель, покрытие ≈360°</td></tr>
+        <tr><td class="ref">—</td><td>резисторы кольца</td><td class="val">22 Ω 0.5 Вт × 3</td><td class="role">≈100 мА на ветку из 2 диодов</td></tr>
+        <tr><td class="ref">R1</td><td>резистор</td><td class="val">10 кОм</td><td class="role">нагрузка фотодиода</td></tr>
+        <tr><td class="ref">R2</td><td>резистор</td><td class="val">10 кОм</td><td class="role">подтяжка открытого коллектора</td></tr>
+        <tr><td class="ref">R3</td><td>резистор</td><td class="val">100 Ω</td><td class="role">резистор затвора (демпфер фронтов)</td></tr>
+        <tr><td class="ref">R4</td><td>резистор</td><td class="val">10 кОм</td><td class="role">подтяжка затвора вниз — держит Q1 закрытым</td></tr>
+        <tr><td class="ref">C1</td><td>конденсатор</td><td class="val">100 нФ</td><td class="role">развязка узла</td></tr>
+        <tr><td class="ref">PWR</td><td>18650 + DC-DC</td><td class="val">→ +5 В</td><td class="role">своё питание; общий только GND (опц.)</td></tr>
       </tbody>
     </table>
   </div>
 
-  <h2>Three things that make or break it</h2>
+  <h2>Три вещи, от которых всё зависит</h2>
   <div class="notes">
     <div class="note">
-      <h3><span class="dot"></span> Purely optical input</h3>
-      <p>No signal or power wire runs to the Flipper. Its own IR LED lights the BPW34 and the
-      booster is <b>galvanically isolated</b> — nothing to flash, nothing to solder into the
-      Flipper. Aim the Flipper's IR window at the photodiode and that's the whole interface.</p>
+      <h3><span class="dot"></span> Чисто оптический вход</h3>
+      <p>К Флипперу не идёт ни один провод — ни сигнальный, ни питания. Его собственный ИК-диод
+      подсвечивает BPW34, а бустер <b>гальванически развязан</b>: нечего прошивать, нечего впаивать
+      в Флиппер. Направь ИК-окно Флиппера на фотодиод — вот и весь интерфейс.</p>
     </div>
     <div class="note">
-      <h3><span class="dot"></span> Shield the feedback path</h3>
-      <p>The ring emits the <b>same 940 nm</b> the BPW34 is straining to hear. With no baffle
-      between them the booster latches on and self-oscillates. Mount an <b>opaque shroud</b> so
-      the photodiode only ever sees the Flipper — this is the <b>✕</b> on the schematic.</p>
+      <h3><span class="dot"></span> Экранируй обратную связь</h3>
+      <p>Кольцо излучает <b>те же 940 нм</b>, что ловит BPW34. Без перегородки между ними бустер
+      защёлкивается и самовозбуждается. Поставь <b>непрозрачный экран</b>, чтобы фотодиод видел
+      только Флиппер — это <b>✕</b> на схеме.</p>
     </div>
     <div class="note">
-      <h3><span class="dot"></span> Calibrate the threshold</h3>
-      <p>Turn <b>RV1</b> until the LM393 trips cleanly on the Flipper's beam but stays quiet on
-      room light and sunlight. Too sensitive and daylight keys the ring; too dull and weak
-      commands are dropped. It's the one thing you tune after assembly.</p>
+      <h3><span class="dot"></span> Настрой порог</h3>
+      <p>Крути <b>RV1</b>, пока LM393 чётко срабатывает на луч Флиппера, но молчит на комнатный свет
+      и солнце. Слишком чувствительно — дневной свет открывает кольцо; слишком грубо — теряются
+      слабые команды. Единственное, что настраивается после сборки.</p>
     </div>
   </div>
 
   <footer>
-    esp32-flipper-exp · hat subsystem — CC1101 + this omni-IR booster + ESP32 BLE ·
-    signal chain <a href="https://github.com/hleserg/esp32-flipper-exp">hleserg/esp32-flipper-exp</a>
+    esp32-flipper-exp · подсистема шапки — CC1101 + этот всенаправленный ИК-бустер + ESP32 BLE ·
+    цепочка <a href="https://github.com/hleserg/esp32-flipper-exp">hleserg/esp32-flipper-exp</a>
   </footer>
 
 </div>

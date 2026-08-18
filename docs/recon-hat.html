@@ -1,0 +1,379 @@
+<meta charset="utf-8">
+<title>Recon-шапка nRF24 — Flipper Zero</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+  :root{
+    --bg:#e9e5db; --panel:#f4f0e8; --board:#efeae0;
+    --ink:#221f19; --muted:#6f685c; --hairline:#d3ccbd; --grid-dot:#d7d0c1;
+    --power:#2c6e77; --ir:#cc3d1a; --ir-soft:rgba(204,61,26,.13);
+    --shadow:0 1px 0 rgba(0,0,0,.04),0 18px 40px -28px rgba(40,30,10,.4);
+    --font-mono:ui-monospace,"Cascadia Code","JetBrains Mono","SF Mono",Menlo,Consolas,monospace;
+    --font-sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#141310; --panel:#1e1b16; --board:#1a1712;
+      --ink:#ece6da; --muted:#9b9284; --hairline:#332f27; --grid-dot:#2a251e;
+      --power:#74b9c2; --ir:#ff6a43; --ir-soft:rgba(255,106,67,.15);
+      --shadow:0 1px 0 rgba(0,0,0,.3),0 20px 46px -30px rgba(0,0,0,.8);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#141310; --panel:#1e1b16; --board:#1a1712;
+    --ink:#ece6da; --muted:#9b9284; --hairline:#332f27; --grid-dot:#2a251e;
+    --power:#74b9c2; --ir:#ff6a43; --ir-soft:rgba(255,106,67,.15);
+    --shadow:0 1px 0 rgba(0,0,0,.3),0 20px 46px -30px rgba(0,0,0,.8);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:var(--font-sans); line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1060px; margin:0 auto; padding:clamp(28px,5vw,64px) clamp(18px,4vw,40px) 80px;}
+
+  /* ---- header ---- */
+  .eyebrow{
+    font-family:var(--font-mono); font-size:.72rem; letter-spacing:.22em;
+    text-transform:uppercase; color:var(--ir); margin:0 0 14px;
+  }
+  h1{
+    font-family:var(--font-sans); font-weight:700; text-wrap:balance;
+    font-size:clamp(2.1rem,6vw,3.4rem); line-height:1.04; letter-spacing:-.02em;
+    margin:0 0 18px;
+  }
+  .lede{font-size:clamp(1.02rem,2.3vw,1.2rem); color:var(--muted); max-width:60ch; margin:0 0 22px;}
+  .chain{
+    font-family:var(--font-mono); font-size:.86rem; color:var(--ink);
+    background:var(--panel); border:1px solid var(--hairline); border-radius:10px;
+    padding:12px 16px; display:inline-block; overflow-x:auto; max-width:100%;
+    box-shadow:var(--shadow);
+  }
+  .chain b{color:var(--ir); font-weight:700}
+  .chips{display:flex; flex-wrap:wrap; gap:8px; margin:22px 0 0; padding:0; list-style:none}
+  .chips li{
+    font-family:var(--font-mono); font-size:.72rem; letter-spacing:.04em;
+    border:1px solid var(--hairline); border-radius:999px; padding:5px 12px;
+    color:var(--muted); background:var(--panel);
+  }
+  .chips li b{color:var(--ink); font-weight:600}
+
+  /* ---- figure ---- */
+  figure{margin:clamp(30px,5vw,52px) 0; padding:0}
+  .board{
+    background:var(--board); border:1px solid var(--hairline); border-radius:16px;
+    box-shadow:var(--shadow); padding:20px 20px 12px; overflow-x:auto;
+  }
+  .board svg{display:block; width:100%; min-width:940px; height:auto; color:var(--ink)}
+  .legend{
+    display:flex; flex-wrap:wrap; gap:18px 24px; align-items:center;
+    font-family:var(--font-mono); font-size:.74rem; color:var(--muted);
+    padding:2px 4px 14px;
+  }
+  .legend span{display:inline-flex; align-items:center; gap:8px}
+  .legend i{width:22px; height:0; border-top-width:2.5px; border-top-style:solid; display:inline-block}
+  .lg-ir i{border-color:var(--ir)}
+  .lg-sig i{border-color:var(--ink)}
+  .lg-pwr i{border-color:var(--power)}
+  .lg-ir i.dash{border-top-style:dashed}
+  figcaption{font-size:.88rem; color:var(--muted); margin-top:14px; max-width:70ch}
+  figcaption b{color:var(--ink); font-weight:600}
+
+  /* ---- section heading ---- */
+  h2{
+    font-size:1.35rem; letter-spacing:-.01em; margin:52px 0 4px;
+  }
+  .sub{color:var(--muted); margin:0 0 20px; font-size:.95rem}
+
+  /* ---- BOM table ---- */
+  .tablewrap{overflow-x:auto; border:1px solid var(--hairline); border-radius:12px; box-shadow:var(--shadow)}
+  table{border-collapse:collapse; width:100%; min-width:560px; font-size:.9rem; background:var(--panel)}
+  th,td{text-align:left; padding:11px 16px; border-bottom:1px solid var(--hairline); vertical-align:top}
+  thead th{
+    font-family:var(--font-mono); font-size:.68rem; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--muted); font-weight:600; background:var(--board);
+  }
+  tbody tr:last-child td{border-bottom:0}
+  td.ref{font-family:var(--font-mono); font-weight:700; color:var(--ir); white-space:nowrap}
+  td.val{font-family:var(--font-mono); font-variant-numeric:tabular-nums; color:var(--ink)}
+  td.role{color:var(--muted)}
+
+  /* ---- notes ---- */
+  .notes{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; margin-top:22px}
+  .note{
+    background:var(--panel); border:1px solid var(--hairline); border-radius:12px;
+    padding:18px 18px 20px; box-shadow:var(--shadow); position:relative;
+  }
+  .note h3{margin:0 0 8px; font-size:1rem; display:flex; align-items:center; gap:9px}
+  .note h3 .dot{width:9px; height:9px; border-radius:50%; background:var(--ir); flex:none}
+  .note p{margin:0; font-size:.9rem; color:var(--muted)}
+  .note p b{color:var(--ink); font-weight:600}
+
+  /* ---- ordered build steps ---- */
+  ol.steps{counter-reset:s; list-style:none; margin:22px 0 0; padding:0; display:grid; gap:12px}
+  ol.steps li{
+    counter-increment:s; position:relative; background:var(--panel);
+    border:1px solid var(--hairline); border-radius:12px; padding:16px 18px 16px 58px;
+    box-shadow:var(--shadow); font-size:.9rem; color:var(--muted);
+  }
+  ol.steps li::before{
+    content:counter(s); position:absolute; left:20px; top:15px;
+    font-family:var(--font-mono); font-weight:700; font-size:1rem; color:var(--ir);
+  }
+  ol.steps li b{color:var(--ink); font-weight:600; display:block; margin-bottom:4px}
+  .aside{
+    margin-top:16px; font-size:.88rem; color:var(--muted);
+    border-left:2px solid var(--hairline); padding:2px 0 2px 16px; max-width:70ch;
+  }
+  .aside b{color:var(--ink); font-weight:600}
+
+  footer{margin-top:56px; padding-top:22px; border-top:1px solid var(--hairline); color:var(--muted); font-size:.82rem; font-family:var(--font-mono)}
+  footer a{color:var(--ir); text-decoration:none}
+
+  /* ---- motion (subtle, opt-in) ---- */
+  .ir-beam{stroke-dasharray:7 5}
+  .glow{opacity:.6}
+  @media (prefers-reduced-motion:no-preference){
+    .ir-beam{animation:march 1.4s linear infinite}
+    .glow{animation:pulse 3.4s ease-in-out infinite}
+    @keyframes march{to{stroke-dashoffset:-24}}
+    @keyframes pulse{0%,100%{opacity:.35}50%{opacity:.75}}
+  }
+</style>
+
+<div class="wrap">
+
+  <p class="eyebrow">Flipper Zero · сменная шапка</p>
+  <h1>Recon-шапка на nRF24</h1>
+  <p class="lede">
+    Вторая шапка, противоположная по назначению. «Шумовая» глушит, включает и выключает всё
+    подряд — это громкий передатчик. Эта делает обратное: тихо слушает эфир 2.4&nbsp;ГГц
+    и ловит устройства. Один чувствительный приёмник, никакого силового железа.
+  </p>
+  <p class="chain">
+    nRF24L01+ ─▶ <b>SPI</b> &nbsp;·&nbsp; 2.4&nbsp;ГГц GFSK &nbsp;·&nbsp; <b>приём / инъекция</b>
+  </p>
+  <ul class="chips">
+    <li><b>2.4</b> ГГц raw</li>
+    <li><b>mousejack</b> · сниффер</li>
+    <li>питание <b>от Флиппера</b></li>
+    <li><b>без</b> батареи</li>
+  </ul>
+
+  <h2>Две шапки, один Флиппер</h2>
+  <p class="sub">
+    Профили не пересекаются: либо создаёшь хаос, либо тихо слушаешь. Разные шапки под разные
+    задачи — и это не только про удобство.
+  </p>
+  <figure>
+    <div class="board">
+      <svg viewBox="0 0 1240 470" role="img"
+           aria-label="Две сменные шапки на один Flipper Zero. Слева шумовая шапка: CC1101, ESP32 BLE и ИК-бластер, автономное питание от двух банок 18650, профиль — громкий передатчик, глушит и переключает. Справа recon-шапка: только модуль nRF24, питание от самого Флиппера, профиль — тихий приёмник, ловит устройства и слушает эфир. По центру Flipper Zero, на который они ставятся по очереди. Внизу три причины разделения: приёмник не соседствует с излучателями; nRF24 забирает те же выводы SPI и CS, что и CC1101, поэтому на одной плате был бы конфликт; recon-шапке не нужна батарея.">
+        <defs>
+          <pattern id="dots3" width="22" height="22" patternUnits="userSpaceOnUse">
+            <circle cx="1.4" cy="1.4" r="1.1" fill="var(--grid-dot)"/>
+          </pattern>
+        </defs>
+        <rect x="0" y="0" width="1240" height="470" fill="url(#dots3)" opacity="0.9"/>
+
+        <!-- Flipper в центре -->
+        <rect x="530" y="150" width="180" height="150" rx="12" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
+        <text x="620" y="218" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="14" fill="currentColor">FLIPPER</text>
+        <text x="620" y="238" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="14" fill="currentColor">ZERO</text>
+        <text x="620" y="130" text-anchor="middle" font-family="var(--font-sans)" font-size="11" fill="var(--muted)">одна платформа</text>
+
+        <!-- шумовая слева -->
+        <rect x="70" y="120" width="360" height="210" rx="12" fill="var(--ir-soft)" stroke="var(--ir)" stroke-width="1.6"/>
+        <text x="250" y="150" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="13" fill="var(--ir)">ШУМОВАЯ ШАПКА</text>
+        <text x="250" y="176" text-anchor="middle" font-family="var(--font-sans)" font-size="11.5" fill="currentColor">CC1101 · ESP32 BLE · ИК-бластер</text>
+        <text x="250" y="198" text-anchor="middle" font-family="var(--font-sans)" font-size="11" fill="var(--muted)">2× 18650 · автономная</text>
+        <text x="250" y="228" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="12" fill="var(--ir)">ГРОМКИЙ ПЕРЕДАТЧИК</text>
+        <text x="250" y="250" text-anchor="middle" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">глушит · включает / выключает</text>
+        <text x="250" y="266" text-anchor="middle" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">громче / тише · хаос из одной кнопки</text>
+        <line x1="430" y1="225" x2="528" y2="225" stroke="currentColor" stroke-width="2" stroke-dasharray="6 4"/>
+
+        <!-- recon справа -->
+        <rect x="810" y="120" width="360" height="210" rx="12" fill="var(--panel)" stroke="var(--power)" stroke-width="2"/>
+        <text x="990" y="150" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="13" fill="var(--power)">RECON-ШАПКА</text>
+        <text x="990" y="176" text-anchor="middle" font-family="var(--font-sans)" font-size="11.5" fill="currentColor">только nRF24L01+</text>
+        <text x="990" y="198" text-anchor="middle" font-family="var(--font-sans)" font-size="11" fill="var(--muted)">питание от Флиппера · без банок</text>
+        <text x="990" y="228" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="12" fill="var(--power)">ТИХИЙ ПРИЁМНИК</text>
+        <text x="990" y="250" text-anchor="middle" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">ловит устройства · слушает эфир</text>
+        <text x="990" y="266" text-anchor="middle" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">mousejack · сниффер</text>
+        <line x1="712" y1="225" x2="810" y2="225" stroke="var(--power)" stroke-width="2" stroke-dasharray="6 4"/>
+
+        <!-- три причины -->
+        <text x="620" y="378" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="12" fill="currentColor">Почему не на одной плате</text>
+        <g font-family="var(--font-sans)" font-size="11">
+          <text x="120" y="410" fill="var(--muted)"><tspan fill="var(--power)" font-weight="700">1 ·</tspan> приёмник не сидит рядом с излучателями</text>
+          <text x="120" y="430" fill="var(--muted)"><tspan fill="var(--power)" font-weight="700">2 ·</tspan> nRF24 хочет те же SPI и CS (PA4), что CC1101 — на одной плате конфликт</text>
+          <text x="120" y="450" fill="var(--muted)"><tspan fill="var(--power)" font-weight="700">3 ·</tspan> recon-шапке не нужна ни батарея, ни преобразователь</text>
+        </g>
+      </svg>
+    </div>
+    <figcaption>
+      Одна кнопка — хаос; другая шапка — тишина и приём. Разделение снимает главный конфликт
+      совмещённой платы: nRF24 по умолчанию просит те же выводы SPI и <b>тот же CS (PA4)</b>,
+      что и внешний CC1101. На общей плате это пришлось бы переразводить; как отдельная шапка
+      nRF24 просто занимает PA4 сам.
+    </figcaption>
+  </figure>
+
+  <h2>Подключение nRF24 → Flipper</h2>
+  <p class="sub">
+    Модуль садится прямо на SPI Флиппера и питается от его 3.3&nbsp;В. Батарея не нужна.
+  </p>
+  <figure>
+    <div class="legend" aria-hidden="true">
+      <span class="lg-sig"><i></i> SPI и управление</span>
+      <span class="lg-pwr"><i></i> питание 3.3 В / GND</span>
+    </div>
+    <div class="board">
+      <svg viewBox="0 0 1240 520" role="img"
+           aria-label="Подключение модуля nRF24L01 к Flipper Zero. Модуль имеет разъём 2 на 4. Слева выводы Флиппера: 3.3 вольта на VCC, земля на GND, PB3 на SCK, PA7 на MOSI, PA6 на MISO, PA4 на CSN, PB2 на CE, вывод IRQ не подключается. Между VCC и GND модуля стоит развязывающий конденсатор 10 микрофарад — обязательный, иначе модуль перезагружается на передаче. Три линии SCK, MOSI, MISO — те же, что у CC1101, а CSN на PA4 модуль занимает целиком, потому что CC1101 на этой шапке нет.">
+        <rect x="0" y="0" width="1240" height="520" fill="url(#dots3)" opacity="0.9"/>
+
+        <!-- Flipper слева -->
+        <rect x="60" y="90" width="150" height="360" rx="10" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
+        <text x="135" y="128" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="13" fill="currentColor">FLIPPER</text>
+        <text x="135" y="146" text-anchor="middle" font-family="var(--font-mono)" font-size="11" fill="var(--muted)">GPIO</text>
+
+        <!-- модуль nRF24 справа: 2x4 header -->
+        <rect x="800" y="120" width="300" height="300" rx="12" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
+        <text x="950" y="152" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="14" fill="currentColor">nRF24L01+</text>
+        <text x="950" y="172" text-anchor="middle" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">разъём 2×4 · кварц 16 МГц</text>
+
+        <!-- 8 pads 2x4 -->
+        <!-- left column pads x=820 -->
+        <!-- right column pads x=1080 -->
+        <g font-family="var(--font-mono)" font-size="11">
+          <!-- row1: GND / VCC -->
+          <circle cx="820" cy="220" r="5" fill="var(--power)"/><text x="834" y="216" fill="var(--power)">GND</text>
+          <circle cx="1080" cy="220" r="5" fill="var(--power)"/><text x="1066" y="216" text-anchor="end" fill="var(--power)">VCC</text>
+          <!-- row2: CE / CSN -->
+          <circle cx="820" cy="268" r="5" fill="currentColor"/><text x="834" y="264" fill="currentColor">CE</text>
+          <circle cx="1080" cy="268" r="5" fill="currentColor"/><text x="1066" y="264" text-anchor="end" fill="currentColor">CSN</text>
+          <!-- row3: SCK / MOSI -->
+          <circle cx="820" cy="316" r="5" fill="currentColor"/><text x="834" y="312" fill="currentColor">SCK</text>
+          <circle cx="1080" cy="316" r="5" fill="currentColor"/><text x="1066" y="312" text-anchor="end" fill="currentColor">MOSI</text>
+          <!-- row4: MISO / IRQ -->
+          <circle cx="820" cy="364" r="5" fill="currentColor"/><text x="834" y="360" fill="currentColor">MISO</text>
+          <circle cx="1080" cy="364" r="5" fill="var(--muted)"/><text x="1066" y="360" text-anchor="end" fill="var(--muted)">IRQ</text>
+        </g>
+
+        <!-- decoupling cap across VCC/GND -->
+        <path d="M1080,220 L1140,220 L1140,450 L1140,450" stroke="var(--power)" stroke-width="1.8" fill="none"/>
+        <path d="M820,220 L780,220 L780,470 L1120,470 L1120,450" stroke="var(--power)" stroke-width="1.8" fill="none" opacity="0"/>
+        <g stroke="var(--power)" stroke-width="2.4">
+          <line x1="1126" y1="436" x2="1154" y2="436"/>
+          <line x1="1126" y1="444" x2="1154" y2="444"/>
+        </g>
+        <line x1="1140" y1="220" x2="1140" y2="436" stroke="var(--power)" stroke-width="1.8"/>
+        <text x="1150" y="466" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="11" fill="var(--power)">C · 10 мкФ</text>
+        <text x="1150" y="482" text-anchor="middle" font-family="var(--font-sans)" font-size="10" fill="var(--ir)">обязателен</text>
+
+        <!-- wires Flipper -> module -->
+        <!-- 3V3 -> VCC (routed above the module box to clear the title) -->
+        <line x1="210" y1="105" x2="1120" y2="105" stroke="var(--power)" stroke-width="2.2"/>
+        <line x1="1120" y1="105" x2="1120" y2="220" stroke="var(--power)" stroke-width="2.2"/>
+        <line x1="1120" y1="220" x2="1085" y2="220" stroke="var(--power)" stroke-width="2.2"/>
+        <text x="230" y="97" font-family="var(--font-mono)" font-size="10.5" fill="var(--power)">3V3 (9)</text>
+        <!-- GND -->
+        <line x1="210" y1="185" x2="760" y2="185" stroke="var(--power)" stroke-width="2.2"/>
+        <line x1="760" y1="185" x2="760" y2="220" stroke="var(--power)" stroke-width="2.2"/>
+        <line x1="760" y1="220" x2="815" y2="220" stroke="var(--power)" stroke-width="2.2"/>
+        <text x="230" y="177" font-family="var(--font-mono)" font-size="10.5" fill="var(--power)">GND (8·11·18)</text>
+        <!-- SCK -->
+        <line x1="210" y1="316" x2="815" y2="316" stroke="currentColor" stroke-width="2"/>
+        <text x="230" y="308" font-family="var(--font-mono)" font-size="10.5" fill="currentColor">PB3 · SCK (5)</text>
+        <!-- MOSI -->
+        <line x1="210" y1="345" x2="740" y2="345" stroke="currentColor" stroke-width="2"/>
+        <line x1="740" y1="345" x2="740" y2="316" stroke="currentColor" stroke-width="2"/>
+        <line x1="740" y1="316" x2="1075" y2="316" stroke="currentColor" stroke-width="2"/>
+        <text x="230" y="337" font-family="var(--font-mono)" font-size="10.5" fill="currentColor">PA7 · MOSI (2)</text>
+        <!-- MISO -->
+        <line x1="210" y1="374" x2="700" y2="374" stroke="currentColor" stroke-width="2"/>
+        <line x1="700" y1="374" x2="700" y2="364" stroke="currentColor" stroke-width="2"/>
+        <line x1="700" y1="364" x2="815" y2="364" stroke="currentColor" stroke-width="2"/>
+        <text x="230" y="366" font-family="var(--font-mono)" font-size="10.5" fill="currentColor">PA6 · MISO (3)</text>
+        <!-- CSN -->
+        <line x1="210" y1="410" x2="1000" y2="410" stroke="currentColor" stroke-width="2"/>
+        <line x1="1000" y1="410" x2="1000" y2="268" stroke="currentColor" stroke-width="2"/>
+        <line x1="1000" y1="268" x2="1075" y2="268" stroke="currentColor" stroke-width="2"/>
+        <text x="230" y="402" font-family="var(--font-mono)" font-size="10.5" fill="currentColor">PA4 · CSN (4)</text>
+        <!-- CE -->
+        <line x1="210" y1="268" x2="815" y2="268" stroke="currentColor" stroke-width="2"/>
+        <text x="230" y="245" font-family="var(--font-mono)" font-size="10.5" fill="currentColor">PB2 · CE (6)</text>
+        <text x="360" y="245" font-family="var(--font-sans)" font-size="9.5" fill="var(--muted)">CE/CSN — сверить с прошивкой</text>
+      </svg>
+    </div>
+    <figcaption>
+      Три линии <b>SCK / MOSI / MISO</b> — тот же SPI, что у CC1101; <b>CSN на PA4</b> модуль
+      забирает целиком, потому что CC1101 на этой шапке нет. <b>CE</b> — отдельный вывод разрешения
+      (передача/приём), <b>IRQ</b> обычно не подключают. Конденсатор <b>10&nbsp;мкФ прямо на VCC/GND</b>
+      модуля — не опция: без него nRF24 перезагружается на пиках передачи. У тебя он уже впаян.
+    </figcaption>
+  </figure>
+
+  <h2>Выводы</h2>
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr><th>Модуль</th><th>Флиппер</th><th>Вывод</th><th>Роль</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="ref">VCC</td><td class="val">3V3</td><td>9</td><td class="role">питание 3.3 В, ≈14 мА — рейл Флиппера тянет</td></tr>
+        <tr><td class="ref">GND</td><td class="val">GND</td><td>8·11·18</td><td class="role">общая земля</td></tr>
+        <tr><td class="ref">SCK</td><td class="val">PB3</td><td>5</td><td class="role">тактовая SPI (общая с CC1101)</td></tr>
+        <tr><td class="ref">MOSI</td><td class="val">PA7</td><td>2</td><td class="role">данные в модуль</td></tr>
+        <tr><td class="ref">MISO</td><td class="val">PA6</td><td>3</td><td class="role">данные из модуля</td></tr>
+        <tr><td class="ref">CSN</td><td class="val">PA4</td><td>4</td><td class="role">выборка чипа — тот же вывод, что CS у CC1101</td></tr>
+        <tr><td class="ref">CE</td><td class="val">PB2</td><td>6</td><td class="role">разрешение приёма/передачи — сверить с прошивкой</td></tr>
+        <tr><td class="ref">IRQ</td><td class="val">—</td><td>—</td><td class="role">прерывание, обычно не подключают</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="aside">
+    Точные выводы <b>CE и CSN задаёт прошивка</b>: в Unleashed / RogueMaster приложения nRF24
+    («Mouse Jacker», сниффер, сканер) используют свою раскладку. Значения выше — типовые;
+    перед пайкой открыть настройки конкретного приложения и сверить. Линии SPI (PB3/PA7/PA6)
+    стабильны.
+  </p>
+
+  <h2>Что учесть</h2>
+  <div class="notes">
+    <div class="note">
+      <h3><span class="dot"></span> Питание — от Флиппера</h3>
+      <p>Базовый модуль (антенна дорожкой) ест ≈14&nbsp;мА при 3.3&nbsp;В — рейл 3V3 Флиппера
+      справляется без вопросов. <b>Ни батареи, ни преобразователя, ни BMS</b> — вся тяжёлая часть
+      шумовой шапки здесь просто не нужна. Шапка получается размером с сам модуль.</p>
+    </div>
+    <div class="note">
+      <h3><span class="dot"></span> Версия PA+LNA — исключение</h3>
+      <p>Если модуль с прикручиваемой антенной и экраном (PA+LNA), на передаче он берёт
+      до ≈115&nbsp;мА импульсами и от 3V3 через тонкие провода <b>просаживается и ресетится</b>.
+      Тогда нужен жирный кап у самого модуля (у тебя уже есть) и лучше отдельный LDO. Базовому
+      это не требуется.</p>
+    </div>
+    <div class="note">
+      <h3><span class="dot"></span> 2.4 ГГц и BLE — врозь</h3>
+      <p>nRF24 и BLE-часть шумовой шапки — <b>одна полоса 2.4&nbsp;ГГц</b>. На разных шапках они
+      физически не встречаются, и вопрос сосуществования снимается сам собой. Это ещё одна причина,
+      почему recon логично отделить, а не ставить к ESP32 впритык.</p>
+    </div>
+    <div class="note">
+      <h3><span class="dot"></span> Что она умеет</h3>
+      <p>Сырой GFSK 2.4&nbsp;ГГц, чего не могут ни CC1101, ни ESP32: <b>mousejack</b> (перехват/инъекция
+      беспроводных клавиатур и мышей), сниффер и сканер nRF24, некоторые проприетарные 2.4-пульты
+      и дроны. Это приём и короткие инъекции, а не постоянное излучение.</p>
+    </div>
+  </div>
+
+  <footer>
+    esp32-flipper-exp · recon-шапка (nRF24) · парная к шумовой шапке (CC1101 + ESP32 + ИК) ·
+    <a href="https://github.com/hleserg/esp32-flipper-exp">hleserg/esp32-flipper-exp</a>
+  </footer>
+
+</div>

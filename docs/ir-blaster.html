@@ -300,23 +300,18 @@
           <text x="652" y="140" font-family="var(--font-mono)" font-size="11.5" fill="currentColor">R2 10k</text>
           <text x="652" y="156" font-family="var(--font-mono)" font-size="11" fill="var(--muted)">подтяжка</text>
 
-          <!-- trimmer RV1 with local power flags (keeps the wiring clear of node A) -->
+          <!-- trimmer RV1: top -> +5V rail, bottom -> GND rail (wired like every other part) -->
           <g>
-            <!-- +5V flag -->
-            <line x1="460" y1="342" x2="460" y2="360" stroke="var(--power)" stroke-width="2.2"/>
-            <path d="M452,342 L468,342 L460,332 Z" fill="var(--power)"/>
-            <text x="474" y="341" font-family="var(--font-mono)" font-size="10" fill="var(--power)">+5В</text>
+            <!-- top terminal up to +5V rail; hops OVER node-A signal wire (no junction) -->
+            <path d="M460,360 L460,292 A6.5,6.5 0 0 1 460,279 L460,72" stroke="var(--power)" stroke-width="2.2" fill="none"/>
+            <circle cx="460" cy="72" r="3.2" fill="var(--power)"/>
             <!-- pot body -->
             <rect x="448" y="360" width="24" height="64" rx="3" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
             <!-- wiper arrow into body -->
             <line x1="490" y1="410" x2="473" y2="398" stroke="currentColor" stroke-width="2" marker-end="url(#arw)"/>
-            <!-- GND flag -->
-            <line x1="460" y1="424" x2="460" y2="442" stroke="var(--power)" stroke-width="2.2"/>
-            <g stroke="var(--power)" stroke-width="2">
-              <line x1="450" y1="442" x2="470" y2="442"/>
-              <line x1="453" y1="447" x2="467" y2="447"/>
-              <line x1="456" y1="452" x2="464" y2="452"/>
-            </g>
+            <!-- bottom terminal down to GND rail -->
+            <line x1="460" y1="424" x2="460" y2="602" stroke="var(--power)" stroke-width="2.2"/>
+            <circle cx="460" cy="602" r="3.2" fill="var(--power)"/>
             <text x="436" y="378" text-anchor="end" font-family="var(--font-mono)" font-size="11.5" fill="currentColor">RV1</text>
             <text x="436" y="394" text-anchor="end" font-family="var(--font-mono)" font-size="11" fill="var(--muted)">10k</text>
             <text x="436" y="410" text-anchor="end" font-family="var(--font-mono)" font-size="11" fill="var(--muted)">3296W</text>

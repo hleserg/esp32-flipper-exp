@@ -172,7 +172,7 @@
     </div>
     <div class="board">
       <svg viewBox="0 0 1240 662" role="img"
-           aria-label="Схема: внутренний ИК-диод Flipper Zero излучает луч 940 нм, который ловит фотодиод BPW34 (обратное смещение, нагрузка 10 кОм и конденсатор 100 пФ). Сигнал идёт на неинвертирующий вход компаратора LM393, порог которого задаёт подстроечник 3296W 10 кОм; выход с открытым коллектором и подтяжкой 1 кОм через резистор затвора 100 Ом и подтяжку вниз 100 кОм управляет затвором логического MOSFET IRLZ44N. MOSFET по нижнему плечу коммутирует три параллельные ветки из двух ИК-диодов IR-5238C 940 нм и резистора 22 Ом каждая, собранные в кольцо для покрытия примерно 360 градусов. Питание — шина +5 В от сборки 18650 через DC-DC преобразователь, с общей землёй. Непрозрачный оптический экран не даёт собственному ИК кольца попасть обратно на фотодиод и вызвать самовозбуждение.">
+           aria-label="Схема после проверки номиналов: внутренний ИК-диод Flipper Zero излучает 940 нм, BPW34 работает с обратным смещением, нагрузкой 10 кОм и конденсатором 100 пФ. Сигнал поступает на неинвертирующий вход LM393. Порог задаётся RV1 10 кОм, верх которого ограничен до примерно 2.5 В резистором R5 10 кОм от +5 В. Выход LM393 с открытым коллектором и подтяжкой 1 кОм через R3 100 Ом управляет имеющимся IRLZ44N; R4 100 кОм удерживает затвор у земли при снятии питания. MOSFET коммутирует три параллельные ветки по два ИК-диода IR-5238C, каждая через собственный резистор 22 Ом 0.5 Вт. Возле кольца установлены локальные C3 100 нФ и C4 220 мкФ. Питание — +5 В от сборки 2S через LM2596. Непрозрачный экран отделяет BPW34 от собственного ИК кольца.">
         <defs>
           <marker id="arw" markerWidth="9" markerHeight="9" refX="7" refY="4.2" orient="auto">
             <path d="M0,0 L8,4.2 L0,8.4 Z" fill="currentColor"/>
@@ -197,8 +197,8 @@
 
         <!-- =========== ШИНЫ ПИТАНИЯ =========== -->
         <g stroke="var(--power)" stroke-width="2.4" fill="none">
-          <line x1="108" y1="72" x2="1170" y2="72"/>
-          <line x1="108" y1="602" x2="1170" y2="602"/>
+          <line x1="108" y1="72" x2="1210" y2="72"/>
+          <line x1="108" y1="602" x2="1210" y2="602"/>
         </g>
         <text x="108" y="60" fill="var(--power)" font-family="var(--font-mono)" font-size="13" font-weight="700">+5 В</text>
         <!-- знак земли слева на шине GND -->
@@ -303,11 +303,18 @@
           <text x="652" y="140" font-family="var(--font-mono)" font-size="11.5" fill="currentColor">R2 1k</text>
           <text x="652" y="156" font-family="var(--font-mono)" font-size="11" fill="var(--muted)">подтяжка</text>
 
-          <!-- подстроечник RV1: верх на шину +5 В, низ на шину GND -->
+          <!-- R5 + RV1: ограничиваем диапазон порога примерно до 0…2.5 В -->
           <g>
-            <!-- верхний вывод на шину +5 В; мостик над сигнальным проводом узла A -->
-            <path d="M460,360 L460,292 A6.5,6.5 0 0 1 460,279 L460,72" stroke="var(--power)" stroke-width="2.2" fill="none"/>
+            <!-- R5 от +5 В к верхнему выводу RV1 -->
+            <line x1="460" y1="72" x2="460" y2="112" stroke="var(--power)" stroke-width="2.2"/>
             <circle cx="460" cy="72" r="3.2" fill="var(--power)"/>
+            <rect x="449" y="112" width="22" height="46" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
+            <text x="436" y="128" text-anchor="end" font-family="var(--font-mono)" font-size="11.5" fill="currentColor">R5</text>
+            <text x="436" y="145" text-anchor="end" font-family="var(--font-mono)" font-size="11" fill="var(--muted)">10k</text>
+            <!-- опорный узел ~2.5 В; мостик над сигнальным проводом узла A -->
+            <path d="M460,158 L460,279 A6.5,6.5 0 0 0 460,292 L460,360" stroke="var(--power)" stroke-width="2.2" fill="none"/>
+            <circle cx="460" cy="184" r="3.0" fill="var(--power)"/>
+            <text x="474" y="188" font-family="var(--font-mono)" font-size="10.5" fill="var(--power)">≈2.5 В REF</text>
             <!-- корпус подстроечника -->
             <rect x="448" y="360" width="24" height="64" rx="3" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
             <!-- стрелка движка -->
@@ -318,14 +325,14 @@
             <text x="436" y="378" text-anchor="end" font-family="var(--font-mono)" font-size="11.5" fill="currentColor">RV1</text>
             <text x="436" y="394" text-anchor="end" font-family="var(--font-mono)" font-size="11" fill="var(--muted)">10k</text>
             <text x="436" y="410" text-anchor="end" font-family="var(--font-mono)" font-size="11" fill="var(--muted)">3296W</text>
-            <text x="436" y="426" text-anchor="end" font-family="var(--font-sans)" font-size="10.5" fill="var(--ir)">порог</text>
+            <text x="436" y="426" text-anchor="end" font-family="var(--font-sans)" font-size="10.5" fill="var(--ir)">порог 0…≈2.5 В</text>
           </g>
         </g>
 
         <!-- =========== УЗЕЛ 4 · КЛЮЧ IRLZ44N =========== -->
         <g>
           <text x="792" y="219" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="13" fill="currentColor">Q1 · IRLZ44N</text>
-          <text x="792" y="234" text-anchor="middle" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">N-MOSFET, лог. уровень</text>
+          <text x="792" y="234" text-anchor="middle" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">N-MOSFET · имеющийся, Qg высокий</text>
 
           <!-- последовательный R3 в затворе -->
           <line x1="676" y1="300" x2="694" y2="300" stroke="currentColor" stroke-width="2"/>
@@ -376,7 +383,7 @@
           <line x1="908" y1="486" x2="1092" y2="486" stroke="currentColor" stroke-width="2"/>
           <circle cx="908" cy="486" r="3.4" fill="currentColor"/>
 
-          <!-- три одинаковые ветки: 22 Ом + 2 диода -->
+          <!-- три одинаковые ветки: 22 Ом + 2 диода; около 90–120 мА на ветку при 5 В в зависимости от Vf -->
           <!-- ветка повторена трижды: x=940, 1000, 1060 -->
           <g stroke="currentColor" stroke-width="2" fill="none">
             <!-- x=940 -->
@@ -417,10 +424,30 @@
             <line x1="1077" y1="246" x2="1089" y2="238" marker-end="url(#arwC)"/>
           </g>
 
-          <text x="1104" y="200" font-family="var(--font-mono)" font-size="11.5" fill="currentColor">22 Ω ×3</text>
+          <text x="1104" y="200" font-family="var(--font-mono)" font-size="11.5" fill="currentColor">R6–R8 · 22 Ω ×3</text>
           <text x="1104" y="216" font-family="var(--font-mono)" font-size="11" fill="var(--muted)">0.5 Вт</text>
           <text x="1104" y="300" font-family="var(--font-mono)" font-size="11.5" fill="currentColor">IR-5238C</text>
           <text x="1104" y="316" font-family="var(--font-mono)" font-size="11" fill="var(--muted)">940 нм ×6</text>
+
+          <!-- локальная развязка питания кольца: ставить физически рядом с Q1/LED -->
+          <g>
+            <!-- C3 100 нФ -->
+            <line x1="1150" y1="72" x2="1150" y2="390" stroke="var(--power)" stroke-width="2"/>
+            <g stroke="currentColor" stroke-width="2">
+              <line x1="1138" y1="390" x2="1162" y2="390"/>
+              <line x1="1138" y1="398" x2="1162" y2="398"/>
+            </g>
+            <line x1="1150" y1="398" x2="1150" y2="602" stroke="var(--power)" stroke-width="2"/>
+            <text x="1132" y="382" text-anchor="end" font-family="var(--font-mono)" font-size="10.5" fill="currentColor">C3 100n</text>
+            <!-- C4 220 мкФ -->
+            <line x1="1200" y1="72" x2="1200" y2="438" stroke="var(--power)" stroke-width="2"/>
+            <line x1="1188" y1="438" x2="1212" y2="438" stroke="currentColor" stroke-width="2"/>
+            <path d="M1188,448 Q1200,442 1212,448" stroke="currentColor" stroke-width="2" fill="none"/>
+            <text x="1182" y="432" text-anchor="end" font-family="var(--font-mono)" font-size="10.5" fill="currentColor">C4</text>
+            <text x="1182" y="447" text-anchor="end" font-family="var(--font-mono)" font-size="10" fill="var(--muted)">220µ</text>
+            <line x1="1200" y1="448" x2="1200" y2="602" stroke="var(--power)" stroke-width="2"/>
+            <text x="1198" y="475" text-anchor="end" font-family="var(--font-sans)" font-size="10" fill="var(--muted)">локально у кольца</text>
+          </g>
 
           <!-- значок кругового покрытия -->
           <g transform="translate(1000,556)">
@@ -458,13 +485,13 @@
   <figure>
     <div class="board">
       <svg viewBox="0 0 1240 500" role="img"
-           aria-label="Распиновка LM393P в корпусе DIP-8, вид сверху, ключ вверху. Левый ряд сверху вниз: нога 1 — выход A, идёт на подтяжку R2 и через R3 на затвор Q1; нога 2 — инвертирующий вход A, на него приходит движок подстроечника RV1 задающего порог; нога 3 — неинвертирующий вход A, на него приходит узел A с фотодиода; нога 4 — общий, на шину GND. Правый ряд сверху вниз: нога 8 — питание, на шину плюс 5 вольт; нога 7 — выход B, не подключается; нога 6 — инвертирующий вход B, притягивается к плюс 5 вольт; нога 5 — неинвертирующий вход B, притягивается к GND, чтобы свободная половина не возбуждалась. Между ногами 8 и 4 ставится развязывающий конденсатор C2 на 100 нанофарад вплотную к корпусу.">
+           aria-label="Распиновка LM393P в корпусе DIP-8, вид сверху, ключ вверху. Половина A: вывод 1 — выход на R2 и R3, вывод 2 — порог с движка RV1, вывод 3 — сигнал BPW34, вывод 4 — GND, вывод 8 — +5 В. Неиспользуемая половина B зафиксирована без выхода за гарантированный common-mode диапазон: вывод 6 подключён к опорному узлу около 2.5 В между R5 и RV1, вывод 5 — к GND, вывод 7 свободен. C2 100 нФ ставится вплотную между выводами 8 и 4.">
 
         <rect x="0" y="0" width="1240" height="500" fill="url(#dots)" opacity="0.9"/>
 
         <!-- ===== примечание о свободной половине ===== -->
         <text x="60" y="50" font-family="var(--font-mono)" font-weight="700" font-size="13" fill="currentColor">Задействована половина A; половина B не используется.</text>
-        <text x="60" y="70" font-family="var(--font-sans)" font-size="11" fill="var(--muted)">Входы 5 и 6 при этом не оставляют свободными: незакреплённая половина переходит в автогенерацию и наводит помеху по питанию.</text>
+        <text x="60" y="70" font-family="var(--font-sans)" font-size="11" fill="var(--muted)">Входы 5 и 6 не оставляют свободными: 5→GND, 6→опорный узел ≈2.5 В (верх RV1). Так оба входа остаются в нормальном common-mode диапазоне.</text>
 
         <!-- ===== корпус, вид сверху, ключ вверх ===== -->
         <g>
@@ -519,7 +546,7 @@
         <line x1="700" y1="265" x2="728" y2="265" stroke="var(--muted)" stroke-width="2"/>
         <text x="668" y="270" text-anchor="end" font-family="var(--font-mono)" font-size="11" fill="var(--muted)">6</text>
         <text x="740" y="261" font-family="var(--font-mono)" font-weight="700" font-size="12" fill="var(--muted)">6 · IN B–</text>
-        <text x="740" y="277" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">→ на +5 В · привязка</text>
+        <text x="740" y="277" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">→ REF ≈2.5 В · верх RV1</text>
         <!-- вывод 5 -->
         <rect x="680" y="313" width="20" height="14" fill="var(--panel)" stroke="var(--muted)" stroke-width="2"/>
         <line x1="700" y1="320" x2="728" y2="320" stroke="var(--muted)" stroke-width="2"/>
@@ -549,7 +576,7 @@
       Вывод&nbsp;3 принимает сигнал с фотодиода, вывод&nbsp;2 — опорный уровень с RV1,
       вывод&nbsp;1 отдаёт результат. Выход <b>с открытым коллектором</b> активно тянет только
       вниз, поэтому подтяжка R2 обязательна. Питание — выводы <b>8 и 4</b>.
-      Входы половины B привязываются перемычками (5→GND, 6→+5&nbsp;В), выход&nbsp;7 остаётся
+      Входы половины B привязываются (5→GND, 6→REF ≈2.5&nbsp;В с верхнего вывода RV1), выход&nbsp;7 остаётся
       свободным.
     </figcaption>
   </figure>
@@ -557,16 +584,19 @@
   <h2>Питание: 2× 18650 + DC-DC</h2>
   <p class="sub">
     LM2596 — <b>понижающий</b> преобразователь, поднять напряжение он не может.
-    Отсюда включение банок <b>последовательно (2S)</b>: 3.7&nbsp;В одной банки лежат ниже
-    его минимального входного напряжения.
+    Поэтому банки включены <b>последовательно (2S)</b>. Для типового модуля, настроенного на 5.00&nbsp;В,
+    практический нижний порог питания лучше считать около <b>6.5&nbsp;В под нагрузкой</b> и проверить именно свой модуль.
   </p>
   <figure>
     <div class="board">
       <svg viewBox="0 0 1240 470" role="img"
-           aria-label="Схема питания: две банки 18650 соединены последовательно (2S) — минус первой банки идёт на перемычку с плюсом второй, что даёт 7.4 вольта номинала, 8.4 вольта в полном заряде и 6.0 вольт в разряде. Со средней точки перемычки идёт балансировочный отвод на плату защиты BMS 2S, которая разрывает минусовую линию. Плюс пакета и минус после BMS приходят на вход VIN+ и VIN− понижающего модуля DC-DC LM2596. Подстроечником W103 на модуле выставляется ровно 5.00 вольт, что видно на встроенном индикаторе. Выходы VOUT+ и VOUT− становятся шинами +5 вольт и GND основной схемы. Параллельное соединение банок не годится: 3.7 вольта ниже минимума 6.5 вольт, нужного понижающему модулю.">
+           aria-label="Схема питания: две банки 18650 соединены последовательно 2S, номинал 7.4 В, полный заряд 8.4 В. Средняя точка идёт на BM платы BMS 2S. Плюс пакета и защищённый минус подаются на VIN+ и VIN− модуля LM2596, настроенного на 5.00 В. Для этой схемы практический нижний порог пакета принят около 6.5 В под нагрузкой, потому что ниже конкретный buck-модуль может перестать удерживать 5 В. Балансировка присутствует только если она есть на выбранной BMS. Выход VOUT образует шины +5 В и GND.">
         <defs>
           <marker id="arwP" markerWidth="9" markerHeight="9" refX="7" refY="4.2" orient="auto">
             <path d="M0,0 L8,4.2 L0,8.4 Z" fill="var(--power)"/>
+          </marker>
+          <marker id="arwTrim" markerWidth="9" markerHeight="9" refX="7" refY="4.2" orient="auto">
+            <path d="M0,0 L8,4.2 L0,8.4 Z" fill="currentColor"/>
           </marker>
         </defs>
 
@@ -574,7 +604,7 @@
 
         <!-- ===== заголовок над сборкой ===== -->
         <text x="86" y="52" font-family="var(--font-mono)" font-weight="700" font-size="14" fill="var(--power)">2S · ПОСЛЕДОВАТЕЛЬНО = 7.4 В</text>
-        <text x="86" y="72" font-family="var(--font-sans)" font-size="11" fill="var(--muted)">полный заряд 8.4 В → разряд 6.0 В · растёт напряжение, не ёмкость</text>
+        <text x="86" y="72" font-family="var(--font-sans)" font-size="11" fill="var(--muted)">полный заряд 8.4 В → рабочий низ ≈6.5 В под нагрузкой · растёт напряжение, не ёмкость</text>
 
         <!-- ===== BT2 · верхняя банка (− слева, + справа) ===== -->
         <g>
@@ -605,11 +635,11 @@
         <text x="72" y="205" text-anchor="end" font-family="var(--font-mono)" font-size="11.5" fill="var(--power)">перемычка</text>
         <text x="72" y="221" text-anchor="end" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">– BT2 к + BT1</text>
 
-        <!-- балансировочный отвод от средней точки, трасса под сборкой -->
+        <!-- средняя точка пакета на BM BMS, трасса под сборкой -->
         <circle cx="86" cy="270" r="3.6" fill="var(--power)"/>
         <path d="M86,270 L86,392 L555,392 L555,320" stroke="var(--power)" stroke-width="1.8"
               stroke-dasharray="6 4" fill="none"/>
-        <text x="300" y="384" text-anchor="middle" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">балансировочный отвод — средняя точка</text>
+        <text x="300" y="384" text-anchor="middle" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">средняя точка пакета → BM</text>
 
         <!-- ===== плюс сборки ===== -->
         <line x1="421" y1="150" x2="700" y2="150" stroke="var(--power)" stroke-width="2.6"/>
@@ -655,11 +685,11 @@
           <!-- подстроечник -->
           <g>
             <rect x="948" y="180" width="26" height="40" rx="3" fill="var(--board)" stroke="currentColor" stroke-width="2"/>
-            <line x1="990" y1="200" x2="975" y2="192" stroke="currentColor" stroke-width="2" marker-end="url(#arw)"/>
+            <line x1="990" y1="200" x2="975" y2="192" stroke="currentColor" stroke-width="2" marker-end="url(#arwTrim)"/>
             <text x="961" y="240" text-anchor="middle" font-family="var(--font-mono)" font-size="11" fill="currentColor">W103</text>
           </g>
           <text x="895" y="288" text-anchor="middle" font-family="var(--font-sans)" font-weight="600" font-size="11.5" fill="currentColor">выход выставляется на 5.00 В до подключения нагрузки</text>
-          <text x="895" y="308" text-anchor="middle" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">вход должен быть ≥ 6.5 В, иначе выход просядет</text>
+          <text x="895" y="308" text-anchor="middle" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">для 5.00 В считать ≈6.5 В практическим низом; проверить под нагрузкой</text>
           <text x="895" y="330" text-anchor="middle" font-family="var(--font-sans)" font-size="10" fill="var(--muted)">на плате клеммы VIN и VOUT разнесены по разным краям — ориентир по шелкографии</text>
         </g>
 
@@ -676,7 +706,7 @@
         <g>
           <rect x="640" y="404" width="450" height="46" rx="8" fill="var(--ir-soft)" stroke="var(--ir)" stroke-width="1.4"/>
           <text x="660" y="424" font-family="var(--font-mono)" font-weight="700" font-size="13" fill="var(--ir)">✕ параллельно (2P)</text>
-          <text x="660" y="441" font-family="var(--font-sans)" font-size="11" fill="var(--ir)">3.7 В ниже минимума преобразователя. Только последовательное включение.</text>
+          <text x="660" y="441" font-family="var(--font-sans)" font-size="11" fill="var(--ir)">одной банки недостаточно для стабильных 5 В на выходе buck. Только 2S.</text>
         </g>
       </svg>
     </div>
@@ -684,8 +714,8 @@
       Ключевой узел — перемычка слева: минус BT2 соединён с плюсом BT1, напряжения
       складываются в 7.4&nbsp;В. Плюс пакета и минус через <b>BMS</b> подаются на
       <b>VIN+/VIN−</b>; <b>VOUT+/VOUT−</b> и есть шины +5&nbsp;В и GND основной схемы.
-      Потребление кольца ≈300&nbsp;мА в импульсе против 2&nbsp;А допустимых у модуля.
-      Заряд пакета — <b>2S-зарядным устройством на 8.4&nbsp;В</b> через BMS, поэлементно нельзя.
+      С резисторами R6–R8 22&nbsp;Ом ток кольца ожидается примерно 270–355&nbsp;мА в импульсе — для модуля LM2596 с пределом 2&nbsp;А это лёгкая нагрузка.
+      Заряд пакета — <b>2S-зарядным устройством на 8.4&nbsp;В</b> через BMS. Балансировка есть только у BMS, где она явно заявлена.
     </figcaption>
   </figure>
 
@@ -699,18 +729,21 @@
       <tbody>
         <tr><td class="ref">D1</td><td>BPW34</td><td class="val">PIN, 940 нм</td><td class="role">оптический приёмник — ловит луч Флиппера</td></tr>
         <tr><td class="ref">U1</td><td>LM393 (DIP)</td><td class="val">сдвоенный компаратор</td><td class="role">формирует сигнал, режет фоновый свет</td></tr>
-        <tr><td class="ref">RV1</td><td>подстроечник 3296W</td><td class="val">10 кОм</td><td class="role">порог / чувствительность</td></tr>
-        <tr><td class="ref">Q1</td><td>IRLZ44N</td><td class="val">N-MOSFET, лог. уровень</td><td class="role">сильноточный ключ нижнего плеча</td></tr>
+        <tr><td class="ref">RV1</td><td>подстроечник 3296W</td><td class="val">10 кОм</td><td class="role">порог / чувствительность, диапазон 0…≈2.5 В</td></tr>
+        <tr><td class="ref">R5</td><td>резистор</td><td class="val">10 кОм</td><td class="role">ограничивает верх RV1 до ≈2.5 В и держит порог в common-mode LM393</td></tr>
+        <tr><td class="ref">Q1</td><td>IRLZ44N</td><td class="val">N-MOSFET, лог. уровень</td><td class="role">имеющийся ключ; электрически избыточен, большой заряд затвора — не увеличивать R2</td></tr>
         <tr><td class="ref">LED1–6</td><td>IR-5238C</td><td class="val">940 нм × 6</td><td class="role">кольцо-излучатель, покрытие ≈360°</td></tr>
-        <tr><td class="ref">—</td><td>резисторы кольца</td><td class="val">22 Ω 0.5 Вт × 3</td><td class="role">≈100 мА на ветку из 2 диодов</td></tr>
+        <tr><td class="ref">R6–R8</td><td>резисторы кольца</td><td class="val">22 Ω 0.5 Вт × 3</td><td class="role">≈90–120 мА на ветку при 5 В в зависимости от Vf; три отдельные ветки, у каждой свой резистор</td></tr>
         <tr><td class="ref">R1</td><td>резистор</td><td class="val">10 кОм</td><td class="role">нагрузка фотодиода</td></tr>
         <tr><td class="ref">R2</td><td>резистор</td><td class="val">1 кОм</td><td class="role">подтяжка открытого коллектора; заряжает затвор Q1</td></tr>
         <tr><td class="ref">R3</td><td>резистор</td><td class="val">100 Ω</td><td class="role">резистор затвора (демпфер фронтов)</td></tr>
         <tr><td class="ref">R4</td><td>резистор</td><td class="val">100 кОм</td><td class="role">подтяжка затвора вниз — держит Q1 закрытым</td></tr>
         <tr><td class="ref">C1</td><td>конденсатор</td><td class="val">100 пФ</td><td class="role">срез ВЧ-шума; больше нельзя — съест несущую 38 кГц</td></tr>
         <tr><td class="ref">C2</td><td>конденсатор, керамика</td><td class="val">100 нФ</td><td class="role">развязка питания LM393 — между ногами 8 и 4</td></tr>
-        <tr><td class="ref">BT1, BT2</td><td>18650 Li-ion</td><td class="val">2S · 7.4 В</td><td class="role">только последовательно — понижайке нужно ≥ 6.5 В</td></tr>
-        <tr><td class="ref">BMS</td><td>плата защиты 2S</td><td class="val">8.4 В, ≥ 3 А</td><td class="role">переразряд / КЗ / баланс — не пропускать</td></tr>
+        <tr><td class="ref">C3</td><td>конденсатор, керамика</td><td class="val">100 нФ</td><td class="role">локальная ВЧ-развязка возле Q1 / кольца</td></tr>
+        <tr><td class="ref">C4</td><td>конденсатор, электролит</td><td class="val">220 мкФ, ≥10 В</td><td class="role">локальный запас энергии для импульсов кольца; ставить рядом с Q1 / LED</td></tr>
+        <tr><td class="ref">BT1, BT2</td><td>18650 Li-ion</td><td class="val">2S · 7.4 В</td><td class="role">последовательно; для стабильных 5 В считать ≈6.5 В практическим нижним порогом пакета</td></tr>
+        <tr><td class="ref">BMS</td><td>плата защиты 2S</td><td class="val">8.4 В, ≥ 3 А</td><td class="role">переразряд / КЗ; балансировка — только если явно предусмотрена выбранной платой</td></tr>
         <tr><td class="ref">PWR</td><td>DC-DC LM2596</td><td class="val">7.4 → 5.00 В</td><td class="role">понижающий, до 2 А; выставить 5 В подстроечником</td></tr>
       </tbody>
     </table>
@@ -736,6 +769,18 @@
       отсутствии ложных на комнатном и дневном свете. Завышенная чувствительность открывает
       кольцо от фона, заниженная теряет слабые посылки.</p>
     </div>
+    <div class="note">
+      <h3><span class="dot"></span> IRLZ44N оставлен</h3>
+      <p>Новый MOSFET для сборки не требуется: используется имеющийся <b>IRLZ44N</b>. У него большой
+      заряд затвора, поэтому <b>R2 = 1 кОм</b> оставлен намеренно как компромисс между скоростью
+      заряда затвора и током выхода LM393. Если на высокочастотных ИК-протоколах дальность заметно
+      хуже, первым делом проверяется форма сигнала на затворе / стоке.</p>
+    </div>
+    <div class="note">
+      <h3><span class="dot"></span> Локальное питание кольца</h3>
+      <p><b>C3 100 нФ + C4 220 мкФ</b> ставятся физически рядом с Q1 и ветками LED. Это отделяет
+      импульсный ток кольца от порога LM393 и уменьшает просадку +5 В на проводах.</p>
+    </div>
   </div>
 
   <h2>Порядок первого включения</h2>
@@ -756,7 +801,7 @@
     </li>
     <li>
       <b>Подключить схему и подать питание</b>
-      Ток покоя ≈6 мА, при работающем кольце ≈320 мА. Значительное отклонение — повод
+      Ток покоя сначала измеряется отдельно: он зависит от конкретного LM2596-модуля и его индикатора. При включённом кольце с R6–R8 = 22 Ом ток должен вырасти ориентировочно ещё на ≈270–355 мА. Значительное отклонение — повод
       искать ошибку монтажа до дальнейшей настройки.
     </li>
     <li>
@@ -766,14 +811,23 @@
     </li>
   </ol>
   <p class="aside">
+    <b>Рабочая дистанция снизу ограничена.</b> Узел A — это ток фотодиода на R1&nbsp;10&nbsp;кОм,
+    и вплотную к излучателю расчётный уровень превышает верх common-mode LM393 (≈3.5&nbsp;В при
+    питании 5&nbsp;В): ориентировочно ближе ≈1.5&nbsp;см. Поведение компаратора за пределами
+    диапазона не нормируется, возможен срыв вместо срабатывания. Штатное расстояние —
+    несколько сантиметров; если нужен уверенный контакт вплотную, уменьшают R1
+    (теряя чувствительность на удалении).
+  </p>
+
+  <p class="aside">
     <b>Если наблюдается дребезг</b> — кольцо мелко пульсирует либо ложно срабатывает на границе
-    порога — у LM393 нет собственного гистерезиса. Он добавляется резистором <b>1 МОм с вывода 1
-    на вывод 3</b>: положительная обратная связь разводит пороги включения и отключения примерно
-    на 50 мВ. Штатно не требуется, фронты ИК-посылки достаточно крутые.
+    порога — у LM393 нет собственного гистерезиса. Если он понадобится, начать лучше с резистора <b>2.2 МОм с вывода 1
+    на вывод 3</b>: это даёт мягкую положительную обратную связь порядка нескольких десятков милливольт.
+    Штатно резистор не ставится — сначала настраивается RV1 и проверяется оптическая изоляция.
   </p>
 
   <footer>
-    esp32-flipper-exp · подсистема шапки — CC1101 + этот всенаправленный ИК-бустер + ESP32 BLE ·
+    esp32-flipper-exp · ИК-бустер · ревизия после проверки номиналов: R5=10k, R6–R8=22Ω, C3=100n, C4=220µ ·
     цепочка <a href="https://github.com/hleserg/esp32-flipper-exp">hleserg/esp32-flipper-exp</a>
   </footer>
 

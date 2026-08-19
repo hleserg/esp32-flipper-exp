@@ -327,7 +327,7 @@
         <rect x="0" y="0" width="1240" height="820" fill="url(#dots2)" opacity="0.9"/>
         <text x="40" y="40" font-family="var(--font-mono)" font-weight="700" font-size="14" fill="currentColor">ЛИСТ 1 · РАДИОЧАСТЬ — CC1101 + XIAO</text>
         <line x1="96" y1="98" x2="1180" y2="98" stroke="var(--power)" stroke-width="2.6"/>
-        <text x="96" y="86" fill="var(--power)" font-family="var(--font-mono)" font-size="12" font-weight="700">+5 В (шина — с листа питания)</text>
+        <text x="96" y="86" fill="var(--power)" font-family="var(--font-mono)" font-size="12" font-weight="700">+5 В (шина — с листа питания · вход через XS3 → XS2)</text>
         <line x1="96" y1="778" x2="1180" y2="778" stroke="var(--power)" stroke-width="2.6"/>
         <g stroke="var(--power)" stroke-width="2.4" fill="none"><line x1="150" y1="778" x2="150" y2="792"/><line x1="136" y1="792" x2="164" y2="792"/><line x1="141" y1="798" x2="159" y2="798"/><line x1="146" y1="804" x2="154" y2="804"/></g>
         <text x="176" y="798" fill="var(--power)" font-family="var(--font-mono)" font-size="12">GND — общая (звезда)</text>
@@ -460,7 +460,7 @@
         <line x1="724" y1="680" x2="740" y2="680" stroke="var(--muted)" stroke-width="2" stroke-dasharray="5 4"/><text x="748" y="684" font-family="var(--font-mono)" font-size="10" fill="var(--muted)">3V3 — выход LDO, н/п</text>
         <polyline points="266,480 470,480 470,600 724,600" fill="none" stroke="currentColor" stroke-width="2"/><text x="272" y="476" font-family="var(--font-mono)" font-size="9.5" fill="var(--muted)">TX→RXD</text>
         <polyline points="266,506 500,506 500,640 724,640" fill="none" stroke="currentColor" stroke-width="2"/><text x="272" y="518" font-family="var(--font-mono)" font-size="9.5" fill="var(--muted)">RX←TXD</text>
-        <text x="740" y="712" font-family="var(--font-sans)" font-size="9.5" fill="var(--muted)">UART 3.3 В прямо, номера GPIO задать в прошивке</text>
+        <text x="740" y="712" font-family="var(--font-sans)" font-size="9.5" fill="var(--muted)">UART 3.3 В прямо; между этажами — через XS2; номера GPIO задать в прошивке</text>
         <line x1="40" y1="832" x2="1200" y2="832" stroke="var(--muted)" stroke-width="1.2" stroke-dasharray="3 5"/><text x="40" y="870" font-family="var(--font-mono)" font-weight="700" font-size="14" fill="var(--ir)">ЛИСТ 2 · ИК-БЛАСТЕР — транзисторный уровень (те же цепи +5 В и GND)</text>
         <g transform="translate(0,884)">
         <defs>
@@ -880,6 +880,21 @@
         <text x="740" y="606" font-family="var(--font-sans)" font-size="11.5" fill="currentColor">Батарейные +5 В в пин 1 Флиппера НЕ подавать.</text>
         <text x="740" y="626" font-family="var(--font-sans)" font-size="11.5" fill="currentColor">CC1101 питается 3.3 В только от Флиппера; общая</text>
         <text x="740" y="644" font-family="var(--font-sans)" font-size="11.5" fill="currentColor">у систем лишь земля (сведена в звезду выше).</text>
+        <!-- overlay: физические платы двухэтажки -->
+        <rect x="118" y="150" width="792" height="252" rx="10" fill="none" stroke="var(--muted)" stroke-width="1.6" stroke-dasharray="9 6"/>
+        <text x="126" y="170" font-family="var(--font-mono)" font-weight="700" font-size="11" fill="var(--muted)">ПЛАТА АКБ · генерация +5 В</text>
+        <rect x="965" y="156" width="270" height="96" rx="10" fill="none" stroke="var(--muted)" stroke-width="1.6" stroke-dasharray="9 6"/>
+        <text x="1229" y="172" text-anchor="end" font-family="var(--font-mono)" font-weight="700" font-size="11" fill="var(--muted)">ЭТАЖ 2</text>
+        <rect x="138" y="545" width="394" height="123" rx="10" fill="none" stroke="var(--muted)" stroke-width="1.6" stroke-dasharray="9 6"/>
+        <text x="146" y="662" font-family="var(--font-mono)" font-weight="700" font-size="11" fill="var(--muted)">ЭТАЖ 1 · CC1101 (3.3 В)</text>
+        <rect x="886" y="128" width="28" height="14" rx="3" fill="var(--panel)" stroke="var(--power)" stroke-width="1.8"/>
+        <circle cx="894" cy="135" r="2.4" fill="var(--power)"/><circle cx="906" cy="135" r="2.4" fill="var(--power)"/>
+        <text x="900" y="118" text-anchor="middle" font-family="var(--font-mono)" font-size="9.5" fill="var(--power)">XS3 → на шапку</text>
+        <text x="900" y="107" text-anchor="middle" font-family="var(--font-mono)" font-size="8.5" fill="var(--muted)">(+5 В, GND)</text>
+        <rect x="938" y="133" width="28" height="14" rx="3" fill="var(--panel)" stroke="var(--power)" stroke-width="1.8"/>
+        <circle cx="946" cy="140" r="2.4" fill="var(--power)"/><circle cx="958" cy="140" r="2.4" fill="var(--power)"/>
+        <text x="952" y="169" text-anchor="middle" font-family="var(--font-mono)" font-size="9.5" fill="var(--power)">XS2 · этаж 1→2</text>
+        <text x="40" y="690" font-family="var(--font-sans)" font-size="10" fill="var(--muted)">Штрих-контур — отдельная плата. XS3 — шлейф от батарей на шапку; XS2 — межэтажный (несёт +5 В/GND, а также UART и выход компаратора — они на верхних листах).</text>
       </svg>
     </div>
     <figcaption>
@@ -988,61 +1003,6 @@
     </figcaption>
   </figure>
 
-  <h2>Зонирование платы</h2>
-  <p class="sub">
-    Приёмник и силовой ключ разносятся физически — это дешевле любого фильтра.
-  </p>
-  <figure>
-    <div class="board">
-      <svg viewBox="0 0 1240 430" role="img"
-           aria-label="План платы. Слева по краю разъём GPIO. Далее зона входа с фотодиодом BPW34 и компаратором LM393. В центре сверху цифровая зона с ESP32. Справа сверху радиочастотная зона с CC1101 и его антенной, вокруг антенны зона, свободная от меди. Внизу справа силовая зона с ключом Q1, резисторами кольца, конденсатором C4 и преобразователем DC-DC. Между антенной CC1101 и ключом Q1 показана стрелка максимального разнесения.">
-        <rect x="0" y="0" width="1240" height="430" fill="url(#dots2)" opacity="0.9"/>
-
-        <!-- плата -->
-        <rect x="70" y="50" width="1100" height="330" rx="14" fill="var(--board)" stroke="currentColor" stroke-width="2"/>
-
-        <!-- разъём -->
-        <rect x="70" y="50" width="52" height="330" rx="0" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
-        <text x="96" y="200" text-anchor="middle" font-family="var(--font-mono)" font-size="10.5" fill="var(--muted)" transform="rotate(-90 96 200)">РАЗЪЁМ GPIO</text>
-
-        <!-- зона входа -->
-        <rect x="145" y="80" width="230" height="270" rx="10" fill="var(--panel)" stroke="var(--hairline)" stroke-width="1.6"/>
-        <text x="260" y="112" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="12" fill="currentColor">ВХОД</text>
-        <text x="260" y="134" text-anchor="middle" font-family="var(--font-sans)" font-size="11" fill="var(--muted)">BPW34 · LM393</text>
-        <text x="260" y="154" text-anchor="middle" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">слаботочный аналог</text>
-        <text x="260" y="330" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--ir)">окно на Флиппер</text>
-
-        <!-- цифровая зона -->
-        <rect x="400" y="80" width="290" height="130" rx="10" fill="var(--panel)" stroke="var(--hairline)" stroke-width="1.6"/>
-        <text x="545" y="112" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="12" fill="currentColor">ЦИФРА</text>
-        <text x="545" y="134" text-anchor="middle" font-family="var(--font-sans)" font-size="11" fill="var(--muted)">ESP32 · UART</text>
-        <text x="545" y="156" text-anchor="middle" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">помеху терпит</text>
-
-        <!-- РЧ зона -->
-        <rect x="715" y="80" width="430" height="130" rx="10" fill="var(--panel)" stroke="var(--power)" stroke-width="2"/>
-        <text x="930" y="112" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="12" fill="var(--power)">РАДИОЧАСТОТНАЯ ЗОНА</text>
-        <text x="930" y="134" text-anchor="middle" font-family="var(--font-sans)" font-size="11" fill="var(--muted)">CC1101 + антенна</text>
-        <text x="930" y="156" text-anchor="middle" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">под антенной меди нет</text>
-        <circle cx="1090" cy="145" r="30" fill="none" stroke="var(--power)" stroke-width="1.6" stroke-dasharray="5 4"/>
-
-        <!-- силовая зона -->
-        <rect x="400" y="240" width="745" height="110" rx="10" fill="var(--ir-soft)" stroke="var(--ir)" stroke-width="1.6"/>
-        <text x="772" y="272" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="12" fill="var(--ir)">СИЛОВАЯ ЗОНА — ИСТОЧНИК ПОМЕХИ</text>
-        <text x="772" y="294" text-anchor="middle" font-family="var(--font-sans)" font-size="11" fill="var(--ir)">Q1 · R6–R8 · C4 · DC-DC</text>
-        <text x="772" y="316" text-anchor="middle" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">провода кольца — витой парой, коротко</text>
-
-        <!-- разнесение -->
-        <line x1="1090" y1="180" x2="1090" y2="238" stroke="var(--ir)" stroke-width="2" stroke-dasharray="6 4"/>
-        <text x="1082" y="232" text-anchor="end" font-family="var(--font-sans)" font-size="10.5" fill="var(--ir)">максимальное разнесение</text>
-      </svg>
-    </div>
-    <figcaption>
-      Антенна CC1101 — в дальнем от ключа углу, под ней <b>не должно быть меди</b>.
-      Силовая зона собрана компактно вокруг Q1. Трассы SPI не идут параллельно проводам
-      кольца: только пересечения под прямым углом.
-    </figcaption>
-  </figure>
-
   <h2>Что учесть при сборке</h2>
   <div class="notes">
     <div class="note">
@@ -1074,17 +1034,17 @@
 
   <h2>Компоновка на макетке — двухэтажная</h2>
   <p class="sub">
-    Два этажа: приёмный тракт внизу, цифра и силовой узел ИК — наверху, между ними полигон
-    земли как экран. Планарная глубина ≈&nbsp;40&nbsp;мм вместо 64, высота стека ≈&nbsp;18&nbsp;мм.
+    Два этажа с экраном между ними, повыводно: где физически стоит каждый модуль, резистор и
+    конденсатор из принципиальной схемы. Силовой узел питания (BMS, LM2596) сюда не ставим&nbsp;—
+    он на батарейной плате; на шапку от неё идут <b>только 2 провода +5&nbsp;В и GND</b> (XS3).
   </p>
   <p class="aside" style="margin-top:0">
-    Принятая геометрия. Размах контактов пин&nbsp;1→18 при шаге 2.54&nbsp;— это
-    17&nbsp;×&nbsp;2.54&nbsp;≈&nbsp;<b>43&nbsp;мм</b>, шире 40-мм грани корпуса, поэтому гребёнка
-    идёт <b>вдоль длинной (100&nbsp;мм) кромки</b>, ширина платы ≈&nbsp;45&nbsp;мм. Этажи разносят
-    приёмник и ключ <b>по вертикали</b>: полигон земли между ними работает экраном&nbsp;— надёжнее
-    любого разноса в плоскости. Кольцо ИК сидит <b>сверху верхнего этажа, открыто</b>, и светит
-    во все стороны&nbsp;— его ничто не перекрывает. Банки&nbsp;— отдельной платой к задней грани
-    (вариант&nbsp;B ниже), чтобы поднявшийся центр тяжести не висел на гребёнке.
+    Разнос по вертикали: приёмник (CC1101, BPW34) и <b>компаратор LM393</b> — на нижнем этаже
+    под экраном <b>E1</b>; наверху цифра и коммутируемый силовой ИК. Наверх через межэтажный
+    разъём <b>XS2</b> уходит только цифровой выход компаратора (затвор Q1) и UART, поэтому
+    аналог остаётся в тишине под экраном. Кольцо ИК&nbsp;— на самом верху, открыто, светит во
+    все стороны. Подстроечник RV1 выведен к кромке нижнего этажа: этаж зажат между платами,
+    крутить его нужно снаружи.
   </p>
 
   <figure>
@@ -1094,265 +1054,767 @@
       <span class="lg-ir"><i class="dash"></i> ИК / оптика</span>
     </div>
     <div class="board">
-      <svg viewBox="0 0 1240 600" role="img"
-           aria-label="Стек в разрезе, вид сбоку схематично. Слева корпус Флиппера, на его верхнюю грань через гребёнку садится нижний этаж — плата приёмного тракта. На нижнем этаже снизу фотодиод BPW34 на гибком выводе смотрит в ИК-окно Флиппера, сверху модуль CC1101. Над нижним этажом на стойках стоит верхний этаж. Между этажами бар полигона земли — экран, он закрывает CC1101 от силового узла сверху. На верхнем этаже сверху XIAO ESP32C5 с разъёмом USB-C наружу, силовой узел ИК, и открытое кольцо инфракрасных светодиодов, лучи которого расходятся во все стороны вверх и в бок, ничем не перекрытые. Справа проставлены высоты: зазор между этажами около 12 миллиметров, весь стек около 18 миллиметров.">
-        <rect x="0" y="0" width="1240" height="600" fill="url(#dots2)" opacity="0.9"/>
-
-        <!-- стол -->
-        <line x1="60" y1="520" x2="1180" y2="520" stroke="currentColor" stroke-width="2"/>
-        <g stroke="var(--hairline)" stroke-width="1.4">
-          <line x1="100" y1="520" x2="84" y2="538"/><line x1="140" y1="520" x2="124" y2="538"/>
-          <line x1="180" y1="520" x2="164" y2="538"/><line x1="220" y1="520" x2="204" y2="538"/>
-        </g>
-
-        <!-- Флиппер -->
-        <rect x="90" y="300" width="230" height="220" rx="10" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
-        <text x="205" y="418" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="13" fill="currentColor">FLIPPER</text>
-        <text x="205" y="438" text-anchor="middle" font-family="var(--font-mono)" font-size="10.5" fill="var(--muted)">торец</text>
-        <text x="105" y="322" font-family="var(--font-sans)" font-size="10" fill="var(--muted)">ИК-окно ▸</text>
-
-        <!-- нижний этаж -->
-        <rect x="250" y="278" width="660" height="14" rx="3" fill="var(--board)" stroke="currentColor" stroke-width="2"/>
-        <text x="580" y="330" text-anchor="middle" font-family="var(--font-mono)" font-size="11" fill="currentColor">ЭТАЖ 1 — приём (CC1101, BPW34)</text>
-        <!-- гребёнка в Флиппер -->
-        <g stroke="var(--power)" stroke-width="2.2">
-          <line x1="270" y1="292" x2="270" y2="312"/><line x1="286" y1="292" x2="286" y2="312"/>
-          <line x1="302" y1="292" x2="302" y2="312"/>
-        </g>
-        <text x="286" y="326" text-anchor="middle" font-family="var(--font-mono)" font-size="9.5" fill="var(--power)">гребёнка</text>
-        <!-- BPW34 под этажом 1 -->
-        <rect x="330" y="292" width="46" height="10" rx="2" fill="var(--panel)" stroke="var(--ir)" stroke-width="1.6"/>
-        <path d="M330,300 C300,306 290,304 268,301" fill="none" stroke="var(--ir)" stroke-width="1.6" stroke-dasharray="5 4"/>
-        <text x="384" y="304" font-family="var(--font-sans)" font-size="9.5" fill="var(--ir)">BPW34 → ИК-окно (гибкий вывод)</text>
-        <!-- CC1101 на этаже 1, под экраном -->
-        <rect x="470" y="250" width="150" height="28" rx="4" fill="var(--panel)" stroke="var(--power)" stroke-width="1.8"/>
-        <text x="545" y="269" text-anchor="middle" font-family="var(--font-mono)" font-size="11" fill="var(--power)">CC1101</text>
-
-        <!-- экран -->
-        <rect x="260" y="236" width="640" height="10" rx="3" fill="var(--power)" opacity="0.55"/>
-        <text x="895" y="230" text-anchor="end" font-family="var(--font-mono)" font-weight="700" font-size="11" fill="var(--power)">ЭКРАН — полигон земли между этажами</text>
-
-        <!-- стойки -->
-        <g stroke="currentColor" stroke-width="2.2">
-          <line x1="272" y1="278" x2="272" y2="214"/><line x1="888" y1="278" x2="888" y2="214"/>
-        </g>
-        <text x="272" y="304" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--muted)">стойка</text>
-
-        <!-- верхний этаж -->
-        <rect x="250" y="200" width="660" height="14" rx="3" fill="var(--board)" stroke="currentColor" stroke-width="2"/>
-        <text x="470" y="190" text-anchor="middle" font-family="var(--font-mono)" font-size="11" fill="currentColor">ЭТАЖ 2 — XIAO + силовой ИК + кольцо</text>
-        <!-- XIAO -->
-        <rect x="340" y="168" width="120" height="32" rx="4" fill="var(--panel)" stroke="currentColor" stroke-width="1.8"/>
-        <text x="400" y="188" text-anchor="middle" font-family="var(--font-mono)" font-size="10.5" fill="currentColor">XIAO C5</text>
-        <rect x="456" y="178" width="10" height="12" rx="2" fill="var(--hairline)"/>
-        <text x="472" y="188" font-family="var(--font-mono)" font-size="9" fill="var(--muted)">USB-C →</text>
-        <!-- силовой ИК -->
-        <rect x="540" y="168" width="120" height="32" rx="4" fill="var(--ir-soft)" stroke="var(--ir)" stroke-width="1.6"/>
-        <text x="600" y="188" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--ir)">LM393·Q1·C4</text>
-
-        <!-- кольцо сверху, открыто -->
-        <g fill="var(--ir)" opacity="0.85">
-          <circle cx="740" cy="182" r="10"/><circle cx="780" cy="182" r="10"/>
-          <circle cx="820" cy="182" r="10"/><circle cx="860" cy="182" r="10"/>
-        </g>
-        <g stroke="var(--ir)" stroke-width="2" marker-end="url(#arC)">
-          <line x1="740" y1="172" x2="726" y2="140"/><line x1="778" y1="172" x2="770" y2="138"/>
-          <line x1="822" y1="172" x2="830" y2="138"/><line x1="862" y1="172" x2="878" y2="142"/>
-          <line x1="866" y1="180" x2="906" y2="176"/><line x1="736" y1="180" x2="700" y2="176"/>
-        </g>
-        <text x="800" y="212" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--ir)">кольцо открыто · во все стороны</text>
-
-        <!-- высоты -->
-        <line x1="960" y1="200" x2="960" y2="292" stroke="var(--muted)" stroke-width="1.2" marker-start="url(#ar)" marker-end="url(#ar)"/>
-        <text x="972" y="250" font-family="var(--font-mono)" font-size="10.5" fill="var(--muted)">≈ 12 мм зазор</text>
-        <line x1="1030" y1="150" x2="1030" y2="292" stroke="var(--muted)" stroke-width="1.2" marker-start="url(#ar)" marker-end="url(#ar)"/>
-        <text x="1042" y="224" font-family="var(--font-mono)" font-size="10.5" fill="var(--muted)">стек ≈ 18 мм</text>
+      <svg viewBox="0 0 1240 620" role="img"
+           aria-label="Стек в разрезе сбоку. Слева торец Флиппера с ИК-окном. На верхнюю грань через разъём XS1 садится нижний этаж — плата приёма и компаратора: снизу фотодиод D1 BPW34 на гибком выводе смотрит в ИК-окно, сверху модуль CC1101 и блок LM393 с обвязкой. Антенна CC1101 выходит влево за кромку экрана. Над платой на стойках лист экрана E1 из текстолита, медью вниз, притянут к земле в одной точке. Выше на стойках верхний этаж: XIAO ESP32C5 с USB-C наружу, силовой узел Q1 с резисторами и конденсаторами, и сверху открытое кольцо инфракрасных диодов, лучи во все стороны. Между этажами короткий межэтажный разъём XS2. Снизу к нижнему этажу подходит двухпроводной шлейф XS3 плюс 5 вольт и земля от батарейной платы. Справа высоты: зазор около 12 миллиметров, стек около 18.">
+        <rect x="0" y="0" width="1240" height="620" fill="url(#dots2)" opacity="0.9"/>
+        <line x1="60" y1="540" x2="1180" y2="540" stroke="currentColor" stroke-width="2"/>
+        <g stroke="var(--hairline)" stroke-width="1.4"><line x1="100" y1="540" x2="84" y2="558"/><line x1="140" y1="540" x2="124" y2="558"/><line x1="180" y1="540" x2="164" y2="558"/><line x1="220" y1="540" x2="204" y2="558"/></g>
+        <rect x="90" y="320" width="230" height="220" rx="10" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
+        <text x="205" y="436" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="13" fill="currentColor">FLIPPER</text>
+        <text x="205" y="455" text-anchor="middle" font-family="var(--font-mono)" font-size="10.5" fill="var(--muted)">торец</text>
+        <text x="105" y="342" font-family="var(--font-sans)" font-size="10" fill="var(--muted)">ИК-окно ▸</text>
+        <rect x="250" y="300" width="640" height="14" rx="3" fill="var(--board)" stroke="currentColor" stroke-width="2"/>
+        <text x="600" y="352" text-anchor="middle" font-family="var(--font-mono)" font-size="11" fill="currentColor">ЭТАЖ 1 — приём + компаратор (CC1101, BPW34, LM393)</text>
+        <g stroke="var(--power)" stroke-width="2.2"><line x1="270" y1="314" x2="270" y2="334"/><line x1="286" y1="314" x2="286" y2="334"/><line x1="302" y1="314" x2="302" y2="334"/></g>
+        <text x="286" y="348" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--power)">XS1</text>
+        <rect x="330" y="314" width="46" height="10" rx="2" fill="var(--panel)" stroke="var(--ir)" stroke-width="1.6"/>
+        <path d="M330,320 C300,326 290,324 268,321" fill="none" stroke="var(--ir)" stroke-width="1.6" stroke-dasharray="5 4"/>
+        <text x="384" y="324" font-family="var(--font-sans)" font-size="9.5" fill="var(--ir)">D1 BPW34 → ИК-окно (гибкий вывод)</text>
+        <rect x="450" y="270" width="140" height="30" rx="4" fill="var(--panel)" stroke="var(--power)" stroke-width="1.8"/>
+        <text x="520" y="290" text-anchor="middle" font-family="var(--font-mono)" font-size="10.5" fill="var(--power)">U2 CC1101</text>
+        <rect x="700" y="272" width="120" height="28" rx="4" fill="var(--ir-soft)" stroke="var(--ir)" stroke-width="1.6"/>
+        <text x="760" y="291" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--ir)">U1 LM393+обвязка</text>
+        <rect x="360" y="248" width="530" height="12" rx="2" fill="var(--power)" opacity="0.5"/>
+        <g stroke="var(--power)" stroke-width="1.3" opacity="0.9"><line x1="368" y1="260" x2="376" y2="266"/><line x1="392" y1="260" x2="400" y2="266"/><line x1="416" y1="260" x2="424" y2="266"/><line x1="440" y1="260" x2="448" y2="266"/><line x1="464" y1="260" x2="472" y2="266"/><line x1="500" y1="260" x2="508" y2="266"/><line x1="540" y1="260" x2="548" y2="266"/><line x1="600" y1="260" x2="608" y2="266"/><line x1="680" y1="260" x2="688" y2="266"/><line x1="760" y1="260" x2="768" y2="266"/><line x1="840" y1="260" x2="848" y2="266"/></g>
+        <text x="895" y="243" text-anchor="end" font-family="var(--font-mono)" font-weight="700" font-size="11" fill="var(--power)">E1 · ЭКРАН — лист текстолита, медь вниз</text>
+        <line x1="380" y1="260" x2="380" y2="300" stroke="var(--power)" stroke-width="1.8" stroke-dasharray="3 3"/>
+        <circle cx="380" cy="300" r="3" fill="var(--power)"/>
+        <text x="356" y="278" text-anchor="end" font-family="var(--font-mono)" font-size="8.5" fill="var(--power)">GND в 1 точке</text>
+        <line x1="450" y1="285" x2="352" y2="285" stroke="var(--power)" stroke-width="2"/>
+        <path d="M352,285 q-16,0 -16,14 M352,285 q-16,0 -16,-14" fill="none" stroke="var(--power)" stroke-width="1.4" stroke-dasharray="5 4"/>
+        <text x="340" y="315" text-anchor="end" font-family="var(--font-mono)" font-size="9" fill="var(--power)">ант. λ/4 — за кромкой E1</text>
+        <g stroke="currentColor" stroke-width="2.2"><line x1="272" y1="300" x2="272" y2="228"/><line x1="868" y1="300" x2="868" y2="228"/></g>
+        <text x="250" y="270" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--muted)">стойка</text>
+        <rect x="250" y="214" width="640" height="14" rx="3" fill="var(--board)" stroke="currentColor" stroke-width="2"/>
+        <text x="470" y="204" text-anchor="middle" font-family="var(--font-mono)" font-size="11" fill="currentColor">ЭТАЖ 2 — XIAO + силовой ИК + кольцо</text>
+        <rect x="330" y="182" width="110" height="32" rx="4" fill="var(--panel)" stroke="currentColor" stroke-width="1.8"/>
+        <text x="385" y="202" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="currentColor">U3 XIAO</text>
+        <rect x="436" y="192" width="10" height="12" rx="2" fill="var(--hairline)"/><text x="452" y="202" font-family="var(--font-mono)" font-size="9" fill="var(--muted)">USB-C →</text>
+        <rect x="520" y="182" width="140" height="32" rx="4" fill="var(--ir-soft)" stroke="var(--ir)" stroke-width="1.6"/>
+        <text x="590" y="202" text-anchor="middle" font-family="var(--font-mono)" font-size="9.5" fill="var(--ir)">Q1·R3·R4·C3·C4</text>
+        <g stroke="var(--power)" stroke-width="2"><line x1="820" y1="228" x2="820" y2="300"/><line x1="834" y1="228" x2="834" y2="300"/></g>
+        <text x="828" y="268" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--power)" transform="rotate(-90 828 268)">XS2 · межэтажный</text>
+        <g fill="var(--ir)" opacity="0.85"><circle cx="720" cy="196" r="10"/><circle cx="760" cy="196" r="10"/><circle cx="800" cy="196" r="10"/><circle cx="840" cy="196" r="10"/></g>
+        <g stroke="var(--ir)" stroke-width="2" marker-end="url(#arC)"><line x1="720" y1="186" x2="706" y2="154"/><line x1="758" y1="186" x2="750" y2="152"/><line x1="802" y1="186" x2="810" y2="152"/><line x1="842" y1="186" x2="858" y2="156"/><line x1="846" y1="194" x2="886" y2="190"/><line x1="716" y1="194" x2="680" y2="190"/></g>
+        <text x="780" y="226" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--ir)">кольцо открыто · во все стороны</text>
+        <path d="M910,540 C960,500 900,360 892,320" fill="none" stroke="var(--power)" stroke-width="2.2"/>
+        <text x="916" y="470" font-family="var(--font-mono)" font-size="10" fill="var(--power)">XS3 · 2 провода</text>
+        <text x="916" y="486" font-family="var(--font-sans)" font-size="9.5" fill="var(--power)">+5 В, GND от АКБ</text>
+        <line x1="960" y1="214" x2="960" y2="314" stroke="var(--muted)" stroke-width="1.2" marker-start="url(#ar)" marker-end="url(#ar)"/>
+        <text x="972" y="270" font-family="var(--font-mono)" font-size="10.5" fill="var(--muted)">≈ 12 мм</text>
+        <line x1="1030" y1="164" x2="1030" y2="314" stroke="var(--muted)" stroke-width="1.2" marker-start="url(#ar)" marker-end="url(#ar)"/>
+        <text x="1042" y="244" font-family="var(--font-mono)" font-size="10.5" fill="var(--muted)">стек ≈ 18 мм</text>
       </svg>
     </div>
     <figcaption>
-      Приёмник CC1101 сидит на нижнем этаже <b>под полигоном земли</b>, а шумный ключ ИК&nbsp;—
-      над этим экраном. Кольцо вынесено на самый верх и открыто&nbsp;— <b>светит во все стороны</b>,
-      его не закрывает ни плата, ни корпус. BPW34 на гибком выводе уходит вниз, в ИК-окно
-      Флиппера. Стойки-гребёнки держат верхний этаж и заодно проводят между этажами питание,
-      землю и UART.
+      <b>E1&nbsp;— это отдельный лист</b> одностороннего текстолита (или медный скотч),
+      вырезанный по контуру платы и поставленный на стойки между этажами <b>медью вниз</b>, к
+      CC1101; к земле он притянут <b>в одной точке</b> (в звезду). Антенна CC1101 выходит
+      <b>за кромку экрана</b>&nbsp;— иначе полигон её глушит. BPW34 на гибком выводе уходит вниз,
+      в ИК-окно. Питание +5&nbsp;В/GND приходит снизу шлейфом XS3, между этажами идёт XS2.
     </figcaption>
   </figure>
 
   <figure>
     <div class="board">
-      <svg viewBox="0 0 1240 720" role="img"
-           aria-label="Два этажа, вид сверху, рядом. Слева этаж 1: по верхней кромке гребёнка в Флиппер на все 18 контактов; слева модуль CC1101 28 на 15 миллиметров с антенной за левым краем и зоной без меди под ней; справа фотодиод BPW34, уходящий на низ платы к ИК-окну; внизу межэтажный гребень, передающий на второй этаж плюс 5 вольт, землю и UART; вся верхняя сторона этажа 1 залита полигоном земли-экраном. Справа этаж 2: сверху приходит межэтажный гребень от этажа 1; плата XIAO ESP32C5 21 на 17.8 с USB-C наружу; ниже силовой узел ИК — LM393, ключ IRLZ44N, конденсатор C4, резисторы; у правого края кольцо из шести инфракрасных светодиодов, лучи расходятся радиально во все стороны.">
-        <rect x="0" y="0" width="1240" height="720" fill="url(#dots2)" opacity="0.9"/>
-
-        <!-- ================= ЭТАЖ 1 ================= -->
-        <text x="288" y="118" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="13" fill="currentColor">ЭТАЖ 1 (низ) — приём</text>
-        <rect x="40" y="150" width="495" height="470" rx="10" fill="var(--board)" stroke="currentColor" stroke-width="2"/>
-        <!-- полигон-экран штриховка -->
-        <text x="288" y="600" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--muted)">верх этажа — полигон земли (экран)</text>
-
-        <!-- гребёнка -->
+      <svg viewBox="0 0 1240 820" role="img"
+           aria-label="Нижний этаж, вид сверху, с расставленными компонентами на поле макетки. По верхней кромке разъём XS1 в Флиппер на все 18 контактов. Слева большой модуль U2 CC1101 28 на 15 миллиметров, его антенна лямбда четверть выходит влево за кромку платы и за контур экрана. Рядом развязка VCC — конденсаторы C10 100 нанофарад и C11 10 микрофарад. Справа фотодиод D1 BPW34, уходящий на низ платы к ИК-окну. По центру-низу блок компаратора U1 LM393 со своей обвязкой: резисторы R1 10 килоом, R2 1 килоом, R5 10 килоом и конденсаторы C1 100 пикофарад, C2 100 нанофарад. У левой кромки подстроечник RV1 10 килоом винтом наружу. У нижней кромки межэтажный разъём XS2 на шесть контактов: плюс 5 вольт, земля, TX, RX и выход компаратора. В левом нижнем углу разъём XS3 плюс 5 вольт и земля от батареи и точка звезды земли. Пунктиром показан контур экрана E1, лежащего сверху медью вниз.">
+        <rect x="0" y="0" width="1240" height="820" fill="url(#dots2)" opacity="0.9"/>
+        <text x="600.0" y="120" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="13" fill="currentColor">ЭТАЖ 1 (низ) — приёмник и компаратор, вид сверху</text>
+        <rect x="210" y="150" width="780" height="600" rx="10" fill="var(--board)" stroke="currentColor" stroke-width="2"/>
+        <g fill="var(--hairline)" opacity="0.5">
+        <circle cx="232" cy="172" r="1.4"/>
+        <circle cx="276" cy="172" r="1.4"/>
+        <circle cx="320" cy="172" r="1.4"/>
+        <circle cx="364" cy="172" r="1.4"/>
+        <circle cx="408" cy="172" r="1.4"/>
+        <circle cx="452" cy="172" r="1.4"/>
+        <circle cx="496" cy="172" r="1.4"/>
+        <circle cx="540" cy="172" r="1.4"/>
+        <circle cx="584" cy="172" r="1.4"/>
+        <circle cx="628" cy="172" r="1.4"/>
+        <circle cx="672" cy="172" r="1.4"/>
+        <circle cx="716" cy="172" r="1.4"/>
+        <circle cx="760" cy="172" r="1.4"/>
+        <circle cx="804" cy="172" r="1.4"/>
+        <circle cx="848" cy="172" r="1.4"/>
+        <circle cx="892" cy="172" r="1.4"/>
+        <circle cx="936" cy="172" r="1.4"/>
+        <circle cx="980" cy="172" r="1.4"/>
+        <circle cx="232" cy="216" r="1.4"/>
+        <circle cx="276" cy="216" r="1.4"/>
+        <circle cx="320" cy="216" r="1.4"/>
+        <circle cx="364" cy="216" r="1.4"/>
+        <circle cx="408" cy="216" r="1.4"/>
+        <circle cx="452" cy="216" r="1.4"/>
+        <circle cx="496" cy="216" r="1.4"/>
+        <circle cx="540" cy="216" r="1.4"/>
+        <circle cx="584" cy="216" r="1.4"/>
+        <circle cx="628" cy="216" r="1.4"/>
+        <circle cx="672" cy="216" r="1.4"/>
+        <circle cx="716" cy="216" r="1.4"/>
+        <circle cx="760" cy="216" r="1.4"/>
+        <circle cx="804" cy="216" r="1.4"/>
+        <circle cx="848" cy="216" r="1.4"/>
+        <circle cx="892" cy="216" r="1.4"/>
+        <circle cx="936" cy="216" r="1.4"/>
+        <circle cx="980" cy="216" r="1.4"/>
+        <circle cx="232" cy="260" r="1.4"/>
+        <circle cx="276" cy="260" r="1.4"/>
+        <circle cx="320" cy="260" r="1.4"/>
+        <circle cx="364" cy="260" r="1.4"/>
+        <circle cx="408" cy="260" r="1.4"/>
+        <circle cx="452" cy="260" r="1.4"/>
+        <circle cx="496" cy="260" r="1.4"/>
+        <circle cx="540" cy="260" r="1.4"/>
+        <circle cx="584" cy="260" r="1.4"/>
+        <circle cx="628" cy="260" r="1.4"/>
+        <circle cx="672" cy="260" r="1.4"/>
+        <circle cx="716" cy="260" r="1.4"/>
+        <circle cx="760" cy="260" r="1.4"/>
+        <circle cx="804" cy="260" r="1.4"/>
+        <circle cx="848" cy="260" r="1.4"/>
+        <circle cx="892" cy="260" r="1.4"/>
+        <circle cx="936" cy="260" r="1.4"/>
+        <circle cx="980" cy="260" r="1.4"/>
+        <circle cx="232" cy="304" r="1.4"/>
+        <circle cx="276" cy="304" r="1.4"/>
+        <circle cx="320" cy="304" r="1.4"/>
+        <circle cx="364" cy="304" r="1.4"/>
+        <circle cx="408" cy="304" r="1.4"/>
+        <circle cx="452" cy="304" r="1.4"/>
+        <circle cx="496" cy="304" r="1.4"/>
+        <circle cx="540" cy="304" r="1.4"/>
+        <circle cx="584" cy="304" r="1.4"/>
+        <circle cx="628" cy="304" r="1.4"/>
+        <circle cx="672" cy="304" r="1.4"/>
+        <circle cx="716" cy="304" r="1.4"/>
+        <circle cx="760" cy="304" r="1.4"/>
+        <circle cx="804" cy="304" r="1.4"/>
+        <circle cx="848" cy="304" r="1.4"/>
+        <circle cx="892" cy="304" r="1.4"/>
+        <circle cx="936" cy="304" r="1.4"/>
+        <circle cx="980" cy="304" r="1.4"/>
+        <circle cx="232" cy="348" r="1.4"/>
+        <circle cx="276" cy="348" r="1.4"/>
+        <circle cx="320" cy="348" r="1.4"/>
+        <circle cx="364" cy="348" r="1.4"/>
+        <circle cx="408" cy="348" r="1.4"/>
+        <circle cx="452" cy="348" r="1.4"/>
+        <circle cx="496" cy="348" r="1.4"/>
+        <circle cx="540" cy="348" r="1.4"/>
+        <circle cx="584" cy="348" r="1.4"/>
+        <circle cx="628" cy="348" r="1.4"/>
+        <circle cx="672" cy="348" r="1.4"/>
+        <circle cx="716" cy="348" r="1.4"/>
+        <circle cx="760" cy="348" r="1.4"/>
+        <circle cx="804" cy="348" r="1.4"/>
+        <circle cx="848" cy="348" r="1.4"/>
+        <circle cx="892" cy="348" r="1.4"/>
+        <circle cx="936" cy="348" r="1.4"/>
+        <circle cx="980" cy="348" r="1.4"/>
+        <circle cx="232" cy="392" r="1.4"/>
+        <circle cx="276" cy="392" r="1.4"/>
+        <circle cx="320" cy="392" r="1.4"/>
+        <circle cx="364" cy="392" r="1.4"/>
+        <circle cx="408" cy="392" r="1.4"/>
+        <circle cx="452" cy="392" r="1.4"/>
+        <circle cx="496" cy="392" r="1.4"/>
+        <circle cx="540" cy="392" r="1.4"/>
+        <circle cx="584" cy="392" r="1.4"/>
+        <circle cx="628" cy="392" r="1.4"/>
+        <circle cx="672" cy="392" r="1.4"/>
+        <circle cx="716" cy="392" r="1.4"/>
+        <circle cx="760" cy="392" r="1.4"/>
+        <circle cx="804" cy="392" r="1.4"/>
+        <circle cx="848" cy="392" r="1.4"/>
+        <circle cx="892" cy="392" r="1.4"/>
+        <circle cx="936" cy="392" r="1.4"/>
+        <circle cx="980" cy="392" r="1.4"/>
+        <circle cx="232" cy="436" r="1.4"/>
+        <circle cx="276" cy="436" r="1.4"/>
+        <circle cx="320" cy="436" r="1.4"/>
+        <circle cx="364" cy="436" r="1.4"/>
+        <circle cx="408" cy="436" r="1.4"/>
+        <circle cx="452" cy="436" r="1.4"/>
+        <circle cx="496" cy="436" r="1.4"/>
+        <circle cx="540" cy="436" r="1.4"/>
+        <circle cx="584" cy="436" r="1.4"/>
+        <circle cx="628" cy="436" r="1.4"/>
+        <circle cx="672" cy="436" r="1.4"/>
+        <circle cx="716" cy="436" r="1.4"/>
+        <circle cx="760" cy="436" r="1.4"/>
+        <circle cx="804" cy="436" r="1.4"/>
+        <circle cx="848" cy="436" r="1.4"/>
+        <circle cx="892" cy="436" r="1.4"/>
+        <circle cx="936" cy="436" r="1.4"/>
+        <circle cx="980" cy="436" r="1.4"/>
+        <circle cx="232" cy="480" r="1.4"/>
+        <circle cx="276" cy="480" r="1.4"/>
+        <circle cx="320" cy="480" r="1.4"/>
+        <circle cx="364" cy="480" r="1.4"/>
+        <circle cx="408" cy="480" r="1.4"/>
+        <circle cx="452" cy="480" r="1.4"/>
+        <circle cx="496" cy="480" r="1.4"/>
+        <circle cx="540" cy="480" r="1.4"/>
+        <circle cx="584" cy="480" r="1.4"/>
+        <circle cx="628" cy="480" r="1.4"/>
+        <circle cx="672" cy="480" r="1.4"/>
+        <circle cx="716" cy="480" r="1.4"/>
+        <circle cx="760" cy="480" r="1.4"/>
+        <circle cx="804" cy="480" r="1.4"/>
+        <circle cx="848" cy="480" r="1.4"/>
+        <circle cx="892" cy="480" r="1.4"/>
+        <circle cx="936" cy="480" r="1.4"/>
+        <circle cx="980" cy="480" r="1.4"/>
+        <circle cx="232" cy="524" r="1.4"/>
+        <circle cx="276" cy="524" r="1.4"/>
+        <circle cx="320" cy="524" r="1.4"/>
+        <circle cx="364" cy="524" r="1.4"/>
+        <circle cx="408" cy="524" r="1.4"/>
+        <circle cx="452" cy="524" r="1.4"/>
+        <circle cx="496" cy="524" r="1.4"/>
+        <circle cx="540" cy="524" r="1.4"/>
+        <circle cx="584" cy="524" r="1.4"/>
+        <circle cx="628" cy="524" r="1.4"/>
+        <circle cx="672" cy="524" r="1.4"/>
+        <circle cx="716" cy="524" r="1.4"/>
+        <circle cx="760" cy="524" r="1.4"/>
+        <circle cx="804" cy="524" r="1.4"/>
+        <circle cx="848" cy="524" r="1.4"/>
+        <circle cx="892" cy="524" r="1.4"/>
+        <circle cx="936" cy="524" r="1.4"/>
+        <circle cx="980" cy="524" r="1.4"/>
+        <circle cx="232" cy="568" r="1.4"/>
+        <circle cx="276" cy="568" r="1.4"/>
+        <circle cx="320" cy="568" r="1.4"/>
+        <circle cx="364" cy="568" r="1.4"/>
+        <circle cx="408" cy="568" r="1.4"/>
+        <circle cx="452" cy="568" r="1.4"/>
+        <circle cx="496" cy="568" r="1.4"/>
+        <circle cx="540" cy="568" r="1.4"/>
+        <circle cx="584" cy="568" r="1.4"/>
+        <circle cx="628" cy="568" r="1.4"/>
+        <circle cx="672" cy="568" r="1.4"/>
+        <circle cx="716" cy="568" r="1.4"/>
+        <circle cx="760" cy="568" r="1.4"/>
+        <circle cx="804" cy="568" r="1.4"/>
+        <circle cx="848" cy="568" r="1.4"/>
+        <circle cx="892" cy="568" r="1.4"/>
+        <circle cx="936" cy="568" r="1.4"/>
+        <circle cx="980" cy="568" r="1.4"/>
+        <circle cx="232" cy="612" r="1.4"/>
+        <circle cx="276" cy="612" r="1.4"/>
+        <circle cx="320" cy="612" r="1.4"/>
+        <circle cx="364" cy="612" r="1.4"/>
+        <circle cx="408" cy="612" r="1.4"/>
+        <circle cx="452" cy="612" r="1.4"/>
+        <circle cx="496" cy="612" r="1.4"/>
+        <circle cx="540" cy="612" r="1.4"/>
+        <circle cx="584" cy="612" r="1.4"/>
+        <circle cx="628" cy="612" r="1.4"/>
+        <circle cx="672" cy="612" r="1.4"/>
+        <circle cx="716" cy="612" r="1.4"/>
+        <circle cx="760" cy="612" r="1.4"/>
+        <circle cx="804" cy="612" r="1.4"/>
+        <circle cx="848" cy="612" r="1.4"/>
+        <circle cx="892" cy="612" r="1.4"/>
+        <circle cx="936" cy="612" r="1.4"/>
+        <circle cx="980" cy="612" r="1.4"/>
+        <circle cx="232" cy="656" r="1.4"/>
+        <circle cx="276" cy="656" r="1.4"/>
+        <circle cx="320" cy="656" r="1.4"/>
+        <circle cx="364" cy="656" r="1.4"/>
+        <circle cx="408" cy="656" r="1.4"/>
+        <circle cx="452" cy="656" r="1.4"/>
+        <circle cx="496" cy="656" r="1.4"/>
+        <circle cx="540" cy="656" r="1.4"/>
+        <circle cx="584" cy="656" r="1.4"/>
+        <circle cx="628" cy="656" r="1.4"/>
+        <circle cx="672" cy="656" r="1.4"/>
+        <circle cx="716" cy="656" r="1.4"/>
+        <circle cx="760" cy="656" r="1.4"/>
+        <circle cx="804" cy="656" r="1.4"/>
+        <circle cx="848" cy="656" r="1.4"/>
+        <circle cx="892" cy="656" r="1.4"/>
+        <circle cx="936" cy="656" r="1.4"/>
+        <circle cx="980" cy="656" r="1.4"/>
+        <circle cx="232" cy="700" r="1.4"/>
+        <circle cx="276" cy="700" r="1.4"/>
+        <circle cx="320" cy="700" r="1.4"/>
+        <circle cx="364" cy="700" r="1.4"/>
+        <circle cx="408" cy="700" r="1.4"/>
+        <circle cx="452" cy="700" r="1.4"/>
+        <circle cx="496" cy="700" r="1.4"/>
+        <circle cx="540" cy="700" r="1.4"/>
+        <circle cx="584" cy="700" r="1.4"/>
+        <circle cx="628" cy="700" r="1.4"/>
+        <circle cx="672" cy="700" r="1.4"/>
+        <circle cx="716" cy="700" r="1.4"/>
+        <circle cx="760" cy="700" r="1.4"/>
+        <circle cx="804" cy="700" r="1.4"/>
+        <circle cx="848" cy="700" r="1.4"/>
+        <circle cx="892" cy="700" r="1.4"/>
+        <circle cx="936" cy="700" r="1.4"/>
+        <circle cx="980" cy="700" r="1.4"/>
+        <circle cx="232" cy="744" r="1.4"/>
+        <circle cx="276" cy="744" r="1.4"/>
+        <circle cx="320" cy="744" r="1.4"/>
+        <circle cx="364" cy="744" r="1.4"/>
+        <circle cx="408" cy="744" r="1.4"/>
+        <circle cx="452" cy="744" r="1.4"/>
+        <circle cx="496" cy="744" r="1.4"/>
+        <circle cx="540" cy="744" r="1.4"/>
+        <circle cx="584" cy="744" r="1.4"/>
+        <circle cx="628" cy="744" r="1.4"/>
+        <circle cx="672" cy="744" r="1.4"/>
+        <circle cx="716" cy="744" r="1.4"/>
+        <circle cx="760" cy="744" r="1.4"/>
+        <circle cx="804" cy="744" r="1.4"/>
+        <circle cx="848" cy="744" r="1.4"/>
+        <circle cx="892" cy="744" r="1.4"/>
+        <circle cx="936" cy="744" r="1.4"/>
+        <circle cx="980" cy="744" r="1.4"/>
+        </g>
+        <rect x="280" y="166" width="690" height="480" rx="8" fill="none" stroke="var(--power)" stroke-width="1.6" stroke-dasharray="8 5"/>
+        <text x="960" y="190" text-anchor="end" font-family="var(--font-mono)" font-size="9.5" fill="var(--power)">контур экрана E1 (сверху, медь вниз)</text>
         <g fill="var(--power)">
-          <circle cx="66" cy="170" r="4.5"/><circle cx="92" cy="170" r="4.5"/><circle cx="118" cy="170" r="4.5"/>
-          <circle cx="144" cy="170" r="4.5"/><circle cx="170" cy="170" r="4.5"/><circle cx="196" cy="170" r="4.5"/>
-          <circle cx="222" cy="170" r="4.5"/><circle cx="248" cy="170" r="4.5"/><circle cx="288" cy="170" r="4.5"/>
-          <circle cx="314" cy="170" r="4.5"/><circle cx="340" cy="170" r="4.5"/><circle cx="366" cy="170" r="4.5"/>
-          <circle cx="392" cy="170" r="4.5"/><circle cx="418" cy="170" r="4.5"/><circle cx="444" cy="170" r="4.5"/>
-          <circle cx="470" cy="170" r="4.5"/><circle cx="496" cy="170" r="4.5"/><circle cx="509" cy="170" r="4.5"/>
+        <circle cx="240" cy="174" r="4.5"/>
+        <circle cx="282" cy="174" r="4.5"/>
+        <circle cx="325" cy="174" r="4.5"/>
+        <circle cx="367" cy="174" r="4.5"/>
+        <circle cx="409" cy="174" r="4.5"/>
+        <circle cx="452" cy="174" r="4.5"/>
+        <circle cx="494" cy="174" r="4.5"/>
+        <circle cx="536" cy="174" r="4.5"/>
+        <circle cx="579" cy="174" r="4.5"/>
+        <circle cx="621" cy="174" r="4.5"/>
+        <circle cx="664" cy="174" r="4.5"/>
+        <circle cx="706" cy="174" r="4.5"/>
+        <circle cx="748" cy="174" r="4.5"/>
+        <circle cx="791" cy="174" r="4.5"/>
+        <circle cx="833" cy="174" r="4.5"/>
+        <circle cx="875" cy="174" r="4.5"/>
+        <circle cx="918" cy="174" r="4.5"/>
+        <circle cx="960" cy="174" r="4.5"/>
         </g>
-        <text x="288" y="195" text-anchor="middle" font-family="var(--font-mono)" font-size="9.5" fill="var(--muted)">гребёнка в Флиппер — все 18</text>
-
-        <!-- CC1101 -->
-        <rect x="70" y="230" width="308" height="165" rx="6" fill="var(--panel)" stroke="var(--power)" stroke-width="2"/>
-        <text x="224" y="308" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="13" fill="var(--power)">CC1101</text>
-        <text x="224" y="328" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--muted)">28 × 15 мм</text>
-        <line x1="70" y1="280" x2="24" y2="280" stroke="var(--power)" stroke-width="2.2"/>
-        <path d="M24,280 q-14,0 -14,16 M24,280 q-14,0 -14,-16" fill="none" stroke="var(--power)" stroke-width="1.4" stroke-dasharray="5 4"/>
-        <text x="30" y="256" font-family="var(--font-mono)" font-size="9" fill="var(--power)">ант.</text>
-
-        <!-- BPW34 -->
-        <rect x="410" y="230" width="105" height="90" rx="6" fill="var(--panel)" stroke="var(--ir)" stroke-width="1.8"/>
-        <text x="462" y="268" text-anchor="middle" font-family="var(--font-mono)" font-size="11" fill="var(--ir)">BPW34</text>
-        <text x="462" y="286" text-anchor="middle" font-family="var(--font-sans)" font-size="9" fill="var(--muted)">на низ →</text>
-        <text x="462" y="300" text-anchor="middle" font-family="var(--font-sans)" font-size="9" fill="var(--muted)">ИК-окно</text>
-
-        <!-- межэтажный гребень -->
-        <rect x="120" y="500" width="336" height="34" rx="5" fill="var(--panel)" stroke="currentColor" stroke-width="1.6"/>
-        <g fill="var(--hairline)">
-          <rect x="132" y="510" width="10" height="14"/><rect x="156" y="510" width="10" height="14"/>
-          <rect x="180" y="510" width="10" height="14"/><rect x="204" y="510" width="10" height="14"/>
-          <rect x="228" y="510" width="10" height="14"/><rect x="252" y="510" width="10" height="14"/>
+        <text x="600.0" y="202" text-anchor="middle" font-family="var(--font-mono)" font-size="9.5" fill="var(--power)">XS1 · гребёнка в Флиппер — все 18 (низ платы)</text>
+        <rect x="240" y="240" width="360" height="190" rx="6" fill="var(--panel)" stroke="var(--power)" stroke-width="2"/>
+        <text x="420.0" y="333.0" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="12" fill="var(--power)">U2 · CC1101</text>
+        <text x="420.0" y="348.0" text-anchor="middle" font-family="var(--font-mono)" font-size="9.5" fill="var(--muted)">28 × 15 мм</text>
+        <line x1="240" y1="300" x2="170" y2="300" stroke="var(--power)" stroke-width="2.2"/>
+        <path d="M170,300 q-16,0 -16,16 M170,300 q-16,0 -16,-16" fill="none" stroke="var(--power)" stroke-width="1.4" stroke-dasharray="5 4"/>
+        <text x="158" y="278" text-anchor="start" font-family="var(--font-mono)" font-size="9" fill="var(--power)">ант. λ/4</text>
+        <text x="158" y="338" text-anchor="start" font-family="var(--font-sans)" font-size="8.5" fill="var(--power)">за кромкой E1</text>
+        <circle cx="630" cy="260" r="12" fill="var(--panel)" stroke="currentColor" stroke-width="1.8"/>
+        <text x="630" y="263" text-anchor="middle" font-family="var(--font-mono)" font-size="8.5" fill="currentColor">C10</text>
+        <text x="630" y="286" text-anchor="middle" font-family="var(--font-mono)" font-size="8" fill="var(--muted)">100n</text>
+        <circle cx="630" cy="320" r="12" fill="var(--panel)" stroke="currentColor" stroke-width="1.8"/>
+        <text x="630" y="323" text-anchor="middle" font-family="var(--font-mono)" font-size="8.5" fill="currentColor">C11</text>
+        <text x="630" y="346" text-anchor="middle" font-family="var(--font-mono)" font-size="8" fill="var(--muted)">10µ</text>
+        <text x="650" y="300" font-family="var(--font-sans)" font-size="8.5" fill="var(--muted)">развязка VCC</text>
+        <rect x="870" y="240" width="90" height="80" rx="6" fill="var(--panel)" stroke="var(--ir)" stroke-width="2"/>
+        <text x="915.0" y="278.0" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="11" fill="var(--ir)">D1</text>
+        <text x="915.0" y="293.0" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--muted)">BPW34</text>
+        <path d="M915,320 l0,40" stroke="var(--ir)" stroke-width="1.8" stroke-dasharray="5 4" marker-end="url(#arC)"/>
+        <text x="915" y="380" text-anchor="middle" font-family="var(--font-sans)" font-size="8.5" fill="var(--ir)">на низ → ИК-окно</text>
+        <rect x="510" y="470" width="150" height="120" rx="6" fill="var(--ir-soft)" stroke="var(--ir)" stroke-width="2"/>
+        <text x="585.0" y="528.0" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="12" fill="var(--ir)">U1 · LM393</text>
+        <text x="585.0" y="543.0" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--muted)">компаратор</text>
+        <rect x="440" y="480" width="34" height="15" rx="2" fill="var(--panel)" stroke="var(--ir)" stroke-width="1.8"/>
+        <text x="457" y="476" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--ir)">R2</text>
+        <text x="457" y="507" text-anchor="middle" font-family="var(--font-mono)" font-size="8.5" fill="var(--muted)">1k</text>
+        <rect x="440" y="530" width="34" height="15" rx="2" fill="var(--panel)" stroke="var(--ir)" stroke-width="1.8"/>
+        <text x="457" y="526" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--ir)">R5</text>
+        <text x="457" y="557" text-anchor="middle" font-family="var(--font-mono)" font-size="8.5" fill="var(--muted)">10k</text>
+        <rect x="675" y="480" width="34" height="15" rx="2" fill="var(--panel)" stroke="var(--ir)" stroke-width="1.8"/>
+        <text x="692" y="476" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--ir)">R1</text>
+        <text x="692" y="507" text-anchor="middle" font-family="var(--font-mono)" font-size="8.5" fill="var(--muted)">10k</text>
+        <circle cx="695" cy="550" r="12" fill="var(--panel)" stroke="var(--ir)" stroke-width="1.8"/>
+        <text x="695" y="553" text-anchor="middle" font-family="var(--font-mono)" font-size="8.5" fill="var(--ir)">C1</text>
+        <text x="695" y="576" text-anchor="middle" font-family="var(--font-mono)" font-size="8" fill="var(--muted)">100p</text>
+        <circle cx="590" cy="620" r="12" fill="var(--panel)" stroke="var(--ir)" stroke-width="1.8"/>
+        <text x="590" y="623" text-anchor="middle" font-family="var(--font-mono)" font-size="8.5" fill="var(--ir)">C2</text>
+        <text x="590" y="646" text-anchor="middle" font-family="var(--font-mono)" font-size="8" fill="var(--muted)">100n</text>
+        <rect x="330" y="680" width="60" height="40" rx="4" fill="var(--panel)" stroke="var(--ir)" stroke-width="1.8"/>
+        <text x="360" y="698" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--ir)">RV1 10k</text>
+        <text x="360" y="710" text-anchor="middle" font-family="var(--font-mono)" font-size="8" fill="var(--muted)">3296W</text>
+        <line x1="360" y1="720" x2="360" y2="758" stroke="var(--ir)" stroke-width="2" marker-end="url(#arP)"/>
+        <text x="370" y="754" font-family="var(--font-sans)" font-size="9" fill="var(--ir)">винт порога — наружу, к кромке</text>
+        <rect x="690" y="692" width="270" height="34" rx="5" fill="var(--panel)" stroke="var(--power)" stroke-width="1.8"/>
+        <g fill="var(--power)">
+        <circle cx="720" cy="709" r="4"/>
+        <circle cx="762" cy="709" r="4"/>
+        <circle cx="804" cy="709" r="4"/>
+        <circle cx="846" cy="709" r="4"/>
+        <circle cx="888" cy="709" r="4"/>
+        <circle cx="930" cy="709" r="4"/>
         </g>
-        <text x="288" y="558" text-anchor="middle" font-family="var(--font-mono)" font-size="9.5" fill="currentColor">межэтажный гребень → этаж 2</text>
-        <text x="288" y="574" text-anchor="middle" font-family="var(--font-sans)" font-size="9" fill="var(--muted)">+5 В · GND · UART</text>
-
-        <!-- ================= ЭТАЖ 2 ================= -->
-        <text x="952" y="118" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="13" fill="currentColor">ЭТАЖ 2 (верх) — цифра + ИК</text>
-        <rect x="705" y="150" width="495" height="470" rx="10" fill="var(--board)" stroke="currentColor" stroke-width="2"/>
-
-        <!-- гребень от этажа 1 -->
-        <rect x="785" y="176" width="336" height="34" rx="5" fill="var(--panel)" stroke="currentColor" stroke-width="1.6"/>
-        <g fill="var(--hairline)">
-          <rect x="797" y="186" width="10" height="14"/><rect x="821" y="186" width="10" height="14"/>
-          <rect x="845" y="186" width="10" height="14"/><rect x="869" y="186" width="10" height="14"/>
-          <rect x="893" y="186" width="10" height="14"/><rect x="917" y="186" width="10" height="14"/>
-        </g>
-        <text x="953" y="167" text-anchor="middle" font-family="var(--font-mono)" font-size="9.5" fill="currentColor">от этажа 1: +5 В · GND · UART</text>
-
-        <!-- XIAO -->
-        <rect x="725" y="240" width="231" height="196" rx="6" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
-        <text x="840" y="330" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="13" fill="currentColor">XIAO ESP32C5</text>
-        <text x="840" y="350" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--muted)">21 × 17.8 мм</text>
-        <rect x="956" y="300" width="10" height="60" rx="2" fill="var(--hairline)"/>
-        <text x="970" y="334" font-family="var(--font-mono)" font-size="9.5" fill="var(--muted)">USB-C →</text>
-
-        <!-- силовой узел ИК -->
-        <rect x="725" y="460" width="230" height="140" rx="8" fill="var(--ir-soft)" stroke="var(--ir)" stroke-width="1.4"/>
-        <text x="840" y="484" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="10.5" fill="var(--ir)">СИЛОВОЙ УЗЕЛ ИК</text>
-        <rect x="738" y="498" width="86" height="66" rx="4" fill="var(--panel)" stroke="var(--ir)" stroke-width="1.4"/>
-        <text x="781" y="536" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--ir)">LM393</text>
-        <rect x="836" y="498" width="72" height="80" rx="4" fill="var(--panel)" stroke="var(--ir)" stroke-width="1.4"/>
-        <text x="872" y="530" text-anchor="middle" font-family="var(--font-mono)" font-size="9.5" fill="var(--ir)">IRLZ44N</text>
-        <text x="872" y="546" text-anchor="middle" font-family="var(--font-sans)" font-size="8" fill="var(--muted)">Q1</text>
-        <circle cx="935" cy="524" r="20" fill="var(--panel)" stroke="var(--ir)" stroke-width="1.6"/>
-        <text x="935" y="528" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--ir)">C4</text>
-
-        <!-- КОЛЬЦО -->
-        <g fill="var(--ir)" opacity="0.85">
-          <circle cx="1170" cy="340" r="12"/><circle cx="1140" cy="392" r="12"/><circle cx="1080" cy="392" r="12"/>
-          <circle cx="1050" cy="340" r="12"/><circle cx="1080" cy="288" r="12"/><circle cx="1140" cy="288" r="12"/>
-        </g>
-        <g fill="none" stroke="var(--ir)" stroke-width="1.4">
-          <circle cx="1170" cy="340" r="12"/><circle cx="1140" cy="392" r="12"/><circle cx="1080" cy="392" r="12"/>
-          <circle cx="1050" cy="340" r="12"/><circle cx="1080" cy="288" r="12"/><circle cx="1140" cy="288" r="12"/>
-        </g>
-        <g stroke="var(--ir)" stroke-width="2" marker-end="url(#arC)">
-          <line x1="1182" y1="340" x2="1206" y2="340"/><line x1="1149" y1="402" x2="1160" y2="424"/>
-          <line x1="1071" y1="402" x2="1060" y2="424"/><line x1="1038" y1="340" x2="1014" y2="340"/>
-          <line x1="1071" y1="278" x2="1060" y2="256"/><line x1="1149" y1="278" x2="1160" y2="256"/>
-        </g>
-        <text x="1110" y="470" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="11" fill="var(--ir)">КОЛЬЦО ИК</text>
-        <text x="1110" y="487" text-anchor="middle" font-family="var(--font-sans)" font-size="9.5" fill="var(--ir)">сверху, открыто</text>
-        <text x="1110" y="502" text-anchor="middle" font-family="var(--font-sans)" font-size="9.5" fill="var(--ir)">во все стороны</text>
+        <text x="825" y="744" text-anchor="middle" font-family="var(--font-mono)" font-size="9.5" fill="var(--power)">XS2 → этаж 2: +5В·GND·TX·RX·OUT</text>
+        <rect x="250" y="692" width="60" height="34" rx="5" fill="var(--panel)" stroke="var(--power)" stroke-width="1.8"/>
+        <text x="280" y="713" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--power)">XS3</text>
+        <text x="280" y="744" text-anchor="middle" font-family="var(--font-sans)" font-size="8.5" fill="var(--power)">+5В/GND от АКБ</text>
+        <circle cx="330" cy="742" r="4.5" fill="var(--power)"/>
+        <g stroke="var(--power)" stroke-width="2" fill="none"><line x1="330" y1="742" x2="330" y2="756"/><line x1="320" y1="756" x2="340" y2="756"/><line x1="324" y1="761" x2="336" y2="761"/></g>
+        <text x="346" y="752" font-family="var(--font-mono)" font-size="8.5" fill="var(--power)">★ земля-звезда</text>
       </svg>
     </div>
     <figcaption>
-      Нагрузка делится поровну: внизу <b>приёмный</b> этаж (CC1101 + BPW34) под сплошным
-      полигоном земли, наверху <b>активный</b> (XIAO, силовой узел ИК, кольцо). Между этажами
-      идёт короткий гребень с +5&nbsp;В, землёй и UART. Каждый этаж теперь ≈&nbsp;45&nbsp;×&nbsp;40&nbsp;мм&nbsp;—
-      площадь меньше, а приёмник и ключ разведены по вертикали через экран.
+      Нижний этаж целиком: модуль CC1101 с развязкой C10/C11 и антенной за кромкой, фотодиод
+      D1, весь компаратор <b>U1 LM393 с обвязкой</b> (R1, R2, R5, C1, C2) и подстроечник RV1
+      винтом к кромке. Питание входит в XS3 (звезда земли рядом), наверх уходит XS2. Сверху
+      всё это накрывает лист экрана E1 (пунктир) с вырезами под антенну и XS2.
     </figcaption>
   </figure>
 
-  <h2>Вариант A — питание на этой же плате</h2>
-  <p class="sub">
-    Банки и преобразователь уезжают за край корпуса, на нижнюю сторону нависающей части.
-    Просто в сборке, но вся масса висит на гребёнке.
-  </p>
   <figure>
     <div class="board">
-      <svg viewBox="0 0 1240 520" role="img"
-           aria-label="Вариант A, вид с торца. Флиппер лежит экраном вверх, показан поперечный разрез шириной 40 и толщиной 25.6 миллиметра. По верхней грани гребёнка, в неё сверху воткнута основная плата. Плата горизонтальна, ближняя часть опирается на корпус, а дальняя выходит за габарит корпуса и нависает. На нижней стороне нависающей части закреплены две банки 18650 и преобразователь, суммарно около 100 граммов. Их центр тяжести вынесен примерно на 50 миллиметров от гребёнки, что создаёт опрокидывающий момент около 5000 грамм на миллиметр. Поэтому под дальним концом обязательна опора-ножка на стол. Показаны стрелка момента вокруг гребёнки и подпись про опору.">
-        <rect x="0" y="0" width="1240" height="520" fill="url(#dots2)" opacity="0.9"/>
-
-        <!-- стол -->
-        <line x1="80" y1="452" x2="1160" y2="452" stroke="currentColor" stroke-width="2"/>
-        <g stroke="var(--hairline)" stroke-width="1.4">
-          <line x1="120" y1="452" x2="104" y2="470"/><line x1="160" y1="452" x2="144" y2="470"/>
-          <line x1="200" y1="452" x2="184" y2="470"/><line x1="240" y1="452" x2="224" y2="470"/>
+      <svg viewBox="0 0 1240 820" role="img"
+           aria-label="Верхний этаж, вид сверху. По верхней кромке ответная часть межэтажного разъёма XS2. Слева модуль U3 XIAO ESP32C5 21 на 17.8 миллиметра, разъём USB-C выведен наружу к кромке. Ниже узел затвора: резисторы R3 100 ом и R4 100 килоом и ключ Q1 IRLZ44N в корпусе TO-220, стоящий вертикально язычком к кромке. Правее три ветки кольца — резисторы R6, R7, R8 по 22 ома, и конденсаторы C3 100 нанофарад и C4 220 микрофарад буфером у кольца. У правой кромки кольцо из шести инфракрасных диодов, вынесенное за габарит платы, лучи расходятся во все стороны. Подпись: силовой узел стоит над экраном E1, поэтому его коммутационный шум не приходится на CC1101 внизу.">
+        <rect x="0" y="0" width="1240" height="820" fill="url(#dots2)" opacity="0.9"/>
+        <text x="600.0" y="120" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="13" fill="currentColor">ЭТАЖ 2 (верх) — цифра и силовой ИК, вид сверху</text>
+        <rect x="210" y="150" width="780" height="600" rx="10" fill="var(--board)" stroke="currentColor" stroke-width="2"/>
+        <g fill="var(--hairline)" opacity="0.5">
+        <circle cx="232" cy="172" r="1.4"/>
+        <circle cx="276" cy="172" r="1.4"/>
+        <circle cx="320" cy="172" r="1.4"/>
+        <circle cx="364" cy="172" r="1.4"/>
+        <circle cx="408" cy="172" r="1.4"/>
+        <circle cx="452" cy="172" r="1.4"/>
+        <circle cx="496" cy="172" r="1.4"/>
+        <circle cx="540" cy="172" r="1.4"/>
+        <circle cx="584" cy="172" r="1.4"/>
+        <circle cx="628" cy="172" r="1.4"/>
+        <circle cx="672" cy="172" r="1.4"/>
+        <circle cx="716" cy="172" r="1.4"/>
+        <circle cx="760" cy="172" r="1.4"/>
+        <circle cx="804" cy="172" r="1.4"/>
+        <circle cx="848" cy="172" r="1.4"/>
+        <circle cx="892" cy="172" r="1.4"/>
+        <circle cx="936" cy="172" r="1.4"/>
+        <circle cx="980" cy="172" r="1.4"/>
+        <circle cx="232" cy="216" r="1.4"/>
+        <circle cx="276" cy="216" r="1.4"/>
+        <circle cx="320" cy="216" r="1.4"/>
+        <circle cx="364" cy="216" r="1.4"/>
+        <circle cx="408" cy="216" r="1.4"/>
+        <circle cx="452" cy="216" r="1.4"/>
+        <circle cx="496" cy="216" r="1.4"/>
+        <circle cx="540" cy="216" r="1.4"/>
+        <circle cx="584" cy="216" r="1.4"/>
+        <circle cx="628" cy="216" r="1.4"/>
+        <circle cx="672" cy="216" r="1.4"/>
+        <circle cx="716" cy="216" r="1.4"/>
+        <circle cx="760" cy="216" r="1.4"/>
+        <circle cx="804" cy="216" r="1.4"/>
+        <circle cx="848" cy="216" r="1.4"/>
+        <circle cx="892" cy="216" r="1.4"/>
+        <circle cx="936" cy="216" r="1.4"/>
+        <circle cx="980" cy="216" r="1.4"/>
+        <circle cx="232" cy="260" r="1.4"/>
+        <circle cx="276" cy="260" r="1.4"/>
+        <circle cx="320" cy="260" r="1.4"/>
+        <circle cx="364" cy="260" r="1.4"/>
+        <circle cx="408" cy="260" r="1.4"/>
+        <circle cx="452" cy="260" r="1.4"/>
+        <circle cx="496" cy="260" r="1.4"/>
+        <circle cx="540" cy="260" r="1.4"/>
+        <circle cx="584" cy="260" r="1.4"/>
+        <circle cx="628" cy="260" r="1.4"/>
+        <circle cx="672" cy="260" r="1.4"/>
+        <circle cx="716" cy="260" r="1.4"/>
+        <circle cx="760" cy="260" r="1.4"/>
+        <circle cx="804" cy="260" r="1.4"/>
+        <circle cx="848" cy="260" r="1.4"/>
+        <circle cx="892" cy="260" r="1.4"/>
+        <circle cx="936" cy="260" r="1.4"/>
+        <circle cx="980" cy="260" r="1.4"/>
+        <circle cx="232" cy="304" r="1.4"/>
+        <circle cx="276" cy="304" r="1.4"/>
+        <circle cx="320" cy="304" r="1.4"/>
+        <circle cx="364" cy="304" r="1.4"/>
+        <circle cx="408" cy="304" r="1.4"/>
+        <circle cx="452" cy="304" r="1.4"/>
+        <circle cx="496" cy="304" r="1.4"/>
+        <circle cx="540" cy="304" r="1.4"/>
+        <circle cx="584" cy="304" r="1.4"/>
+        <circle cx="628" cy="304" r="1.4"/>
+        <circle cx="672" cy="304" r="1.4"/>
+        <circle cx="716" cy="304" r="1.4"/>
+        <circle cx="760" cy="304" r="1.4"/>
+        <circle cx="804" cy="304" r="1.4"/>
+        <circle cx="848" cy="304" r="1.4"/>
+        <circle cx="892" cy="304" r="1.4"/>
+        <circle cx="936" cy="304" r="1.4"/>
+        <circle cx="980" cy="304" r="1.4"/>
+        <circle cx="232" cy="348" r="1.4"/>
+        <circle cx="276" cy="348" r="1.4"/>
+        <circle cx="320" cy="348" r="1.4"/>
+        <circle cx="364" cy="348" r="1.4"/>
+        <circle cx="408" cy="348" r="1.4"/>
+        <circle cx="452" cy="348" r="1.4"/>
+        <circle cx="496" cy="348" r="1.4"/>
+        <circle cx="540" cy="348" r="1.4"/>
+        <circle cx="584" cy="348" r="1.4"/>
+        <circle cx="628" cy="348" r="1.4"/>
+        <circle cx="672" cy="348" r="1.4"/>
+        <circle cx="716" cy="348" r="1.4"/>
+        <circle cx="760" cy="348" r="1.4"/>
+        <circle cx="804" cy="348" r="1.4"/>
+        <circle cx="848" cy="348" r="1.4"/>
+        <circle cx="892" cy="348" r="1.4"/>
+        <circle cx="936" cy="348" r="1.4"/>
+        <circle cx="980" cy="348" r="1.4"/>
+        <circle cx="232" cy="392" r="1.4"/>
+        <circle cx="276" cy="392" r="1.4"/>
+        <circle cx="320" cy="392" r="1.4"/>
+        <circle cx="364" cy="392" r="1.4"/>
+        <circle cx="408" cy="392" r="1.4"/>
+        <circle cx="452" cy="392" r="1.4"/>
+        <circle cx="496" cy="392" r="1.4"/>
+        <circle cx="540" cy="392" r="1.4"/>
+        <circle cx="584" cy="392" r="1.4"/>
+        <circle cx="628" cy="392" r="1.4"/>
+        <circle cx="672" cy="392" r="1.4"/>
+        <circle cx="716" cy="392" r="1.4"/>
+        <circle cx="760" cy="392" r="1.4"/>
+        <circle cx="804" cy="392" r="1.4"/>
+        <circle cx="848" cy="392" r="1.4"/>
+        <circle cx="892" cy="392" r="1.4"/>
+        <circle cx="936" cy="392" r="1.4"/>
+        <circle cx="980" cy="392" r="1.4"/>
+        <circle cx="232" cy="436" r="1.4"/>
+        <circle cx="276" cy="436" r="1.4"/>
+        <circle cx="320" cy="436" r="1.4"/>
+        <circle cx="364" cy="436" r="1.4"/>
+        <circle cx="408" cy="436" r="1.4"/>
+        <circle cx="452" cy="436" r="1.4"/>
+        <circle cx="496" cy="436" r="1.4"/>
+        <circle cx="540" cy="436" r="1.4"/>
+        <circle cx="584" cy="436" r="1.4"/>
+        <circle cx="628" cy="436" r="1.4"/>
+        <circle cx="672" cy="436" r="1.4"/>
+        <circle cx="716" cy="436" r="1.4"/>
+        <circle cx="760" cy="436" r="1.4"/>
+        <circle cx="804" cy="436" r="1.4"/>
+        <circle cx="848" cy="436" r="1.4"/>
+        <circle cx="892" cy="436" r="1.4"/>
+        <circle cx="936" cy="436" r="1.4"/>
+        <circle cx="980" cy="436" r="1.4"/>
+        <circle cx="232" cy="480" r="1.4"/>
+        <circle cx="276" cy="480" r="1.4"/>
+        <circle cx="320" cy="480" r="1.4"/>
+        <circle cx="364" cy="480" r="1.4"/>
+        <circle cx="408" cy="480" r="1.4"/>
+        <circle cx="452" cy="480" r="1.4"/>
+        <circle cx="496" cy="480" r="1.4"/>
+        <circle cx="540" cy="480" r="1.4"/>
+        <circle cx="584" cy="480" r="1.4"/>
+        <circle cx="628" cy="480" r="1.4"/>
+        <circle cx="672" cy="480" r="1.4"/>
+        <circle cx="716" cy="480" r="1.4"/>
+        <circle cx="760" cy="480" r="1.4"/>
+        <circle cx="804" cy="480" r="1.4"/>
+        <circle cx="848" cy="480" r="1.4"/>
+        <circle cx="892" cy="480" r="1.4"/>
+        <circle cx="936" cy="480" r="1.4"/>
+        <circle cx="980" cy="480" r="1.4"/>
+        <circle cx="232" cy="524" r="1.4"/>
+        <circle cx="276" cy="524" r="1.4"/>
+        <circle cx="320" cy="524" r="1.4"/>
+        <circle cx="364" cy="524" r="1.4"/>
+        <circle cx="408" cy="524" r="1.4"/>
+        <circle cx="452" cy="524" r="1.4"/>
+        <circle cx="496" cy="524" r="1.4"/>
+        <circle cx="540" cy="524" r="1.4"/>
+        <circle cx="584" cy="524" r="1.4"/>
+        <circle cx="628" cy="524" r="1.4"/>
+        <circle cx="672" cy="524" r="1.4"/>
+        <circle cx="716" cy="524" r="1.4"/>
+        <circle cx="760" cy="524" r="1.4"/>
+        <circle cx="804" cy="524" r="1.4"/>
+        <circle cx="848" cy="524" r="1.4"/>
+        <circle cx="892" cy="524" r="1.4"/>
+        <circle cx="936" cy="524" r="1.4"/>
+        <circle cx="980" cy="524" r="1.4"/>
+        <circle cx="232" cy="568" r="1.4"/>
+        <circle cx="276" cy="568" r="1.4"/>
+        <circle cx="320" cy="568" r="1.4"/>
+        <circle cx="364" cy="568" r="1.4"/>
+        <circle cx="408" cy="568" r="1.4"/>
+        <circle cx="452" cy="568" r="1.4"/>
+        <circle cx="496" cy="568" r="1.4"/>
+        <circle cx="540" cy="568" r="1.4"/>
+        <circle cx="584" cy="568" r="1.4"/>
+        <circle cx="628" cy="568" r="1.4"/>
+        <circle cx="672" cy="568" r="1.4"/>
+        <circle cx="716" cy="568" r="1.4"/>
+        <circle cx="760" cy="568" r="1.4"/>
+        <circle cx="804" cy="568" r="1.4"/>
+        <circle cx="848" cy="568" r="1.4"/>
+        <circle cx="892" cy="568" r="1.4"/>
+        <circle cx="936" cy="568" r="1.4"/>
+        <circle cx="980" cy="568" r="1.4"/>
+        <circle cx="232" cy="612" r="1.4"/>
+        <circle cx="276" cy="612" r="1.4"/>
+        <circle cx="320" cy="612" r="1.4"/>
+        <circle cx="364" cy="612" r="1.4"/>
+        <circle cx="408" cy="612" r="1.4"/>
+        <circle cx="452" cy="612" r="1.4"/>
+        <circle cx="496" cy="612" r="1.4"/>
+        <circle cx="540" cy="612" r="1.4"/>
+        <circle cx="584" cy="612" r="1.4"/>
+        <circle cx="628" cy="612" r="1.4"/>
+        <circle cx="672" cy="612" r="1.4"/>
+        <circle cx="716" cy="612" r="1.4"/>
+        <circle cx="760" cy="612" r="1.4"/>
+        <circle cx="804" cy="612" r="1.4"/>
+        <circle cx="848" cy="612" r="1.4"/>
+        <circle cx="892" cy="612" r="1.4"/>
+        <circle cx="936" cy="612" r="1.4"/>
+        <circle cx="980" cy="612" r="1.4"/>
+        <circle cx="232" cy="656" r="1.4"/>
+        <circle cx="276" cy="656" r="1.4"/>
+        <circle cx="320" cy="656" r="1.4"/>
+        <circle cx="364" cy="656" r="1.4"/>
+        <circle cx="408" cy="656" r="1.4"/>
+        <circle cx="452" cy="656" r="1.4"/>
+        <circle cx="496" cy="656" r="1.4"/>
+        <circle cx="540" cy="656" r="1.4"/>
+        <circle cx="584" cy="656" r="1.4"/>
+        <circle cx="628" cy="656" r="1.4"/>
+        <circle cx="672" cy="656" r="1.4"/>
+        <circle cx="716" cy="656" r="1.4"/>
+        <circle cx="760" cy="656" r="1.4"/>
+        <circle cx="804" cy="656" r="1.4"/>
+        <circle cx="848" cy="656" r="1.4"/>
+        <circle cx="892" cy="656" r="1.4"/>
+        <circle cx="936" cy="656" r="1.4"/>
+        <circle cx="980" cy="656" r="1.4"/>
+        <circle cx="232" cy="700" r="1.4"/>
+        <circle cx="276" cy="700" r="1.4"/>
+        <circle cx="320" cy="700" r="1.4"/>
+        <circle cx="364" cy="700" r="1.4"/>
+        <circle cx="408" cy="700" r="1.4"/>
+        <circle cx="452" cy="700" r="1.4"/>
+        <circle cx="496" cy="700" r="1.4"/>
+        <circle cx="540" cy="700" r="1.4"/>
+        <circle cx="584" cy="700" r="1.4"/>
+        <circle cx="628" cy="700" r="1.4"/>
+        <circle cx="672" cy="700" r="1.4"/>
+        <circle cx="716" cy="700" r="1.4"/>
+        <circle cx="760" cy="700" r="1.4"/>
+        <circle cx="804" cy="700" r="1.4"/>
+        <circle cx="848" cy="700" r="1.4"/>
+        <circle cx="892" cy="700" r="1.4"/>
+        <circle cx="936" cy="700" r="1.4"/>
+        <circle cx="980" cy="700" r="1.4"/>
+        <circle cx="232" cy="744" r="1.4"/>
+        <circle cx="276" cy="744" r="1.4"/>
+        <circle cx="320" cy="744" r="1.4"/>
+        <circle cx="364" cy="744" r="1.4"/>
+        <circle cx="408" cy="744" r="1.4"/>
+        <circle cx="452" cy="744" r="1.4"/>
+        <circle cx="496" cy="744" r="1.4"/>
+        <circle cx="540" cy="744" r="1.4"/>
+        <circle cx="584" cy="744" r="1.4"/>
+        <circle cx="628" cy="744" r="1.4"/>
+        <circle cx="672" cy="744" r="1.4"/>
+        <circle cx="716" cy="744" r="1.4"/>
+        <circle cx="760" cy="744" r="1.4"/>
+        <circle cx="804" cy="744" r="1.4"/>
+        <circle cx="848" cy="744" r="1.4"/>
+        <circle cx="892" cy="744" r="1.4"/>
+        <circle cx="936" cy="744" r="1.4"/>
+        <circle cx="980" cy="744" r="1.4"/>
         </g>
-
-        <!-- корпус Флиппера (разрез 40 × 25.6) -->
-        <rect x="300" y="300" width="360" height="150" rx="10" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
-        <text x="480" y="382" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="12" fill="currentColor">FLIPPER (торец)</text>
-        <text x="480" y="402" text-anchor="middle" font-family="var(--font-mono)" font-size="10.5" fill="var(--muted)">40 × 25.6 мм</text>
-        <text x="315" y="322" font-family="var(--font-sans)" font-size="10" fill="var(--muted)">экран</text>
-
-        <!-- гребёнка -->
-        <g stroke="var(--power)" stroke-width="2.2">
-          <line x1="320" y1="300" x2="320" y2="278"/><line x1="336" y1="300" x2="336" y2="278"/>
-          <line x1="352" y1="300" x2="352" y2="278"/>
+        <rect x="250" y="166" width="270" height="34" rx="5" fill="var(--panel)" stroke="var(--power)" stroke-width="1.8"/>
+        <g fill="var(--power)">
+        <circle cx="280" cy="183" r="4"/>
+        <circle cx="322" cy="183" r="4"/>
+        <circle cx="364" cy="183" r="4"/>
+        <circle cx="406" cy="183" r="4"/>
+        <circle cx="448" cy="183" r="4"/>
+        <circle cx="490" cy="183" r="4"/>
         </g>
-        <text x="336" y="268" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--power)">гребёнка</text>
-
-        <!-- основная плата (горизонтальна, нависает вправо) -->
-        <rect x="308" y="262" width="560" height="16" rx="3" fill="var(--board)" stroke="currentColor" stroke-width="2"/>
-        <text x="470" y="250" text-anchor="middle" font-family="var(--font-mono)" font-size="10.5" fill="currentColor">основная плата ≈ 20 г</text>
-        <!-- часть на корпусе / нависает -->
-        <line x1="660" y1="240" x2="660" y2="290" stroke="var(--ink)" stroke-width="1.2" stroke-dasharray="6 4"/>
-        <text x="666" y="238" font-family="var(--font-sans)" font-size="9.5" fill="var(--muted)">край корпуса</text>
-
-        <!-- модули на плате -->
-        <rect x="360" y="244" width="60" height="18" rx="2" fill="var(--panel)" stroke="var(--power)" stroke-width="1.4"/>
-        <rect x="470" y="244" width="70" height="18" rx="2" fill="var(--panel)" stroke="currentColor" stroke-width="1.4"/>
-
-        <!-- банки на нижней стороне нависающей части -->
-        <circle cx="720" cy="316" r="30" fill="var(--panel)" stroke="var(--power)" stroke-width="2"/>
-        <circle cx="792" cy="316" r="30" fill="var(--panel)" stroke="var(--power)" stroke-width="2"/>
-        <text x="756" y="320" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--power)">2× 18650</text>
-        <rect x="700" y="356" width="150" height="34" rx="5" fill="var(--panel)" stroke="currentColor" stroke-width="1.6"/>
-        <text x="775" y="378" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--muted)">BMS + DC-DC</text>
-        <text x="775" y="410" text-anchor="middle" font-family="var(--font-sans)" font-size="10.5" fill="var(--ir)">≈ 100 г на нижней стороне</text>
-
-        <!-- опора-ножка -->
-        <line x1="860" y1="278" x2="860" y2="452" stroke="var(--ir)" stroke-width="2.4"/>
-        <path d="M846,452 L874,452 L860,432 Z" fill="var(--ir)"/>
-        <text x="884" y="372" font-family="var(--font-sans)" font-size="10.5" fill="var(--ir)">опора-ножка</text>
-        <text x="884" y="388" font-family="var(--font-sans)" font-size="10.5" fill="var(--ir)">обязательна</text>
-
-        <!-- момент -->
-        <path d="M336,220 a70,70 0 0 1 120,20" fill="none" stroke="var(--ir)" stroke-width="2" marker-end="url(#arC)"/>
-        <text x="470" y="205" font-family="var(--font-mono)" font-size="11" fill="var(--ir)">момент ≈ 100 г × 50 мм ≈ 5000 г·мм</text>
-        <text x="470" y="222" font-family="var(--font-sans)" font-size="10" fill="var(--muted)">гребёнка одна столько не держит</text>
+        <text x="385" y="218" text-anchor="middle" font-family="var(--font-mono)" font-size="9.5" fill="var(--power)">XS2 ← этаж 1: +5В·GND·TX·RX·OUT</text>
+        <rect x="250" y="250" width="300" height="180" rx="6" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
+        <text x="400.0" y="338.0" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="12" fill="currentColor">U3 · XIAO ESP32C5</text>
+        <text x="400.0" y="353.0" text-anchor="middle" font-family="var(--font-mono)" font-size="9.5" fill="var(--muted)">21 × 17.8 мм</text>
+        <rect x="238" y="320" width="12" height="46" rx="2" fill="var(--hairline)"/>
+        <text x="228" y="300" text-anchor="start" font-family="var(--font-mono)" font-size="9" fill="var(--muted)">USB-C</text>
+        <text x="228" y="314" text-anchor="start" font-family="var(--font-mono)" font-size="9" fill="var(--muted)">наружу ←</text>
+        <rect x="260" y="520" width="34" height="15" rx="2" fill="var(--panel)" stroke="var(--ir)" stroke-width="1.8"/>
+        <text x="277" y="516" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--ir)">R3</text>
+        <text x="277" y="547" text-anchor="middle" font-family="var(--font-mono)" font-size="8.5" fill="var(--muted)">100Ω</text>
+        <rect x="340" y="520" width="15" height="34" rx="2" fill="var(--panel)" stroke="var(--ir)" stroke-width="1.8"/>
+        <text x="365" y="532" font-family="var(--font-mono)" font-size="9" fill="var(--ir)">R4</text>
+        <text x="365" y="544" font-family="var(--font-mono)" font-size="8.5" fill="var(--muted)">100k</text>
+        <rect x="400" y="490" width="120" height="150" rx="6" fill="var(--ir-soft)" stroke="var(--ir)" stroke-width="2"/>
+        <text x="460.0" y="563.0" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="11" fill="var(--ir)">Q1 · IRLZ44N</text>
+        <text x="460.0" y="578.0" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--muted)">TO-220</text>
+        <text x="460" y="660" text-anchor="middle" font-family="var(--font-sans)" font-size="8.5" fill="var(--muted)">стоит вертикально, язычком к кромке</text>
+        <text x="670" y="500" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--ir)">3 ветки кольца</text>
+        <rect x="610" y="520" width="34" height="15" rx="2" fill="var(--panel)" stroke="var(--ir)" stroke-width="1.8"/>
+        <text x="627" y="516" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--ir)">R6</text>
+        <text x="627" y="547" text-anchor="middle" font-family="var(--font-mono)" font-size="8.5" fill="var(--muted)">22Ω</text>
+        <rect x="610" y="570" width="34" height="15" rx="2" fill="var(--panel)" stroke="var(--ir)" stroke-width="1.8"/>
+        <text x="627" y="566" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--ir)">R7</text>
+        <text x="627" y="597" text-anchor="middle" font-family="var(--font-mono)" font-size="8.5" fill="var(--muted)">22Ω</text>
+        <rect x="610" y="620" width="34" height="15" rx="2" fill="var(--panel)" stroke="var(--ir)" stroke-width="1.8"/>
+        <text x="627" y="616" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--ir)">R8</text>
+        <text x="627" y="647" text-anchor="middle" font-family="var(--font-mono)" font-size="8.5" fill="var(--muted)">22Ω</text>
+        <circle cx="710" cy="540" r="12" fill="var(--panel)" stroke="var(--ir)" stroke-width="1.8"/>
+        <text x="710" y="543" text-anchor="middle" font-family="var(--font-mono)" font-size="8.5" fill="var(--ir)">C3</text>
+        <text x="710" y="566" text-anchor="middle" font-family="var(--font-mono)" font-size="8" fill="var(--muted)">100n</text>
+        <circle cx="710" cy="610" r="12" fill="var(--panel)" stroke="var(--ir)" stroke-width="1.8"/>
+        <text x="710" y="613" text-anchor="middle" font-family="var(--font-mono)" font-size="8.5" fill="var(--ir)">C4</text>
+        <text x="710" y="636" text-anchor="middle" font-family="var(--font-mono)" font-size="8" fill="var(--muted)">220µ</text>
+        <text x="730" y="640" font-family="var(--font-sans)" font-size="8.5" fill="var(--muted)">буфер у кольца</text>
+        <g fill="var(--ir)" opacity="0.85">
+        <circle cx="950" cy="366" r="12"/>
+        <circle cx="1005" cy="398" r="12"/>
+        <circle cx="1005" cy="462" r="12"/>
+        <circle cx="950" cy="494" r="12"/>
+        <circle cx="895" cy="462" r="12"/>
+        <circle cx="895" cy="398" r="12"/>
+        </g>
+        <g stroke="var(--ir)" stroke-width="2" marker-end="url(#arC)">
+        <line x1="950" y1="366" x2="950" y2="340"/>
+        <line x1="1005" y1="398" x2="1028" y2="385"/>
+        <line x1="1005" y1="462" x2="1028" y2="475"/>
+        <line x1="950" y1="494" x2="950" y2="520"/>
+        <line x1="895" y1="462" x2="872" y2="475"/>
+        <line x1="895" y1="398" x2="872" y2="385"/>
+        </g>
+        <text x="940" y="550" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="11" fill="var(--ir)">КОЛЬЦО 6× IR</text>
+        <text x="940" y="566" text-anchor="middle" font-family="var(--font-sans)" font-size="9" fill="var(--ir)">за кромкой, наружу</text>
+        <text x="600.0" y="734" text-anchor="middle" font-family="var(--font-sans)" font-size="9.5" fill="var(--muted)">силовой узел над экраном E1 — коммутационный шум не приходится на CC1101 внизу</text>
       </svg>
     </div>
     <figcaption>
-      Плюс: один узел, короткие силовые провода, ничего не болтается на шлейфе. Минус:
-      центр тяжести вынесен за корпус, и <b>без опоры под дальним концом гребёнка работает
-      на отрыв</b>. Годится, когда устройство лежит на столе; в руке — вариант&nbsp;B.
+      Верхний этаж целиком: <b>U3 XIAO</b> с USB-C к кромке, узел затвора R3/R4 и ключ
+      <b>Q1 IRLZ44N (TO-220, вертикально)</b>, три токовые ветки кольца R6–R8 22&nbsp;Ω с
+      буфером C3/C4, и открытое <b>кольцо 6× IR</b> за кромкой платы. Всё это над экраном E1,
+      так что коммутация ключа не наводится на приёмник внизу.
     </figcaption>
   </figure>
 
-  <h2>Вариант B — питание на отдельной плате</h2>
+  <div class="tablewrap">
+    <table>
+      <caption style="text-align:left; padding:8px 4px; color:var(--muted); font-size:13px;">Межплатные разъёмы</caption>
+      <thead>
+        <tr><th>Разъём</th><th>Контакты</th><th>Между</th><th>Цепи</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="ref">XS1</td><td class="val">1×18</td><td>этаж 1 ↔ Флиппер</td><td class="role">весь GPIO: SPI, UART, 3V3, GND, 5V (пин 1 — не подключать)</td></tr>
+        <tr><td class="ref">XS2</td><td class="val">1×6</td><td>этаж 1 ↔ этаж 2</td><td class="role">+5&nbsp;В, GND, GND, TX, RX, выход LM393 (на затвор Q1)</td></tr>
+        <tr><td class="ref">XS3</td><td class="val">1×2 (шлейф)</td><td>АКБ-плата → этаж 1</td><td class="role">+5&nbsp;В, GND — только питание, звезда земли на этаже 1</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Батарейная плата — питание отдельным модулем</h2>
   <p class="sub">
     Банки на второй плате, перпендикулярно основной, прижаты к задней грани Флиппера.
     Массу несёт корпус, не гребёнка.
@@ -1422,13 +1884,221 @@
     </figcaption>
   </figure>
 
-  <h2>A против B и что учесть при сборке</h2>
+
+  <figure>
+    <div class="board">
+      <svg viewBox="0 0 1240 500" role="img"
+           aria-label="Батарейная плата сверху, повыводно. Два держателя 18650 — BT1 сверху и BT2 ниже, соединены последовательно в 2S, средняя точка идёт на баланс BMS. Нижним рядом стоят: плата BMS 2S защиты, понижающий преобразователь LM2596 на 5.00 вольта, выключатель SW1, предохранитель F1 на 3 ампера и выходной разъём XS3 плюс 5 вольт и земля. Цепь: банки, BMS, LM2596, выключатель, предохранитель, XS3. На шапку уходит только двухпроводной шлейф XS3.">
+        <rect x="0" y="0" width="1240" height="500" fill="url(#dots2)" opacity="0.9"/>
+        <text x="620.0" y="80" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="13" fill="currentColor">Батарейная плата — вид сверху (весь силовой узел питания)</text>
+        <rect x="190" y="110" width="860" height="340" rx="10" fill="var(--board)" stroke="currentColor" stroke-width="2"/>
+        <g fill="var(--hairline)" opacity="0.5">
+        <circle cx="212" cy="132" r="1.4"/>
+        <circle cx="254" cy="132" r="1.4"/>
+        <circle cx="296" cy="132" r="1.4"/>
+        <circle cx="338" cy="132" r="1.4"/>
+        <circle cx="380" cy="132" r="1.4"/>
+        <circle cx="422" cy="132" r="1.4"/>
+        <circle cx="464" cy="132" r="1.4"/>
+        <circle cx="506" cy="132" r="1.4"/>
+        <circle cx="548" cy="132" r="1.4"/>
+        <circle cx="590" cy="132" r="1.4"/>
+        <circle cx="632" cy="132" r="1.4"/>
+        <circle cx="674" cy="132" r="1.4"/>
+        <circle cx="716" cy="132" r="1.4"/>
+        <circle cx="758" cy="132" r="1.4"/>
+        <circle cx="800" cy="132" r="1.4"/>
+        <circle cx="842" cy="132" r="1.4"/>
+        <circle cx="884" cy="132" r="1.4"/>
+        <circle cx="926" cy="132" r="1.4"/>
+        <circle cx="968" cy="132" r="1.4"/>
+        <circle cx="1010" cy="132" r="1.4"/>
+        <circle cx="212" cy="174" r="1.4"/>
+        <circle cx="254" cy="174" r="1.4"/>
+        <circle cx="296" cy="174" r="1.4"/>
+        <circle cx="338" cy="174" r="1.4"/>
+        <circle cx="380" cy="174" r="1.4"/>
+        <circle cx="422" cy="174" r="1.4"/>
+        <circle cx="464" cy="174" r="1.4"/>
+        <circle cx="506" cy="174" r="1.4"/>
+        <circle cx="548" cy="174" r="1.4"/>
+        <circle cx="590" cy="174" r="1.4"/>
+        <circle cx="632" cy="174" r="1.4"/>
+        <circle cx="674" cy="174" r="1.4"/>
+        <circle cx="716" cy="174" r="1.4"/>
+        <circle cx="758" cy="174" r="1.4"/>
+        <circle cx="800" cy="174" r="1.4"/>
+        <circle cx="842" cy="174" r="1.4"/>
+        <circle cx="884" cy="174" r="1.4"/>
+        <circle cx="926" cy="174" r="1.4"/>
+        <circle cx="968" cy="174" r="1.4"/>
+        <circle cx="1010" cy="174" r="1.4"/>
+        <circle cx="212" cy="216" r="1.4"/>
+        <circle cx="254" cy="216" r="1.4"/>
+        <circle cx="296" cy="216" r="1.4"/>
+        <circle cx="338" cy="216" r="1.4"/>
+        <circle cx="380" cy="216" r="1.4"/>
+        <circle cx="422" cy="216" r="1.4"/>
+        <circle cx="464" cy="216" r="1.4"/>
+        <circle cx="506" cy="216" r="1.4"/>
+        <circle cx="548" cy="216" r="1.4"/>
+        <circle cx="590" cy="216" r="1.4"/>
+        <circle cx="632" cy="216" r="1.4"/>
+        <circle cx="674" cy="216" r="1.4"/>
+        <circle cx="716" cy="216" r="1.4"/>
+        <circle cx="758" cy="216" r="1.4"/>
+        <circle cx="800" cy="216" r="1.4"/>
+        <circle cx="842" cy="216" r="1.4"/>
+        <circle cx="884" cy="216" r="1.4"/>
+        <circle cx="926" cy="216" r="1.4"/>
+        <circle cx="968" cy="216" r="1.4"/>
+        <circle cx="1010" cy="216" r="1.4"/>
+        <circle cx="212" cy="258" r="1.4"/>
+        <circle cx="254" cy="258" r="1.4"/>
+        <circle cx="296" cy="258" r="1.4"/>
+        <circle cx="338" cy="258" r="1.4"/>
+        <circle cx="380" cy="258" r="1.4"/>
+        <circle cx="422" cy="258" r="1.4"/>
+        <circle cx="464" cy="258" r="1.4"/>
+        <circle cx="506" cy="258" r="1.4"/>
+        <circle cx="548" cy="258" r="1.4"/>
+        <circle cx="590" cy="258" r="1.4"/>
+        <circle cx="632" cy="258" r="1.4"/>
+        <circle cx="674" cy="258" r="1.4"/>
+        <circle cx="716" cy="258" r="1.4"/>
+        <circle cx="758" cy="258" r="1.4"/>
+        <circle cx="800" cy="258" r="1.4"/>
+        <circle cx="842" cy="258" r="1.4"/>
+        <circle cx="884" cy="258" r="1.4"/>
+        <circle cx="926" cy="258" r="1.4"/>
+        <circle cx="968" cy="258" r="1.4"/>
+        <circle cx="1010" cy="258" r="1.4"/>
+        <circle cx="212" cy="300" r="1.4"/>
+        <circle cx="254" cy="300" r="1.4"/>
+        <circle cx="296" cy="300" r="1.4"/>
+        <circle cx="338" cy="300" r="1.4"/>
+        <circle cx="380" cy="300" r="1.4"/>
+        <circle cx="422" cy="300" r="1.4"/>
+        <circle cx="464" cy="300" r="1.4"/>
+        <circle cx="506" cy="300" r="1.4"/>
+        <circle cx="548" cy="300" r="1.4"/>
+        <circle cx="590" cy="300" r="1.4"/>
+        <circle cx="632" cy="300" r="1.4"/>
+        <circle cx="674" cy="300" r="1.4"/>
+        <circle cx="716" cy="300" r="1.4"/>
+        <circle cx="758" cy="300" r="1.4"/>
+        <circle cx="800" cy="300" r="1.4"/>
+        <circle cx="842" cy="300" r="1.4"/>
+        <circle cx="884" cy="300" r="1.4"/>
+        <circle cx="926" cy="300" r="1.4"/>
+        <circle cx="968" cy="300" r="1.4"/>
+        <circle cx="1010" cy="300" r="1.4"/>
+        <circle cx="212" cy="342" r="1.4"/>
+        <circle cx="254" cy="342" r="1.4"/>
+        <circle cx="296" cy="342" r="1.4"/>
+        <circle cx="338" cy="342" r="1.4"/>
+        <circle cx="380" cy="342" r="1.4"/>
+        <circle cx="422" cy="342" r="1.4"/>
+        <circle cx="464" cy="342" r="1.4"/>
+        <circle cx="506" cy="342" r="1.4"/>
+        <circle cx="548" cy="342" r="1.4"/>
+        <circle cx="590" cy="342" r="1.4"/>
+        <circle cx="632" cy="342" r="1.4"/>
+        <circle cx="674" cy="342" r="1.4"/>
+        <circle cx="716" cy="342" r="1.4"/>
+        <circle cx="758" cy="342" r="1.4"/>
+        <circle cx="800" cy="342" r="1.4"/>
+        <circle cx="842" cy="342" r="1.4"/>
+        <circle cx="884" cy="342" r="1.4"/>
+        <circle cx="926" cy="342" r="1.4"/>
+        <circle cx="968" cy="342" r="1.4"/>
+        <circle cx="1010" cy="342" r="1.4"/>
+        <circle cx="212" cy="384" r="1.4"/>
+        <circle cx="254" cy="384" r="1.4"/>
+        <circle cx="296" cy="384" r="1.4"/>
+        <circle cx="338" cy="384" r="1.4"/>
+        <circle cx="380" cy="384" r="1.4"/>
+        <circle cx="422" cy="384" r="1.4"/>
+        <circle cx="464" cy="384" r="1.4"/>
+        <circle cx="506" cy="384" r="1.4"/>
+        <circle cx="548" cy="384" r="1.4"/>
+        <circle cx="590" cy="384" r="1.4"/>
+        <circle cx="632" cy="384" r="1.4"/>
+        <circle cx="674" cy="384" r="1.4"/>
+        <circle cx="716" cy="384" r="1.4"/>
+        <circle cx="758" cy="384" r="1.4"/>
+        <circle cx="800" cy="384" r="1.4"/>
+        <circle cx="842" cy="384" r="1.4"/>
+        <circle cx="884" cy="384" r="1.4"/>
+        <circle cx="926" cy="384" r="1.4"/>
+        <circle cx="968" cy="384" r="1.4"/>
+        <circle cx="1010" cy="384" r="1.4"/>
+        <circle cx="212" cy="426" r="1.4"/>
+        <circle cx="254" cy="426" r="1.4"/>
+        <circle cx="296" cy="426" r="1.4"/>
+        <circle cx="338" cy="426" r="1.4"/>
+        <circle cx="380" cy="426" r="1.4"/>
+        <circle cx="422" cy="426" r="1.4"/>
+        <circle cx="464" cy="426" r="1.4"/>
+        <circle cx="506" cy="426" r="1.4"/>
+        <circle cx="548" cy="426" r="1.4"/>
+        <circle cx="590" cy="426" r="1.4"/>
+        <circle cx="632" cy="426" r="1.4"/>
+        <circle cx="674" cy="426" r="1.4"/>
+        <circle cx="716" cy="426" r="1.4"/>
+        <circle cx="758" cy="426" r="1.4"/>
+        <circle cx="800" cy="426" r="1.4"/>
+        <circle cx="842" cy="426" r="1.4"/>
+        <circle cx="884" cy="426" r="1.4"/>
+        <circle cx="926" cy="426" r="1.4"/>
+        <circle cx="968" cy="426" r="1.4"/>
+        <circle cx="1010" cy="426" r="1.4"/>
+        </g>
+        <rect x="230" y="140" width="720" height="70" rx="30" fill="var(--panel)" stroke="var(--power)" stroke-width="2"/>
+        <line x1="240" y1="175" x2="260" y2="175" stroke="var(--power)" stroke-width="3"/>
+        <text x="245" y="170" font-family="var(--font-mono)" font-size="12" fill="var(--power)">+</text>
+        <text x="935" y="182" text-anchor="end" font-family="var(--font-mono)" font-size="14" fill="var(--power)">−</text>
+        <text x="590" y="183" text-anchor="middle" font-family="var(--font-mono)" font-size="12" fill="var(--power)">BT1 · держатель 18650 (65 × 18.4)</text>
+        <rect x="230" y="230" width="720" height="70" rx="30" fill="var(--panel)" stroke="var(--power)" stroke-width="2"/>
+        <line x1="240" y1="265" x2="260" y2="265" stroke="var(--power)" stroke-width="3"/>
+        <text x="245" y="260" font-family="var(--font-mono)" font-size="12" fill="var(--power)">+</text>
+        <text x="935" y="272" text-anchor="end" font-family="var(--font-mono)" font-size="14" fill="var(--power)">−</text>
+        <text x="590" y="273" text-anchor="middle" font-family="var(--font-mono)" font-size="12" fill="var(--power)">BT2 · держатель 18650 (65 × 18.4)</text>
+        <text x="590" y="228" text-anchor="middle" font-family="var(--font-sans)" font-size="9" fill="var(--muted)">2S: минус BT1 → плюс BT2 перемычкой; средняя точка → на BMS (баланс)</text>
+        <rect x="230" y="340" width="150" height="70" rx="6" fill="var(--panel)" stroke="var(--power)" stroke-width="2"/>
+        <text x="305.0" y="372" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="12" fill="var(--power)">BMS 2S</text>
+        <text x="305.0" y="390" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--muted)">защита 2S</text>
+        <rect x="400" y="340" width="190" height="70" rx="6" fill="var(--panel)" stroke="var(--power)" stroke-width="2"/>
+        <text x="495.0" y="372" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="12" fill="var(--power)">LM2596</text>
+        <text x="495.0" y="390" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--muted)">5.00 В</text>
+        <circle cx="630" cy="375" r="24" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
+        <text x="630" y="372" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="11" fill="currentColor">SW1</text>
+        <text x="630" y="386" text-anchor="middle" font-family="var(--font-mono)" font-size="8.5" fill="var(--muted)">выкл</text>
+        <rect x="680" y="358" width="70" height="34" rx="6" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
+        <text x="715" y="379" text-anchor="middle" font-family="var(--font-mono)" font-size="11" fill="currentColor">F1 · 3 A</text>
+        <rect x="790" y="350" width="120" height="50" rx="6" fill="var(--panel)" stroke="var(--power)" stroke-width="2"/>
+        <text x="850" y="372" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="11" fill="var(--power)">XS3 →</text>
+        <text x="850" y="388" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--muted)">+5 В, GND</text>
+        <text x="850" y="422" text-anchor="middle" font-family="var(--font-sans)" font-size="9" fill="var(--power)">шлейф на этаж 1</text>
+        <text x="620.0" y="484" text-anchor="middle" font-family="var(--font-sans)" font-size="10" fill="var(--muted)">Весь силовой узел питания живёт здесь; на шапку уходит только двухпроводной XS3. Банки → BMS → LM2596 → выключатель → предохранитель → XS3.</text>
+      </svg>
+    </div>
+    <figcaption>
+      Повыводная раскладка батарейной платы: держатели <b>BT1/BT2</b>, <b>BMS 2S</b>,
+      <b>LM2596</b> (выставлен на 5.00&nbsp;В), выключатель <b>SW1</b> и предохранитель
+      <b>F1</b>. Наружу&nbsp;— единственный разъём <b>XS3</b> (+5&nbsp;В, GND). Весь вес и весь
+      силовой узел остаются здесь, на шапку идёт только лёгкий двухпроводный шлейф.
+    </figcaption>
+  </figure>
+
+  <h2>Механика, развесовка и монтаж</h2>
   <div class="notes">
     <div class="note">
       <h3><span class="dot"></span> Развесовка решает</h3>
-      <p>Банки 18650 — это <b>≈ 90 г</b> из ~120 г всей шапки. В варианте&nbsp;A этот вес висит
-      за краем корпуса на трении гребёнки (момент ≈&nbsp;5000&nbsp;г·мм) — нужна опора. В&nbsp;B
-      вес уходит в корпус и на стол, гребёнка разгружена. Для ношения — только&nbsp;B.</p>
+      <p>Банки 18650 — это <b>≈ 90 г</b> из ~120 г всей шапки. Поэтому они вынесены на
+      отдельную батарейную плату у задней грани: вес уходит <b>в корпус и на стол</b>, а
+      гребёнка держит только лёгкий стек (≈ 20 г). На шапку от батарей идёт лишь двухпроводный
+      шлейф XS3 — момента на отрыв гребёнки нет.</p>
     </div>
     <div class="note">
       <h3><span class="dot"></span> Низ платы — плоский</h3>
@@ -1462,14 +2132,16 @@
       </thead>
       <tbody>
         <tr><td class="ref">Гребёнка</td><td class="val">1×8 + 1×10</td><td>ряд 1</td><td class="role">шаг 2.54, размах ≈ 43 мм вдоль кромки</td></tr>
-        <tr><td class="ref">CC1101</td><td class="val">28 × 15</td><td>верх, слева</td><td class="role">антенна за краем, под ней меди нет</td></tr>
-        <tr><td class="ref">BPW34</td><td class="val">5 × 4</td><td>верх справа, гибкий вывод</td><td class="role">уходит на низ платы к ИК-окну</td></tr>
-        <tr><td class="ref">XIAO ESP32C5</td><td class="val">21 × 17.8</td><td>центр</td><td class="role">USB-C + LDO на борту; UART на 2 GPIO</td></tr>
-        <tr><td class="ref">LM393</td><td class="val">~10 × 8</td><td>силовой узел</td><td class="role">DIP-8, компаратор</td></tr>
-        <tr><td class="ref">IRLZ44N</td><td class="val">~15 × 10</td><td>силовой узел</td><td class="role">TO-220, ключ Q1</td></tr>
-        <tr><td class="ref">C4</td><td class="val">Ø 8</td><td>силовой узел</td><td class="role">220 мкФ, вплотную к ключу</td></tr>
-        <tr><td class="ref">Кольцо</td><td class="val">6× Ø 5</td><td>дальний край</td><td class="role">940 нм, за габаритом корпуса, наружу</td></tr>
-        <tr><td class="ref">2× 18650</td><td class="val">65 × 18.4</td><td>A: низ · B: ⟂ плата</td><td class="role">≈ 90 г — определяет выбор варианта</td></tr>
+        <tr><td class="ref">CC1101</td><td class="val">28 × 15</td><td>этаж 1</td><td class="role">антенна за кромкой платы и за экраном E1</td></tr>
+        <tr><td class="ref">D1 BPW34</td><td class="val">5 × 4</td><td>этаж 1, гибкий вывод</td><td class="role">уходит на низ платы к ИК-окну</td></tr>
+        <tr><td class="ref">XIAO ESP32C5</td><td class="val">21 × 17.8</td><td>этаж 2</td><td class="role">USB-C + LDO на борту; UART на 2 GPIO</td></tr>
+        <tr><td class="ref">LM393 + обвязка</td><td class="val">~10 × 8</td><td>этаж 1, под E1</td><td class="role">DIP-8; R1/R2/R5, C1/C2, RV1 рядом</td></tr>
+        <tr><td class="ref">IRLZ44N</td><td class="val">~15 × 10</td><td>этаж 2</td><td class="role">TO-220, ключ Q1, вертикально</td></tr>
+        <tr><td class="ref">C3/C4</td><td class="val">Ø 5 / Ø 8</td><td>этаж 2</td><td class="role">100 нФ + 220 мкФ буфер у кольца</td></tr>
+        <tr><td class="ref">Кольцо 6× IR</td><td class="val">6× Ø 5</td><td>этаж 2, дальний край</td><td class="role">940 нм, за габаритом корпуса, наружу</td></tr>
+        <tr><td class="ref">E1 · экран</td><td class="val">по контуру платы</td><td>между этажами</td><td class="role">лист текстолита/медь вниз, GND в 1 точке, вырез под антенну</td></tr>
+        <tr><td class="ref">XS2</td><td class="val">1×6</td><td>этаж 1↔2</td><td class="role">+5В·GND·GND·TX·RX·выход LM393</td></tr>
+        <tr><td class="ref">2× 18650 · BMS · LM2596</td><td class="val">65 × 18.4</td><td>батарейная плата ⟂</td><td class="role">≈ 90 г; на шапку — только XS3 (+5В, GND)</td></tr>
       </tbody>
     </table>
   </div>

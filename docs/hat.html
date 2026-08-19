@@ -491,6 +491,372 @@
     </div>
   </div>
 
+  <h2>Компоновка на макетке — по геометрии Флиппера</h2>
+  <p class="sub">
+    От абстрактных зон к масштабной раскладке. Числа привязаны к корпусу
+    100.3&nbsp;×&nbsp;40.1&nbsp;×&nbsp;25.6&nbsp;мм и к разъёму: 18 контактов, один ряд, шаг 2.54.
+  </p>
+  <p class="aside" style="margin-top:0">
+    Принятая геометрия. Полный размах контактов пин&nbsp;1→18 при шаге 2.54&nbsp;— это
+    17&nbsp;×&nbsp;2.54&nbsp;≈&nbsp;<b>43&nbsp;мм</b>, то есть шире 40-мм грани корпуса. Значит
+    гребёнка стоит <b>вдоль длинной (100&nbsp;мм) кромки</b>, а не поперёк. Плата ложится на
+    Флиппер сверху этой кромкой, первый ряд&nbsp;— гребёнка. Ширина платы вдоль гребёнки
+    <b>≈&nbsp;45&nbsp;мм</b> («примерно с Флиппера»), глубина набирается вглубь и
+    минимизируется. Экран под платой закрыт&nbsp;— устройство работает «вслепую», по одной
+    кнопке, это допустимо для его сценария.
+  </p>
+
+  <figure>
+    <div class="legend" aria-hidden="true">
+      <span class="lg-sig"><i></i> посадочные места</span>
+      <span class="lg-pwr"><i></i> РЧ / keep-out</span>
+      <span class="lg-ir"><i class="dash"></i> оптика / силовое</span>
+    </div>
+    <div class="board">
+      <svg viewBox="0 0 1240 1120" role="img"
+           aria-label="Масштабный план платы, вид сверху. Плата шириной около 45 миллиметров вдоль верхней кромки и глубиной около 64 миллиметров. По верхней кромке гребёнка из 18 контактов с шагом 2.54 в двух блоках: 1-8 и 9-18. Питание и земля показаны цветом. Слева радиочастотный модуль CC1101 28 на 15 миллиметров, его антенна выведена за левый край платы, под антенной меди нет. Справа сверху LDO AMS1117 с конденсаторами и фотодиод BPW34 на гибком выводе, который уходит вниз платы к инфракрасному окну Флиппера. По центру модуль ESP32-WROOM 25.5 на 18 миллиметров, ниже площадки для прошивки. Ниже силовой узел инфракрасного бластера: компаратор LM393, ключ IRLZ44N в корпусе TO-220, подстроечник, конденсатор C4 220 микрофарад вплотную к ключу, резисторы. У дальнего края плата выходит за габарит корпуса Флиппера, там расположено кольцо из шести светодиодов 940 нанометров, направленное наружу. Пунктиром отмечены: дальний край корпуса Флиппера на 40 миллиметрах, зона keep-out под антенной, разделительный экран между кольцом и приёмным трактом, гибкий вывод фотодиода. Слева и сверху проставлены размеры 45 и 64 миллиметра.">
+        <defs>
+          <pattern id="holes" width="38.1" height="38.1" patternUnits="userSpaceOnUse">
+            <circle cx="1" cy="1" r="1.6" fill="var(--grid-dot)"/>
+          </pattern>
+          <marker id="dimA" markerWidth="10" markerHeight="10" refX="5" refY="4.2" orient="auto">
+            <path d="M8,0 L0,4.2 L8,8.4" fill="none" stroke="var(--muted)" stroke-width="1.4"/>
+          </marker>
+        </defs>
+
+        <!-- плата -->
+        <rect x="282" y="60" width="675" height="960" rx="10" fill="var(--board)" stroke="currentColor" stroke-width="2"/>
+        <rect x="282" y="60" width="675" height="960" rx="10" fill="url(#holes)" opacity="0.7"/>
+
+        <!-- размеры -->
+        <line x1="282" y1="38" x2="957" y2="38" stroke="var(--muted)" stroke-width="1.2" marker-start="url(#dimA)" marker-end="url(#dimA)"/>
+        <text x="619" y="30" text-anchor="middle" font-family="var(--font-mono)" font-size="12" fill="var(--muted)">≈ 45 мм · 18 отв. шаг 2.54</text>
+        <line x1="256" y1="72" x2="256" y2="1020" stroke="var(--muted)" stroke-width="1.2" marker-start="url(#dimA)" marker-end="url(#dimA)"/>
+        <text x="248" y="548" text-anchor="middle" font-family="var(--font-mono)" font-size="12" fill="var(--muted)" transform="rotate(-90 248 548)">≈ 64 мм (глубина)</text>
+
+        <!-- к Флипперу -->
+        <text x="300" y="1046" font-family="var(--font-mono)" font-size="11" fill="var(--muted)">↑ к Флипперу (гребёнка)   ·   от Флиппера ↓</text>
+
+        <!-- гребёнка -->
+        <g>
+          <!-- сигналы: 2,3,4,5,7,13,14 currentColor; питание/земля 8,9,11,18 power; прочее muted -->
+          <circle cx="296"  cy="86" r="6.2" fill="var(--muted)"/>
+          <circle cx="334"  cy="86" r="6.2" fill="currentColor"/>
+          <circle cx="372"  cy="86" r="6.2" fill="currentColor"/>
+          <circle cx="410"  cy="86" r="6.2" fill="currentColor"/>
+          <circle cx="448"  cy="86" r="6.2" fill="currentColor"/>
+          <circle cx="486"  cy="86" r="6.2" fill="var(--muted)"/>
+          <circle cx="524"  cy="86" r="6.2" fill="currentColor"/>
+          <circle cx="562"  cy="86" r="6.2" fill="var(--power)"/>
+          <circle cx="601"  cy="86" r="6.2" fill="var(--power)"/>
+          <circle cx="639"  cy="86" r="6.2" fill="var(--muted)"/>
+          <circle cx="677"  cy="86" r="6.2" fill="var(--power)"/>
+          <circle cx="715"  cy="86" r="6.2" fill="var(--muted)"/>
+          <circle cx="753"  cy="86" r="6.2" fill="currentColor"/>
+          <circle cx="791"  cy="86" r="6.2" fill="currentColor"/>
+          <circle cx="829"  cy="86" r="6.2" fill="var(--muted)"/>
+          <circle cx="867"  cy="86" r="6.2" fill="var(--muted)"/>
+          <circle cx="905"  cy="86" r="6.2" fill="var(--muted)"/>
+          <circle cx="944"  cy="86" r="6.2" fill="var(--power)"/>
+          <text x="296" y="66" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--muted)">1</text>
+          <text x="944" y="66" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--muted)">18</text>
+          <line x1="290" y1="104" x2="568" y2="104" stroke="var(--hairline)" stroke-width="1.4"/>
+          <line x1="595" y1="104" x2="950" y2="104" stroke="var(--hairline)" stroke-width="1.4"/>
+          <text x="429" y="120" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--muted)">блок 1×8</text>
+          <text x="772" y="120" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--muted)">блок 1×10</text>
+        </g>
+
+        <!-- CC1101 -->
+        <rect x="296" y="150" width="420" height="225" rx="6" fill="var(--panel)" stroke="var(--power)" stroke-width="2"/>
+        <text x="506" y="255" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="14" fill="var(--power)">CC1101</text>
+        <text x="506" y="277" text-anchor="middle" font-family="var(--font-mono)" font-size="11" fill="var(--muted)">28 × 15 мм</text>
+        <text x="506" y="297" text-anchor="middle" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">SPI + 3.3 В от Флиппера</text>
+        <!-- антенна за левый край + keep-out -->
+        <line x1="296" y1="200" x2="230" y2="200" stroke="var(--power)" stroke-width="2.4"/>
+        <path d="M230,200 q-30,0 -30,30 M230,200 q-30,0 -30,-30" fill="none" stroke="var(--power)" stroke-width="1.4" stroke-dasharray="5 4"/>
+        <text x="214" y="176" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--power)">антенна</text>
+        <text x="214" y="252" text-anchor="middle" font-family="var(--font-sans)" font-size="9.5" fill="var(--muted)">keep-out</text>
+
+        <!-- AMS1117 LDO -->
+        <rect x="748" y="150" width="164" height="105" rx="6" fill="var(--panel)" stroke="currentColor" stroke-width="1.8"/>
+        <text x="830" y="192" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="12" fill="currentColor">AMS1117</text>
+        <text x="830" y="212" text-anchor="middle" font-family="var(--font-sans)" font-size="10" fill="var(--muted)">5 В → 3.3 В</text>
+        <text x="830" y="230" text-anchor="middle" font-family="var(--font-sans)" font-size="10" fill="var(--muted)">для ESP32 + 2× C</text>
+
+        <!-- BPW34 + гибкий вывод -->
+        <rect x="770" y="280" width="120" height="80" rx="6" fill="var(--panel)" stroke="var(--ir)" stroke-width="1.8"/>
+        <text x="830" y="312" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="12" fill="var(--ir)">BPW34</text>
+        <text x="830" y="332" text-anchor="middle" font-family="var(--font-sans)" font-size="9.5" fill="var(--muted)">фотодиод</text>
+        <text x="830" y="349" text-anchor="middle" font-family="var(--font-sans)" font-size="9.5" fill="var(--muted)">на гибком выводе</text>
+        <path d="M830,280 C830,150 900,150 905,104" fill="none" stroke="var(--ir)" stroke-width="1.8" stroke-dasharray="6 4"/>
+        <text x="930" y="230" font-family="var(--font-sans)" font-size="9.5" fill="var(--ir)">вывод уходит</text>
+        <text x="930" y="245" font-family="var(--font-sans)" font-size="9.5" fill="var(--ir)">на низ платы,</text>
+        <text x="930" y="260" font-family="var(--font-sans)" font-size="9.5" fill="var(--ir)">к ИК-окну</text>
+
+        <!-- ESP32 -->
+        <rect x="296" y="410" width="382" height="270" rx="6" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
+        <text x="487" y="530" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="14" fill="currentColor">ESP32-WROOM-32</text>
+        <text x="487" y="552" text-anchor="middle" font-family="var(--font-mono)" font-size="11" fill="var(--muted)">25.5 × 18 мм · голый модуль</text>
+        <text x="487" y="572" text-anchor="middle" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">GPIO16 ← TX · GPIO17 → RX</text>
+        <!-- castellations hint -->
+        <g fill="var(--hairline)">
+          <rect x="296" y="424" width="8" height="10"/><rect x="296" y="452" width="8" height="10"/>
+          <rect x="296" y="480" width="8" height="10"/><rect x="296" y="508" width="8" height="10"/>
+          <rect x="670" y="424" width="8" height="10"/><rect x="670" y="452" width="8" height="10"/>
+          <rect x="670" y="480" width="8" height="10"/><rect x="670" y="508" width="8" height="10"/>
+        </g>
+        <!-- flashing pads -->
+        <rect x="700" y="410" width="212" height="120" rx="6" fill="none" stroke="var(--hairline)" stroke-width="1.6" stroke-dasharray="5 4"/>
+        <text x="806" y="452" text-anchor="middle" font-family="var(--font-mono)" font-size="11" fill="var(--muted)">6 площадок</text>
+        <text x="806" y="472" text-anchor="middle" font-family="var(--font-sans)" font-size="10" fill="var(--muted)">3V3·GND·TX0·RX0</text>
+        <text x="806" y="489" text-anchor="middle" font-family="var(--font-sans)" font-size="10" fill="var(--muted)">·IO0·EN — прошивка</text>
+        <text x="806" y="512" text-anchor="middle" font-family="var(--font-sans)" font-size="10" fill="var(--muted)">внешним USB-TTL</text>
+
+        <!-- силовой узел ИК -->
+        <rect x="296" y="710" width="616" height="200" rx="8" fill="var(--ir-soft)" stroke="var(--ir)" stroke-width="1.4"/>
+        <text x="604" y="736" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="12" fill="var(--ir)">СИЛОВОЙ УЗЕЛ ИК — ИСТОЧНИК ПОМЕХИ</text>
+        <rect x="312" y="752" width="150" height="120" rx="5" fill="var(--panel)" stroke="var(--ir)" stroke-width="1.6"/>
+        <text x="387" y="810" text-anchor="middle" font-family="var(--font-mono)" font-size="12" fill="var(--ir)">LM393</text>
+        <text x="387" y="828" text-anchor="middle" font-family="var(--font-sans)" font-size="9.5" fill="var(--muted)">DIP-8</text>
+        <rect x="486" y="752" width="150" height="140" rx="5" fill="var(--panel)" stroke="var(--ir)" stroke-width="1.6"/>
+        <text x="561" y="806" text-anchor="middle" font-family="var(--font-mono)" font-size="12" fill="var(--ir)">IRLZ44N</text>
+        <text x="561" y="824" text-anchor="middle" font-family="var(--font-sans)" font-size="9.5" fill="var(--muted)">TO-220 · Q1</text>
+        <rect x="486" y="742" width="150" height="12" rx="2" fill="var(--ir)" opacity="0.5"/>
+        <rect x="660" y="752" width="150" height="70" rx="5" fill="var(--panel)" stroke="var(--hairline)" stroke-width="1.6"/>
+        <text x="735" y="792" text-anchor="middle" font-family="var(--font-mono)" font-size="11" fill="var(--muted)">подстроечник</text>
+        <circle cx="726" cy="866" r="30" fill="var(--panel)" stroke="var(--ir)" stroke-width="2"/>
+        <text x="726" y="862" text-anchor="middle" font-family="var(--font-mono)" font-size="11" fill="var(--ir)">C4</text>
+        <text x="726" y="878" text-anchor="middle" font-family="var(--font-sans)" font-size="8.5" fill="var(--muted)">220µ</text>
+        <text x="770" y="862" font-family="var(--font-sans)" font-size="9.5" fill="var(--ir)">вплотную</text>
+        <text x="770" y="876" font-family="var(--font-sans)" font-size="9.5" fill="var(--ir)">к ключу</text>
+        <g fill="var(--muted)">
+          <rect x="828" y="756" width="70" height="9" rx="2"/><rect x="828" y="772" width="70" height="9" rx="2"/>
+          <rect x="828" y="788" width="70" height="9" rx="2"/><rect x="828" y="804" width="70" height="9" rx="2"/>
+        </g>
+        <text x="863" y="832" text-anchor="middle" font-family="var(--font-sans)" font-size="9" fill="var(--muted)">R1–R8</text>
+
+        <!-- разделительный экран -->
+        <line x1="290" y1="932" x2="950" y2="932" stroke="var(--ir)" stroke-width="1.6" stroke-dasharray="8 5"/>
+        <text x="619" y="926" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--ir)">экран · разнос кольца и приёмного тракта</text>
+
+        <!-- кольцо -->
+        <g fill="none" stroke="var(--ir)" stroke-width="2">
+          <circle cx="352" cy="978" r="24"/><circle cx="454" cy="978" r="24"/><circle cx="556" cy="978" r="24"/>
+          <circle cx="658" cy="978" r="24"/><circle cx="760" cy="978" r="24"/><circle cx="862" cy="978" r="24"/>
+        </g>
+        <g stroke="var(--ir)" stroke-width="2" marker-end="url(#arC)">
+          <line x1="352" y1="1002" x2="352" y2="1030"/><line x1="454" y1="1002" x2="454" y2="1030"/>
+          <line x1="556" y1="1002" x2="556" y2="1030"/><line x1="658" y1="1002" x2="658" y2="1030"/>
+          <line x1="760" y1="1002" x2="760" y2="1030"/><line x1="862" y1="1002" x2="862" y2="1030"/>
+        </g>
+        <text x="619" y="1006" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--ir)">кольцо 6× 940 нм → наружу</text>
+
+        <!-- дальний край корпуса -->
+        <line x1="282" y1="700" x2="957" y2="700" stroke="var(--ink)" stroke-width="1.4" stroke-dasharray="10 6"/>
+        <text x="951" y="694" text-anchor="end" font-family="var(--font-sans)" font-size="10" fill="var(--muted)">дальний край корпуса (40 мм) — ниже плата нависает</text>
+      </svg>
+    </div>
+    <figcaption>
+      Ширина диктуется гребёнкой (≈&nbsp;45&nbsp;мм), глубина набирается зонами: приёмный
+      CC1101 с антенной за краем — вверху у разъёма; ESP32 — по центру; силовой узел ИК и
+      кольцо — внизу, максимально далеко от антенны. Кольцо вынесено за габарит корпуса
+      (пунктир 40&nbsp;мм) и смотрит наружу, <b>BPW34 уходит на низ платы</b> к ИК-окну Флиппера.
+      ESP32 взят «голым» модулем WROOM-32 с питанием через AMS1117&nbsp;— DevKit по длине не
+      влезает в минимальную глубину (см. примечание ниже).
+    </figcaption>
+  </figure>
+
+  <h2>Вариант A — питание на этой же плате</h2>
+  <p class="sub">
+    Банки и преобразователь уезжают за край корпуса, на нижнюю сторону нависающей части.
+    Просто в сборке, но вся масса висит на гребёнке.
+  </p>
+  <figure>
+    <div class="board">
+      <svg viewBox="0 0 1240 520" role="img"
+           aria-label="Вариант A, вид с торца. Флиппер лежит экраном вверх, показан поперечный разрез шириной 40 и толщиной 25.6 миллиметра. По верхней грани гребёнка, в неё сверху воткнута основная плата. Плата горизонтальна, ближняя часть опирается на корпус, а дальняя выходит за габарит корпуса и нависает. На нижней стороне нависающей части закреплены две банки 18650 и преобразователь, суммарно около 100 граммов. Их центр тяжести вынесен примерно на 50 миллиметров от гребёнки, что создаёт опрокидывающий момент около 5000 грамм на миллиметр. Поэтому под дальним концом обязательна опора-ножка на стол. Показаны стрелка момента вокруг гребёнки и подпись про опору.">
+        <rect x="0" y="0" width="1240" height="520" fill="url(#dots2)" opacity="0.9"/>
+
+        <!-- стол -->
+        <line x1="80" y1="452" x2="1160" y2="452" stroke="currentColor" stroke-width="2"/>
+        <g stroke="var(--hairline)" stroke-width="1.4">
+          <line x1="120" y1="452" x2="104" y2="470"/><line x1="160" y1="452" x2="144" y2="470"/>
+          <line x1="200" y1="452" x2="184" y2="470"/><line x1="240" y1="452" x2="224" y2="470"/>
+        </g>
+
+        <!-- корпус Флиппера (разрез 40 × 25.6) -->
+        <rect x="300" y="300" width="360" height="150" rx="10" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
+        <text x="480" y="382" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="12" fill="currentColor">FLIPPER (торец)</text>
+        <text x="480" y="402" text-anchor="middle" font-family="var(--font-mono)" font-size="10.5" fill="var(--muted)">40 × 25.6 мм</text>
+        <text x="315" y="322" font-family="var(--font-sans)" font-size="10" fill="var(--muted)">экран</text>
+
+        <!-- гребёнка -->
+        <g stroke="var(--power)" stroke-width="2.2">
+          <line x1="320" y1="300" x2="320" y2="278"/><line x1="336" y1="300" x2="336" y2="278"/>
+          <line x1="352" y1="300" x2="352" y2="278"/>
+        </g>
+        <text x="336" y="268" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--power)">гребёнка</text>
+
+        <!-- основная плата (горизонтальна, нависает вправо) -->
+        <rect x="308" y="262" width="560" height="16" rx="3" fill="var(--board)" stroke="currentColor" stroke-width="2"/>
+        <text x="470" y="250" text-anchor="middle" font-family="var(--font-mono)" font-size="10.5" fill="currentColor">основная плата ≈ 20 г</text>
+        <!-- часть на корпусе / нависает -->
+        <line x1="660" y1="240" x2="660" y2="290" stroke="var(--ink)" stroke-width="1.2" stroke-dasharray="6 4"/>
+        <text x="666" y="238" font-family="var(--font-sans)" font-size="9.5" fill="var(--muted)">край корпуса</text>
+
+        <!-- модули на плате -->
+        <rect x="360" y="244" width="60" height="18" rx="2" fill="var(--panel)" stroke="var(--power)" stroke-width="1.4"/>
+        <rect x="470" y="244" width="70" height="18" rx="2" fill="var(--panel)" stroke="currentColor" stroke-width="1.4"/>
+
+        <!-- банки на нижней стороне нависающей части -->
+        <circle cx="720" cy="316" r="30" fill="var(--panel)" stroke="var(--power)" stroke-width="2"/>
+        <circle cx="792" cy="316" r="30" fill="var(--panel)" stroke="var(--power)" stroke-width="2"/>
+        <text x="756" y="320" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--power)">2× 18650</text>
+        <rect x="700" y="356" width="150" height="34" rx="5" fill="var(--panel)" stroke="currentColor" stroke-width="1.6"/>
+        <text x="775" y="378" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--muted)">BMS + DC-DC</text>
+        <text x="775" y="410" text-anchor="middle" font-family="var(--font-sans)" font-size="10.5" fill="var(--ir)">≈ 100 г на нижней стороне</text>
+
+        <!-- опора-ножка -->
+        <line x1="860" y1="278" x2="860" y2="452" stroke="var(--ir)" stroke-width="2.4"/>
+        <path d="M846,452 L874,452 L860,432 Z" fill="var(--ir)"/>
+        <text x="884" y="372" font-family="var(--font-sans)" font-size="10.5" fill="var(--ir)">опора-ножка</text>
+        <text x="884" y="388" font-family="var(--font-sans)" font-size="10.5" fill="var(--ir)">обязательна</text>
+
+        <!-- момент -->
+        <path d="M336,220 a70,70 0 0 1 120,20" fill="none" stroke="var(--ir)" stroke-width="2" marker-end="url(#arC)"/>
+        <text x="470" y="205" font-family="var(--font-mono)" font-size="11" fill="var(--ir)">момент ≈ 100 г × 50 мм ≈ 5000 г·мм</text>
+        <text x="470" y="222" font-family="var(--font-sans)" font-size="10" fill="var(--muted)">гребёнка одна столько не держит</text>
+      </svg>
+    </div>
+    <figcaption>
+      Плюс: один узел, короткие силовые провода, ничего не болтается на шлейфе. Минус:
+      центр тяжести вынесен за корпус, и <b>без опоры под дальним концом гребёнка работает
+      на отрыв</b>. Годится, когда устройство лежит на столе; в руке — вариант&nbsp;B.
+    </figcaption>
+  </figure>
+
+  <h2>Вариант B — питание на отдельной плате</h2>
+  <p class="sub">
+    Банки на второй плате, перпендикулярно основной, прижаты к задней грани Флиппера.
+    Массу несёт корпус, не гребёнка.
+  </p>
+  <figure>
+    <div class="board">
+      <svg viewBox="0 0 1240 560" role="img"
+           aria-label="Вариант B, вид сбоку. Флиппер стоит вертикально, экраном влево, показан профиль 100 на 25.6 миллиметра. По верхней грани гребёнка, в неё сверху воткнута основная плата — она горизонтальна и уходит вправо, от экрана. К задней грани Флиппера прижата вторая плата, вертикальная, перпендикулярная основной. На ней две банки 18650 стоят вертикально, а также BMS и преобразователь. Батарейная плата опирается низом на стол и прихвачена к корпусу хомутом, поэтому её вес несёт корпус, а не гребёнка. Двухпроводной шлейф 5 вольт и земля поднимается от батарейной платы к основной. Подписи подчёркивают, что гребёнка держит только лёгкую основную плату около 20 граммов.">
+        <rect x="0" y="0" width="1240" height="560" fill="url(#dots2)" opacity="0.9"/>
+
+        <!-- стол -->
+        <line x1="80" y1="492" x2="1160" y2="492" stroke="currentColor" stroke-width="2"/>
+        <g stroke="var(--hairline)" stroke-width="1.4">
+          <line x1="120" y1="492" x2="104" y2="510"/><line x1="160" y1="492" x2="144" y2="510"/>
+          <line x1="200" y1="492" x2="184" y2="510"/><line x1="240" y1="492" x2="224" y2="510"/>
+        </g>
+
+        <!-- Флиппер стоймя (100 × 25.6) -->
+        <rect x="470" y="92" width="104" height="400" rx="10" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
+        <text x="522" y="300" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="12" fill="currentColor" transform="rotate(-90 522 300)">FLIPPER (профиль)</text>
+        <text x="452" y="120" text-anchor="end" font-family="var(--font-sans)" font-size="10" fill="var(--muted)">экран</text>
+
+        <!-- гребёнка сверху -->
+        <g stroke="var(--power)" stroke-width="2.2">
+          <line x1="490" y1="92" x2="490" y2="72"/><line x1="506" y1="92" x2="506" y2="72"/>
+          <line x1="522" y1="92" x2="522" y2="72"/>
+        </g>
+
+        <!-- основная плата горизонтальна вправо -->
+        <rect x="486" y="56" width="360" height="16" rx="3" fill="var(--board)" stroke="currentColor" stroke-width="2"/>
+        <text x="820" y="52" text-anchor="start" font-family="var(--font-mono)" font-size="10.5" fill="currentColor">основная плата ≈ 20 г</text>
+        <rect x="560" y="38" width="60" height="18" rx="2" fill="var(--panel)" stroke="var(--power)" stroke-width="1.4"/>
+        <rect x="660" y="38" width="70" height="18" rx="2" fill="var(--panel)" stroke="currentColor" stroke-width="1.4"/>
+
+        <!-- батарейная плата: вертикальна, прижата к задней грани (справа) -->
+        <rect x="596" y="150" width="18" height="342" rx="3" fill="var(--board)" stroke="currentColor" stroke-width="2"/>
+        <text x="640" y="470" font-family="var(--font-mono)" font-size="10.5" fill="currentColor">батарейная плата ⟂</text>
+        <!-- банки вертикально -->
+        <rect x="620" y="170" width="60" height="260" rx="28" fill="var(--panel)" stroke="var(--power)" stroke-width="2"/>
+        <rect x="690" y="170" width="60" height="260" rx="28" fill="var(--panel)" stroke="var(--power)" stroke-width="2"/>
+        <text x="685" y="304" text-anchor="middle" font-family="var(--font-mono)" font-size="11" fill="var(--power)" transform="rotate(-90 685 304)">2× 18650 · 65 мм</text>
+        <rect x="620" y="440" width="130" height="34" rx="5" fill="var(--panel)" stroke="currentColor" stroke-width="1.6"/>
+        <text x="685" y="462" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--muted)">BMS + DC-DC</text>
+
+        <!-- опора низом на стол -->
+        <text x="620" y="488" font-family="var(--font-sans)" font-size="9.5" fill="var(--muted)">низ — на стол</text>
+
+        <!-- хомут вокруг корпуса + батарейной платы -->
+        <rect x="462" y="210" width="160" height="60" rx="8" fill="none" stroke="var(--ir)" stroke-width="2" stroke-dasharray="7 5"/>
+        <text x="470" y="200" font-family="var(--font-sans)" font-size="10.5" fill="var(--ir)">хомут / стяжка — прижимает к задней грани</text>
+
+        <!-- шлейф 5В+GND -->
+        <path d="M605,150 C605,110 700,110 720,74" fill="none" stroke="var(--power)" stroke-width="2.2"/>
+        <text x="726" y="120" font-family="var(--font-mono)" font-size="10.5" fill="var(--power)">2 провода: +5 В, GND</text>
+
+        <!-- акцент развесовки -->
+        <path d="M560,300 C520,320 500,360 508,410" fill="none" stroke="var(--power)" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#arP)"/>
+        <text x="300" y="360" font-family="var(--font-mono)" font-size="11" fill="var(--power)">вес банок → в корпус и стол,</text>
+        <text x="300" y="378" font-family="var(--font-mono)" font-size="11" fill="var(--power)">гребёнка держит только ≈ 20 г</text>
+      </svg>
+    </div>
+    <figcaption>
+      Банки стоят вертикально вплотную к задней грани и опираются низом на стол; хомут
+      прижимает вторую плату к корпусу. Гребёнка при этом несёт <b>только лёгкую основную
+      плату</b>, а не 100&nbsp;г батарей. Связь между платами&nbsp;— два провода (+5&nbsp;В и
+      земля) коротким шлейфом. Механически это верный вариант для работы в руке.
+    </figcaption>
+  </figure>
+
+  <h2>A против B и что учесть при сборке</h2>
+  <div class="notes">
+    <div class="note">
+      <h3><span class="dot"></span> Развесовка решает</h3>
+      <p>Банки 18650 — это <b>≈ 90 г</b> из ~120 г всей шапки. В варианте&nbsp;A этот вес висит
+      за краем корпуса на трении гребёнки (момент ≈&nbsp;5000&nbsp;г·мм) — нужна опора. В&nbsp;B
+      вес уходит в корпус и на стол, гребёнка разгружена. Для ношения — только&nbsp;B.</p>
+    </div>
+    <div class="note">
+      <h3><span class="dot"></span> Низ платы — плоский</h3>
+      <p>Снизу выступают <b>только штыри гребёнки и вывод BPW34</b>. Все модули и провода — на
+      верхней стороне, выводы после пайки скусить заподлицо. Иначе плата не сядет на кромку
+      Флиппера ровно и будет качаться.</p>
+    </div>
+    <div class="note">
+      <h3><span class="dot"></span> Пайка и провода</h3>
+      <p>Гребёнку паять двумя планками (1×8 и 1×10) — зазор между блоками сам встаёт по месту.
+      Питание развести двумя шинами (+5&nbsp;В и GND) поверху; провода кольца — витой парой и
+      коротко, к силовому узлу, а не через всю плату.</p>
+    </div>
+    <div class="note">
+      <h3><span class="dot"></span> ESP32: модуль и прошивка</h3>
+      <p>Ради минимальной глубины поставлен <b>голый WROOM-32</b> (25.5&nbsp;×&nbsp;18) с питанием
+      от AMS1117 из 5&nbsp;В. Прошивка — внешним USB-TTL на 6 площадок. Нужна лёгкая заливка по
+      месту — берите ESP32-C3 SuperMini или DevKit, но глубина вырастет на ~25&nbsp;мм.</p>
+    </div>
+  </div>
+
+  <h2>Посадочные габариты</h2>
+  <p class="sub">
+    Что и сколько занимает — с чего считалась глубина ≈ 64 мм.
+  </p>
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr><th>Узел</th><th>Габарит</th><th>Зона</th><th>Примечание</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="ref">Гребёнка</td><td class="val">1×8 + 1×10</td><td>ряд 1</td><td class="role">шаг 2.54, размах ≈ 43 мм вдоль кромки</td></tr>
+        <tr><td class="ref">CC1101</td><td class="val">28 × 15</td><td>верх, слева</td><td class="role">антенна за краем, под ней меди нет</td></tr>
+        <tr><td class="ref">AMS1117</td><td class="val">~10 × 10</td><td>верх, справа</td><td class="role">5 В → 3.3 В для ESP32 + 2 конденсатора</td></tr>
+        <tr><td class="ref">BPW34</td><td class="val">5 × 4</td><td>на гибком выводе</td><td class="role">уходит на низ платы к ИК-окну</td></tr>
+        <tr><td class="ref">ESP32-WROOM-32</td><td class="val">25.5 × 18</td><td>центр</td><td class="role">голый модуль + 6 площадок под прошивку</td></tr>
+        <tr><td class="ref">LM393</td><td class="val">~10 × 8</td><td>силовой узел</td><td class="role">DIP-8, компаратор</td></tr>
+        <tr><td class="ref">IRLZ44N</td><td class="val">~15 × 10</td><td>силовой узел</td><td class="role">TO-220, ключ Q1</td></tr>
+        <tr><td class="ref">C4</td><td class="val">Ø 8</td><td>силовой узел</td><td class="role">220 мкФ, вплотную к ключу</td></tr>
+        <tr><td class="ref">Кольцо</td><td class="val">6× Ø 5</td><td>дальний край</td><td class="role">940 нм, за габаритом корпуса, наружу</td></tr>
+        <tr><td class="ref">2× 18650</td><td class="val">65 × 18.4</td><td>A: низ · B: ⟂ плата</td><td class="role">≈ 90 г — определяет выбор варианта</td></tr>
+      </tbody>
+    </table>
+  </div>
+
   <footer>
     esp32-flipper-exp · шапка на GPIO · схема ИК-бластера — отдельный документ ·
     <a href="https://github.com/hleserg/esp32-flipper-exp">hleserg/esp32-flipper-exp</a>

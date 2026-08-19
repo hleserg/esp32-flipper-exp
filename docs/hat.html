@@ -238,8 +238,8 @@
         <!-- ============ ESP32 ============ -->
         <rect x="420" y="330" width="260" height="150" rx="10" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
         <text x="550" y="382" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="14" fill="currentColor">ESP32</text>
-        <text x="550" y="404" text-anchor="middle" font-family="var(--font-sans)" font-size="11" fill="var(--muted)">BLE-бластер</text>
-        <text x="550" y="426" text-anchor="middle" font-family="var(--font-sans)" font-size="11" fill="var(--muted)">GPIO16 ← TX · GPIO17 → RX</text>
+        <text x="550" y="404" text-anchor="middle" font-family="var(--font-sans)" font-size="11" fill="var(--muted)">BLE-бластер · XIAO ESP32C5</text>
+        <text x="550" y="426" text-anchor="middle" font-family="var(--font-sans)" font-size="11" fill="var(--muted)">UART · 2 GPIO по выбору</text>
         <text x="550" y="450" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--power)">питание от батареи</text>
         <text x="550" y="468" text-anchor="middle" font-family="var(--font-sans)" font-size="10" fill="var(--ir)">именно он связывает земли</text>
 
@@ -324,8 +324,8 @@
         <tr><td class="ref">5</td><td class="val">PB3</td><td>SCK</td><td class="role">CC1101</td></tr>
         <tr><td class="ref">7</td><td class="val">PC3</td><td>GDO0</td><td class="role">CC1101 — сверить с рабочим модулем</td></tr>
         <tr><td class="ref">9</td><td class="val">3V3</td><td>питание</td><td class="role">CC1101, ≈35 мА</td></tr>
-        <tr><td class="ref">13</td><td class="val">PB6</td><td>TX →</td><td class="role">ESP32 GPIO16 (RX2)</td></tr>
-        <tr><td class="ref">14</td><td class="val">PB7</td><td>RX ←</td><td class="role">ESP32 GPIO17 (TX2)</td></tr>
+        <tr><td class="ref">13</td><td class="val">PB6</td><td>TX →</td><td class="role">ESP32 RX — на XIAO любой GPIO</td></tr>
+        <tr><td class="ref">14</td><td class="val">PB7</td><td>RX ←</td><td class="role">ESP32 TX — на XIAO любой GPIO</td></tr>
         <tr><td class="ref">8·11·18</td><td class="val">GND</td><td>общая земля</td><td class="role">сводить в одну точку, см. ниже</td></tr>
         <tr><td class="ref">1</td><td class="val">5V</td><td>не задействован</td><td class="role">батарейные 5 В сюда не подавать</td></tr>
       </tbody>
@@ -514,7 +514,7 @@
     </div>
     <div class="board">
       <svg viewBox="0 0 1240 1120" role="img"
-           aria-label="Масштабный план платы, вид сверху. Плата шириной около 45 миллиметров вдоль верхней кромки и глубиной около 64 миллиметров. По верхней кромке гребёнка из 18 контактов с шагом 2.54 в двух блоках: 1-8 и 9-18. Питание и земля показаны цветом. Слева радиочастотный модуль CC1101 28 на 15 миллиметров, его антенна выведена за левый край платы, под антенной меди нет. Справа сверху LDO AMS1117 с конденсаторами и фотодиод BPW34 на гибком выводе, который уходит вниз платы к инфракрасному окну Флиппера. По центру модуль ESP32-WROOM 25.5 на 18 миллиметров, ниже площадки для прошивки. Ниже силовой узел инфракрасного бластера: компаратор LM393, ключ IRLZ44N в корпусе TO-220, подстроечник, конденсатор C4 220 микрофарад вплотную к ключу, резисторы. У дальнего края плата выходит за габарит корпуса Флиппера, там расположено кольцо из шести светодиодов 940 нанометров, направленное наружу. Пунктиром отмечены: дальний край корпуса Флиппера на 40 миллиметрах, зона keep-out под антенной, разделительный экран между кольцом и приёмным трактом, гибкий вывод фотодиода. Слева и сверху проставлены размеры 45 и 64 миллиметра.">
+           aria-label="Масштабный план платы, вид сверху. Плата шириной около 45 миллиметров вдоль верхней кромки и глубиной около 64 миллиметров. По верхней кромке гребёнка из 18 контактов с шагом 2.54 в двух блоках: 1-8 и 9-18. Питание и земля показаны цветом. Слева радиочастотный модуль CC1101 28 на 15 миллиметров, его антенна выведена за левый край платы, под антенной меди нет. Справа сверху фотодиод BPW34 на гибком выводе, который уходит вниз платы к инфракрасному окну Флиппера. По центру плата ESP32 — Seeed XIAO ESP32C5, 21 на 17.8 миллиметра, с разъёмом USB-C и собственным стабилизатором на борту, антенна отведена вверх от кольца. Ниже силовой узел инфракрасного бластера: компаратор LM393, ключ IRLZ44N в корпусе TO-220, подстроечник, конденсатор C4 220 микрофарад вплотную к ключу, резисторы. У дальнего края платы, за габаритом корпуса Флиппера, расположено кольцо инфракрасных светодиодов: шесть штук 940 нанометров, выделено отдельной полосой и направлено наружу за кромку. Пунктиром отмечены: дальний край корпуса Флиппера на 40 миллиметрах, зона keep-out под антенной, разделительный экран между кольцом и приёмным трактом, гибкий вывод фотодиода. Слева и сверху проставлены размеры 45 и 64 миллиметра.">
         <defs>
           <pattern id="holes" width="38.1" height="38.1" patternUnits="userSpaceOnUse">
             <circle cx="1" cy="1" r="1.6" fill="var(--grid-dot)"/>
@@ -535,7 +535,7 @@
         <text x="248" y="548" text-anchor="middle" font-family="var(--font-mono)" font-size="12" fill="var(--muted)" transform="rotate(-90 248 548)">≈ 64 мм (глубина)</text>
 
         <!-- к Флипперу -->
-        <text x="300" y="1046" font-family="var(--font-mono)" font-size="11" fill="var(--muted)">↑ к Флипперу (гребёнка)   ·   от Флиппера ↓</text>
+        <text x="300" y="1080" font-family="var(--font-mono)" font-size="11" fill="var(--muted)">↑ к Флипперу (гребёнка)   ·   от Флиппера ↓</text>
 
         <!-- гребёнка -->
         <g>
@@ -577,40 +577,39 @@
         <text x="214" y="176" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--power)">антенна</text>
         <text x="214" y="252" text-anchor="middle" font-family="var(--font-sans)" font-size="9.5" fill="var(--muted)">keep-out</text>
 
-        <!-- AMS1117 LDO -->
-        <rect x="748" y="150" width="164" height="105" rx="6" fill="var(--panel)" stroke="currentColor" stroke-width="1.8"/>
-        <text x="830" y="192" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="12" fill="currentColor">AMS1117</text>
-        <text x="830" y="212" text-anchor="middle" font-family="var(--font-sans)" font-size="10" fill="var(--muted)">5 В → 3.3 В</text>
-        <text x="830" y="230" text-anchor="middle" font-family="var(--font-sans)" font-size="10" fill="var(--muted)">для ESP32 + 2× C</text>
+        <!-- BPW34 + гибкий вывод (справа у разъёма) -->
+        <rect x="748" y="150" width="164" height="108" rx="6" fill="var(--panel)" stroke="var(--ir)" stroke-width="1.8"/>
+        <text x="830" y="188" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="13" fill="var(--ir)">BPW34</text>
+        <text x="830" y="208" text-anchor="middle" font-family="var(--font-sans)" font-size="10" fill="var(--muted)">фотодиод</text>
+        <text x="830" y="226" text-anchor="middle" font-family="var(--font-sans)" font-size="10" fill="var(--muted)">на гибком выводе</text>
+        <text x="830" y="246" text-anchor="middle" font-family="var(--font-sans)" font-size="10" fill="var(--ir)">→ низ платы, к ИК-окну</text>
+        <path d="M830,150 C830,120 895,120 905,104" fill="none" stroke="var(--ir)" stroke-width="1.8" stroke-dasharray="6 4"/>
 
-        <!-- BPW34 + гибкий вывод -->
-        <rect x="770" y="280" width="120" height="80" rx="6" fill="var(--panel)" stroke="var(--ir)" stroke-width="1.8"/>
-        <text x="830" y="312" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="12" fill="var(--ir)">BPW34</text>
-        <text x="830" y="332" text-anchor="middle" font-family="var(--font-sans)" font-size="9.5" fill="var(--muted)">фотодиод</text>
-        <text x="830" y="349" text-anchor="middle" font-family="var(--font-sans)" font-size="9.5" fill="var(--muted)">на гибком выводе</text>
-        <path d="M830,280 C830,150 900,150 905,104" fill="none" stroke="var(--ir)" stroke-width="1.8" stroke-dasharray="6 4"/>
-        <text x="930" y="230" font-family="var(--font-sans)" font-size="9.5" fill="var(--ir)">вывод уходит</text>
-        <text x="930" y="245" font-family="var(--font-sans)" font-size="9.5" fill="var(--ir)">на низ платы,</text>
-        <text x="930" y="260" font-family="var(--font-sans)" font-size="9.5" fill="var(--ir)">к ИК-окну</text>
-
-        <!-- ESP32 -->
-        <rect x="296" y="410" width="382" height="270" rx="6" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
-        <text x="487" y="530" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="14" fill="currentColor">ESP32-WROOM-32</text>
-        <text x="487" y="552" text-anchor="middle" font-family="var(--font-mono)" font-size="11" fill="var(--muted)">25.5 × 18 мм · голый модуль</text>
-        <text x="487" y="572" text-anchor="middle" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">GPIO16 ← TX · GPIO17 → RX</text>
+        <!-- ESP32 — Seeed XIAO ESP32C5 -->
+        <rect x="296" y="410" width="315" height="267" rx="6" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
+        <text x="453" y="512" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="14" fill="currentColor">XIAO ESP32C5</text>
+        <text x="453" y="534" text-anchor="middle" font-family="var(--font-mono)" font-size="11" fill="var(--muted)">21 × 17.8 мм</text>
+        <text x="453" y="554" text-anchor="middle" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">USB-C и LDO — на борту</text>
+        <text x="453" y="574" text-anchor="middle" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">UART на 2 GPIO по выбору</text>
         <!-- castellations hint -->
         <g fill="var(--hairline)">
-          <rect x="296" y="424" width="8" height="10"/><rect x="296" y="452" width="8" height="10"/>
-          <rect x="296" y="480" width="8" height="10"/><rect x="296" y="508" width="8" height="10"/>
-          <rect x="670" y="424" width="8" height="10"/><rect x="670" y="452" width="8" height="10"/>
-          <rect x="670" y="480" width="8" height="10"/><rect x="670" y="508" width="8" height="10"/>
+          <rect x="296" y="430" width="7" height="9"/><rect x="296" y="458" width="7" height="9"/>
+          <rect x="296" y="486" width="7" height="9"/><rect x="296" y="514" width="7" height="9"/>
+          <rect x="604" y="430" width="7" height="9"/><rect x="604" y="458" width="7" height="9"/>
+          <rect x="604" y="486" width="7" height="9"/><rect x="604" y="514" width="7" height="9"/>
         </g>
-        <!-- flashing pads -->
-        <rect x="700" y="410" width="212" height="120" rx="6" fill="none" stroke="var(--hairline)" stroke-width="1.6" stroke-dasharray="5 4"/>
-        <text x="806" y="452" text-anchor="middle" font-family="var(--font-mono)" font-size="11" fill="var(--muted)">6 площадок</text>
-        <text x="806" y="472" text-anchor="middle" font-family="var(--font-sans)" font-size="10" fill="var(--muted)">3V3·GND·TX0·RX0</text>
-        <text x="806" y="489" text-anchor="middle" font-family="var(--font-sans)" font-size="10" fill="var(--muted)">·IO0·EN — прошивка</text>
-        <text x="806" y="512" text-anchor="middle" font-family="var(--font-sans)" font-size="10" fill="var(--muted)">внешним USB-TTL</text>
+        <!-- USB-C у нижнего торца -->
+        <rect x="416" y="671" width="74" height="10" rx="2" fill="var(--hairline)"/>
+        <text x="453" y="628" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--muted)">USB-C ↓ прошивка/питание</text>
+        <!-- антенна отведена вверх, от кольца -->
+        <line x1="590" y1="410" x2="590" y2="384" stroke="currentColor" stroke-width="2.2"/>
+        <text x="596" y="398" font-family="var(--font-mono)" font-size="10" fill="var(--muted)">ANT ↑ от кольца</text>
+        <!-- питание XIAO -->
+        <text x="760" y="466" font-family="var(--font-mono)" font-size="11" fill="var(--power)">Питание XIAO</text>
+        <text x="760" y="486" font-family="var(--font-sans)" font-size="10" fill="var(--muted)">+5 В → пад 5V,</text>
+        <text x="760" y="503" font-family="var(--font-sans)" font-size="10" fill="var(--muted)">3.3 В даёт свой LDO.</text>
+        <text x="760" y="527" font-family="var(--font-sans)" font-size="10" fill="var(--muted)">Прошивка — по USB-C,</text>
+        <text x="760" y="544" font-family="var(--font-sans)" font-size="10" fill="var(--muted)">программатор не нужен.</text>
 
         <!-- силовой узел ИК -->
         <rect x="296" y="710" width="616" height="200" rx="8" fill="var(--ir-soft)" stroke="var(--ir)" stroke-width="1.4"/>
@@ -636,20 +635,26 @@
         <text x="863" y="832" text-anchor="middle" font-family="var(--font-sans)" font-size="9" fill="var(--muted)">R1–R8</text>
 
         <!-- разделительный экран -->
-        <line x1="290" y1="932" x2="950" y2="932" stroke="var(--ir)" stroke-width="1.6" stroke-dasharray="8 5"/>
-        <text x="619" y="926" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--ir)">экран · разнос кольца и приёмного тракта</text>
+        <line x1="290" y1="924" x2="950" y2="924" stroke="var(--ir)" stroke-width="1.6" stroke-dasharray="8 5"/>
+        <text x="619" y="918" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--ir)">экран · разнос кольца и приёмного тракта</text>
 
-        <!-- кольцо -->
-        <g fill="none" stroke="var(--ir)" stroke-width="2">
-          <circle cx="352" cy="978" r="24"/><circle cx="454" cy="978" r="24"/><circle cx="556" cy="978" r="24"/>
-          <circle cx="658" cy="978" r="24"/><circle cx="760" cy="978" r="24"/><circle cx="862" cy="978" r="24"/>
+        <!-- кольцо ИК-светодиодов: выделенная полоса у дальней кромки -->
+        <rect x="290" y="936" width="660" height="82" rx="8" fill="var(--ir-soft)" stroke="var(--ir)" stroke-width="1.6"/>
+        <text x="308" y="958" font-family="var(--font-mono)" font-weight="700" font-size="12" fill="var(--ir)">КОЛЬЦО ИК · 6× 940 нм → наружу за кромку</text>
+        <g fill="var(--ir)" opacity="0.85">
+          <circle cx="352" cy="990" r="15"/><circle cx="454" cy="990" r="15"/><circle cx="556" cy="990" r="15"/>
+          <circle cx="658" cy="990" r="15"/><circle cx="760" cy="990" r="15"/><circle cx="862" cy="990" r="15"/>
         </g>
-        <g stroke="var(--ir)" stroke-width="2" marker-end="url(#arC)">
-          <line x1="352" y1="1002" x2="352" y2="1030"/><line x1="454" y1="1002" x2="454" y2="1030"/>
-          <line x1="556" y1="1002" x2="556" y2="1030"/><line x1="658" y1="1002" x2="658" y2="1030"/>
-          <line x1="760" y1="1002" x2="760" y2="1030"/><line x1="862" y1="1002" x2="862" y2="1030"/>
+        <g fill="none" stroke="var(--ir)" stroke-width="1.6">
+          <circle cx="352" cy="990" r="15"/><circle cx="454" cy="990" r="15"/><circle cx="556" cy="990" r="15"/>
+          <circle cx="658" cy="990" r="15"/><circle cx="760" cy="990" r="15"/><circle cx="862" cy="990" r="15"/>
         </g>
-        <text x="619" y="1006" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--ir)">кольцо 6× 940 нм → наружу</text>
+        <!-- лучи наружу, веером за край платы -->
+        <g stroke="var(--ir)" stroke-width="2.2" marker-end="url(#arC)">
+          <line x1="346" y1="1005" x2="324" y2="1044"/><line x1="452" y1="1006" x2="446" y2="1048"/>
+          <line x1="554" y1="1006" x2="550" y2="1049"/><line x1="660" y1="1006" x2="664" y2="1049"/>
+          <line x1="762" y1="1006" x2="768" y2="1048"/><line x1="868" y1="1005" x2="890" y2="1044"/>
+        </g>
 
         <!-- дальний край корпуса -->
         <line x1="282" y1="700" x2="957" y2="700" stroke="var(--ink)" stroke-width="1.4" stroke-dasharray="10 6"/>
@@ -658,11 +663,11 @@
     </div>
     <figcaption>
       Ширина диктуется гребёнкой (≈&nbsp;45&nbsp;мм), глубина набирается зонами: приёмный
-      CC1101 с антенной за краем — вверху у разъёма; ESP32 — по центру; силовой узел ИК и
-      кольцо — внизу, максимально далеко от антенны. Кольцо вынесено за габарит корпуса
-      (пунктир 40&nbsp;мм) и смотрит наружу, <b>BPW34 уходит на низ платы</b> к ИК-окну Флиппера.
-      ESP32 взят «голым» модулем WROOM-32 с питанием через AMS1117&nbsp;— DevKit по длине не
-      влезает в минимальную глубину (см. примечание ниже).
+      CC1101 с антенной за краем — вверху у разъёма; ESP32 — по центру; <b>кольцо ИК —
+      выделенной полосой у дальней кромки</b>, за габаритом корпуса (пунктир 40&nbsp;мм), лучи
+      наружу веером. BPW34 уходит на низ платы к ИК-окну Флиппера. ESP32 — <b>Seeed XIAO
+      ESP32C5</b>: USB-C и стабилизатор на борту, так что ни AMS1117, ни программатора не нужно,
+      а глубина заметно меньше, чем с DevKit.
     </figcaption>
   </figure>
 
@@ -826,10 +831,11 @@
       коротко, к силовому узлу, а не через всю плату.</p>
     </div>
     <div class="note">
-      <h3><span class="dot"></span> ESP32: модуль и прошивка</h3>
-      <p>Ради минимальной глубины поставлен <b>голый WROOM-32</b> (25.5&nbsp;×&nbsp;18) с питанием
-      от AMS1117 из 5&nbsp;В. Прошивка — внешним USB-TTL на 6 площадок. Нужна лёгкая заливка по
-      месту — берите ESP32-C3 SuperMini или DevKit, но глубина вырастет на ~25&nbsp;мм.</p>
+      <h3><span class="dot"></span> ESP32: XIAO ESP32C5</h3>
+      <p><b>Seeed XIAO ESP32C5</b> (21&nbsp;×&nbsp;17.8) — USB-C и LDO на борту: +5&nbsp;В идут на пад
+      5V, 3.3&nbsp;В плата делает сама, отдельный AMS1117 не нужен, прошивка по USB-C без
+      программатора. UART к Флипперу — <b>на любые два GPIO</b> через матрицу, в прошивке
+      поправить номера пинов Serial. Антенну отвести от кольца и силового узла.</p>
     </div>
   </div>
 
@@ -845,9 +851,8 @@
       <tbody>
         <tr><td class="ref">Гребёнка</td><td class="val">1×8 + 1×10</td><td>ряд 1</td><td class="role">шаг 2.54, размах ≈ 43 мм вдоль кромки</td></tr>
         <tr><td class="ref">CC1101</td><td class="val">28 × 15</td><td>верх, слева</td><td class="role">антенна за краем, под ней меди нет</td></tr>
-        <tr><td class="ref">AMS1117</td><td class="val">~10 × 10</td><td>верх, справа</td><td class="role">5 В → 3.3 В для ESP32 + 2 конденсатора</td></tr>
-        <tr><td class="ref">BPW34</td><td class="val">5 × 4</td><td>на гибком выводе</td><td class="role">уходит на низ платы к ИК-окну</td></tr>
-        <tr><td class="ref">ESP32-WROOM-32</td><td class="val">25.5 × 18</td><td>центр</td><td class="role">голый модуль + 6 площадок под прошивку</td></tr>
+        <tr><td class="ref">BPW34</td><td class="val">5 × 4</td><td>верх справа, гибкий вывод</td><td class="role">уходит на низ платы к ИК-окну</td></tr>
+        <tr><td class="ref">XIAO ESP32C5</td><td class="val">21 × 17.8</td><td>центр</td><td class="role">USB-C + LDO на борту; UART на 2 GPIO</td></tr>
         <tr><td class="ref">LM393</td><td class="val">~10 × 8</td><td>силовой узел</td><td class="role">DIP-8, компаратор</td></tr>
         <tr><td class="ref">IRLZ44N</td><td class="val">~15 × 10</td><td>силовой узел</td><td class="role">TO-220, ключ Q1</td></tr>
         <tr><td class="ref">C4</td><td class="val">Ø 8</td><td>силовой узел</td><td class="role">220 мкФ, вплотную к ключу</td></tr>

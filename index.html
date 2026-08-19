@@ -1,0 +1,74 @@
+<meta charset="utf-8">
+<title>Flipper Zero · hardware docs</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+  :root{
+    --bg:#e9e5db; --panel:#f4f0e8; --board:#efeae0;
+    --ink:#221f19; --muted:#6f685c; --hairline:#d3ccbd;
+    --power:#2c6e77; --ir:#cc3d1a;
+    --shadow:0 1px 0 rgba(0,0,0,.04),0 18px 40px -28px rgba(40,30,10,.4);
+    --font-mono:ui-monospace,"Cascadia Code","JetBrains Mono","SF Mono",Menlo,Consolas,monospace;
+    --font-sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+    --bg:#141310; --panel:#1e1b16; --board:#1a1712;
+    --ink:#ece6da; --muted:#9b9284; --hairline:#332f27;
+    --power:#74b9c2; --ir:#ff6a43;
+    --shadow:0 1px 0 rgba(0,0,0,.3),0 20px 46px -30px rgba(0,0,0,.8);
+  }}
+  :root[data-theme="dark"]{
+    --bg:#141310; --panel:#1e1b16; --board:#1a1712;
+    --ink:#ece6da; --muted:#9b9284; --hairline:#332f27;
+    --power:#74b9c2; --ir:#ff6a43;
+    --shadow:0 1px 0 rgba(0,0,0,.3),0 20px 46px -30px rgba(0,0,0,.8);
+  }
+  *{box-sizing:border-box}
+  body{margin:0; background:var(--bg); color:var(--ink); font-family:var(--font-sans); line-height:1.6; -webkit-font-smoothing:antialiased}
+  .wrap{max-width:900px; margin:0 auto; padding:clamp(28px,5vw,64px) clamp(18px,4vw,40px) 80px}
+  .eyebrow{font-family:var(--font-mono); font-size:.72rem; letter-spacing:.22em; text-transform:uppercase; color:var(--ir); margin:0 0 14px}
+  h1{font-weight:700; font-size:clamp(2rem,6vw,3rem); line-height:1.05; letter-spacing:-.02em; margin:0 0 16px}
+  .lede{font-size:1.1rem; color:var(--muted); max-width:60ch; margin:0 0 34px}
+  .cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; margin:0; padding:0; list-style:none}
+  .cards a{
+    display:block; text-decoration:none; color:inherit; background:var(--panel);
+    border:1px solid var(--hairline); border-radius:14px; padding:20px 20px 22px; box-shadow:var(--shadow);
+  }
+  .cards a:hover{border-color:var(--ir)}
+  .cards .em{font-size:1.5rem; line-height:1}
+  .cards h2{font-size:1.1rem; margin:12px 0 6px; letter-spacing:-.01em}
+  .cards p{margin:0; font-size:.9rem; color:var(--muted)}
+  footer{margin-top:48px; padding-top:22px; border-top:1px solid var(--hairline); color:var(--muted); font-size:.82rem; font-family:var(--font-mono)}
+  footer a{color:var(--ir); text-decoration:none}
+</style>
+
+<div class="wrap">
+  <p class="eyebrow">Flipper Zero · GPIO hats</p>
+  <h1>Схемы и разводки</h1>
+  <p class="lede">
+    Инженерные документы проекта: две сменные шапки на Flipper Zero и оптический
+    ИК-бластер. Каждая страница — самодостаточная схема с расчётами и BOM.
+  </p>
+
+  <ul class="cards">
+    <li><a href="docs/hat.html">
+      <div class="em">🎛️</div>
+      <h2>Шумовая шапка</h2>
+      <p>CC1101 + ESP32 BLE + ИК-бластер на одной плате, автономное питание.</p>
+    </a></li>
+    <li><a href="docs/recon-hat.html">
+      <div class="em">📡</div>
+      <h2>Recon-шапка nRF24</h2>
+      <p>Тихий приём 2.4 ГГц: подключение по SPI, питание +5 В → LDO.</p>
+    </a></li>
+    <li><a href="docs/ir-blaster.html">
+      <div class="em">🔦</div>
+      <h2>ИК-бластер</h2>
+      <p>Оптический повторитель: фотодиод → компаратор → MOSFET → кольцо 940 нм.</p>
+    </a></li>
+  </ul>
+
+  <footer>
+    esp32-flipper-exp · <a href="https://github.com/hleserg/esp32-flipper-exp">hleserg/esp32-flipper-exp</a>
+  </footer>
+</div>

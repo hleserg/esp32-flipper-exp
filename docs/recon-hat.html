@@ -209,7 +209,7 @@
         <g font-family="var(--font-sans)" font-size="11">
           <text x="120" y="410" fill="var(--muted)"><tspan fill="var(--power)" font-weight="700">1 ·</tspan> приёмник не сидит рядом с излучателями</text>
           <text x="120" y="430" fill="var(--muted)"><tspan fill="var(--power)" font-weight="700">2 ·</tspan> nRF24 хочет те же SPI и CS (PA4), что CC1101 — на одной плате конфликт</text>
-          <text x="120" y="450" fill="var(--muted)"><tspan fill="var(--power)" font-weight="700">3 ·</tspan> recon-шапке не нужна ни батарея, ни преобразователь</text>
+          <text x="120" y="450" fill="var(--muted)"><tspan fill="var(--power)" font-weight="700">3 ·</tspan> recon-шапке не нужна батарея — хватает пина +5 В и крошечного LDO</text>
         </g>
       </svg>
     </div>
@@ -223,7 +223,8 @@
 
   <h2>Подключение nRF24 → Flipper</h2>
   <p class="sub">
-    Модуль садится прямо на SPI Флиппера и питается от его 3.3&nbsp;В. Батарея не нужна.
+    Модуль садится прямо на SPI Флиппера. Питание — отдельная история: не с пина 3V3, а с
+    +5&nbsp;В через LDO (ниже). Батарея по-прежнему не нужна.
   </p>
   <figure>
     <div class="legend" aria-hidden="true">
@@ -232,7 +233,7 @@
     </div>
     <div class="board">
       <svg viewBox="0 0 1240 520" role="img"
-           aria-label="Подключение модуля nRF24L01 к Flipper Zero. Модуль имеет разъём 2 на 4. Слева выводы Флиппера: 3.3 вольта на VCC, земля на GND, PB3 на SCK, PA7 на MOSI, PA6 на MISO, PA4 на CSN, PB2 на CE, вывод IRQ не подключается. Между VCC и GND модуля стоит развязывающий конденсатор 10 микрофарад — обязательный, иначе модуль перезагружается на передаче. Три линии SCK, MOSI, MISO — те же, что у CC1101, а CSN на PA4 модуль занимает целиком, потому что CC1101 на этой шапке нет.">
+           aria-label="Подключение модуля nRF24L01 к Flipper Zero. Модуль имеет разъём 2 на 4. Слева выводы Флиппера: 3.3 вольта (с отдельного LDO) на VCC, земля на GND, PB3 на SCK, PA7 на MOSI, PA6 на MISO, PA4 на CSN, PB2 на CE, вывод IRQ не подключается. Между VCC и GND модуля стоит развязывающий конденсатор 10 микрофарад — обязательный, иначе модуль перезагружается на передаче. Три линии SCK, MOSI, MISO — те же, что у CC1101, а CSN на PA4 модуль занимает целиком, потому что CC1101 на этой шапке нет.">
         <rect x="0" y="0" width="1240" height="520" fill="url(#dots3)" opacity="0.9"/>
 
         <!-- Flipper слева -->
@@ -279,7 +280,7 @@
         <line x1="210" y1="105" x2="1120" y2="105" stroke="var(--power)" stroke-width="2.2"/>
         <line x1="1120" y1="105" x2="1120" y2="220" stroke="var(--power)" stroke-width="2.2"/>
         <line x1="1120" y1="220" x2="1085" y2="220" stroke="var(--power)" stroke-width="2.2"/>
-        <text x="230" y="97" font-family="var(--font-mono)" font-size="10.5" fill="var(--power)">3V3 (9)</text>
+        <text x="230" y="97" font-family="var(--font-mono)" font-size="10.5" fill="var(--power)">+3.3 В ← LDO</text>
         <!-- GND -->
         <line x1="210" y1="185" x2="760" y2="185" stroke="var(--power)" stroke-width="2.2"/>
         <line x1="760" y1="185" x2="760" y2="220" stroke="var(--power)" stroke-width="2.2"/>
@@ -317,6 +318,93 @@
     </figcaption>
   </figure>
 
+  <h2>Питание: +5 В → 3.3 В через LDO</h2>
+  <p class="sub">
+    Не с пина 3V3 напрямую, а с +5&nbsp;В через маленький линейный стабилизатор — так броски тока
+    модуля не трогают рейл, на котором сидит SD-карта.
+  </p>
+  <figure>
+    <div class="legend" aria-hidden="true">
+      <span class="lg-pwr"><i></i> +5 В · +3.3 В · GND</span>
+    </div>
+    <div class="board">
+      <svg viewBox="0 0 1240 380" role="img"
+           aria-label="Цепь питания recon-шапки. С пина плюс 5 вольт, вывод 1 Флиппера, идёт на линейный стабилизатор AP2112K-3.3 в корпусе SOT-23-5. На входе и выходе стабилизатора по конденсатору 1 микрофарад, вывод EN соединён со входом, иначе выход выключен. С выхода 3.3 вольта идут на VCC модуля nRF24, где у самого модуля стоят 10 микрофарад и 100 нанофарад. Земля общая. Пин 5 вольт по умолчанию выключен и включается в настройках GPIO, зато броски тока модуля не трогают рейл 3.3 вольта, с которого питается SD-карта.">
+        <rect x="0" y="0" width="1240" height="380" fill="url(#dots3)" opacity="0.9"/>
+
+        <!-- Flipper +5V -->
+        <rect x="60" y="110" width="170" height="120" rx="10" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
+        <text x="145" y="150" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="13" fill="currentColor">FLIPPER</text>
+        <text x="145" y="172" text-anchor="middle" font-family="var(--font-mono)" font-size="12" fill="var(--power)">+5 В · пин 1</text>
+        <text x="145" y="202" text-anchor="middle" font-family="var(--font-sans)" font-size="9.5" fill="var(--muted)">включить в</text>
+        <text x="145" y="215" text-anchor="middle" font-family="var(--font-sans)" font-size="9.5" fill="var(--muted)">Settings → GPIO → 5V</text>
+
+        <!-- LDO -->
+        <rect x="380" y="110" width="230" height="120" rx="10" fill="var(--panel)" stroke="var(--power)" stroke-width="2"/>
+        <text x="415" y="134" text-anchor="start" font-family="var(--font-mono)" font-size="10" fill="var(--power)">IN</text>
+        <text x="575" y="134" text-anchor="end" font-family="var(--font-mono)" font-size="10" fill="var(--power)">OUT</text>
+        <text x="495" y="164" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="14" fill="var(--power)">AP2112K-3.3</text>
+        <text x="495" y="184" text-anchor="middle" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">LDO · SOT-23-5 · 600 мА</text>
+        <text x="495" y="210" text-anchor="middle" font-family="var(--font-mono)" font-size="11" fill="currentColor">EN → IN (иначе выкл.)</text>
+
+        <!-- nRF24 -->
+        <rect x="770" y="110" width="220" height="120" rx="10" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
+        <text x="785" y="134" text-anchor="start" font-family="var(--font-mono)" font-size="10" fill="var(--power)">VCC</text>
+        <text x="880" y="168" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="14" fill="currentColor">nRF24L01+</text>
+        <text x="880" y="190" text-anchor="middle" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">VCC / GND</text>
+
+        <!-- +5V wire Flipper -> LDO IN -->
+        <line x1="230" y1="160" x2="380" y2="160" stroke="var(--power)" stroke-width="2.6"/>
+        <text x="305" y="150" text-anchor="middle" font-family="var(--font-mono)" font-size="10.5" fill="var(--power)">+5 В</text>
+        <!-- +3.3V wire LDO OUT -> VCC -->
+        <line x1="610" y1="160" x2="770" y2="160" stroke="var(--power)" stroke-width="2.6"/>
+        <text x="690" y="150" text-anchor="middle" font-family="var(--font-mono)" font-size="10.5" fill="var(--power)">+3.3 В</text>
+
+        <!-- ground rail -->
+        <line x1="145" y1="330" x2="1050" y2="330" stroke="var(--power)" stroke-width="2"/>
+        <line x1="145" y1="230" x2="145" y2="330" stroke="var(--power)" stroke-width="2"/>
+        <line x1="495" y1="230" x2="495" y2="330" stroke="var(--power)" stroke-width="2"/>
+        <line x1="880" y1="230" x2="880" y2="330" stroke="var(--power)" stroke-width="2"/>
+
+        <!-- input cap 1uF on +5V -->
+        <line x1="340" y1="160" x2="340" y2="285" stroke="var(--power)" stroke-width="1.8"/>
+        <line x1="329" y1="285" x2="351" y2="285" stroke="var(--power)" stroke-width="2.6"/>
+        <line x1="329" y1="293" x2="351" y2="293" stroke="var(--power)" stroke-width="2.6"/>
+        <line x1="340" y1="293" x2="340" y2="330" stroke="var(--power)" stroke-width="1.8"/>
+        <text x="340" y="352" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--power)">1 мкФ</text>
+
+        <!-- output cap 1uF on +3.3V -->
+        <line x1="650" y1="160" x2="650" y2="285" stroke="var(--power)" stroke-width="1.8"/>
+        <line x1="639" y1="285" x2="661" y2="285" stroke="var(--power)" stroke-width="2.6"/>
+        <line x1="639" y1="293" x2="661" y2="293" stroke="var(--power)" stroke-width="2.6"/>
+        <line x1="650" y1="293" x2="650" y2="330" stroke="var(--power)" stroke-width="1.8"/>
+        <text x="650" y="352" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--power)">1 мкФ</text>
+
+        <!-- module decoupling on +3.3V, at module -->
+        <line x1="735" y1="160" x2="735" y2="285" stroke="var(--power)" stroke-width="1.8"/>
+        <line x1="724" y1="285" x2="746" y2="285" stroke="var(--power)" stroke-width="2.6"/>
+        <line x1="724" y1="293" x2="746" y2="293" stroke="var(--power)" stroke-width="2.6"/>
+        <line x1="735" y1="293" x2="735" y2="330" stroke="var(--power)" stroke-width="1.8"/>
+        <text x="775" y="311" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--ir)">10 мкФ ∥ 100 нФ</text>
+        <text x="775" y="325" text-anchor="middle" font-family="var(--font-sans)" font-size="9" fill="var(--muted)">у самого модуля</text>
+
+        <!-- ground symbol -->
+        <line x1="1050" y1="330" x2="1050" y2="344" stroke="var(--power)" stroke-width="2"/>
+        <line x1="1034" y1="344" x2="1066" y2="344" stroke="var(--power)" stroke-width="2"/>
+        <line x1="1040" y1="351" x2="1060" y2="351" stroke="var(--power)" stroke-width="2"/>
+        <line x1="1046" y1="358" x2="1054" y2="358" stroke="var(--power)" stroke-width="2"/>
+        <text x="1050" y="376" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--muted)">GND</text>
+      </svg>
+    </div>
+    <figcaption>
+      <b>AP2112K-3.3</b> (SOT-23-5): вход и выход по <b>1&nbsp;мкФ</b>, <b>EN обязательно на IN</b> —
+      иначе выход выключен. Питание берётся с <b>+5&nbsp;В (пин 1)</b>, который по умолчанию выключен:
+      включить в <b>Settings → GPIO → 5V on GPIO</b>. У самого модуля — <b>10&nbsp;мкФ ∥ 100&nbsp;нФ</b>.
+      Базовый модуль формально заводится и прямо с 3V3, но именно так рейл с SD-картой остаётся
+      нетронутым, а вариант PA+LNA закрывается заодно.
+    </figcaption>
+  </figure>
+
   <h2>Выводы</h2>
   <div class="tablewrap">
     <table>
@@ -324,7 +412,7 @@
         <tr><th>Модуль</th><th>Флиппер</th><th>Вывод</th><th>Роль</th></tr>
       </thead>
       <tbody>
-        <tr><td class="ref">VCC</td><td class="val">3V3</td><td>9</td><td class="role">питание 3.3 В, ≈14 мА — рейл Флиппера тянет</td></tr>
+        <tr><td class="ref">VCC</td><td class="val">+5V→LDO</td><td>1</td><td class="role">+5 В (пин 1) → AP2112K-3.3 → 3.3 В; рейл SD не трогаем</td></tr>
         <tr><td class="ref">GND</td><td class="val">GND</td><td>8·11·18</td><td class="role">общая земля</td></tr>
         <tr><td class="ref">SCK</td><td class="val">PB3</td><td>5</td><td class="role">тактовая SPI (общая с CC1101)</td></tr>
         <tr><td class="ref">MOSI</td><td class="val">PA7</td><td>2</td><td class="role">данные в модуль</td></tr>
@@ -345,17 +433,18 @@
   <h2>Что учесть</h2>
   <div class="notes">
     <div class="note">
-      <h3><span class="dot"></span> Питание — от Флиппера</h3>
-      <p>Базовый модуль (антенна дорожкой) ест ≈14&nbsp;мА при 3.3&nbsp;В — рейл 3V3 Флиппера
-      справляется без вопросов. <b>Ни батареи, ни преобразователя, ни BMS</b> — вся тяжёлая часть
-      шумовой шапки здесь просто не нужна. Шапка получается размером с сам модуль.</p>
+      <h3><span class="dot"></span> Питание — +5 В через LDO</h3>
+      <p>Не с пина 3V3 напрямую, а с <b>+5&nbsp;В (пин 1) через LDO</b> AP2112K-3.3. Пин 3V3 — это
+      внутренний рейл Флиппера, на нём же сидит <b>SD-карта</b>: броски тока модуля способны его
+      просаживать и ловить сбои записи. LDO развязывает модуль от этого рейла. Батарея всё равно
+      не нужна — только чип и пара конденсаторов.</p>
     </div>
     <div class="note">
-      <h3><span class="dot"></span> Версия PA+LNA — исключение</h3>
-      <p>Если модуль с прикручиваемой антенной и экраном (PA+LNA), на передаче он берёт
-      до ≈115&nbsp;мА импульсами и от 3V3 через тонкие провода <b>просаживается и ресетится</b>.
-      Тогда нужен жирный кап у самого модуля (у тебя уже есть) и лучше отдельный LDO. Базовому
-      это не требуется.</p>
+      <h3><span class="dot"></span> Версия PA+LNA — тем более</h3>
+      <p>Модуль с прикручиваемой антенной и экраном (PA+LNA) на передаче берёт до ≈115&nbsp;мА
+      импульсами — прямо с 3V3 через тонкие провода он <b>просаживается и ресетится</b>. С LDO от
+      +5&nbsp;В и <b>10&nbsp;мкФ у самого модуля</b> этот случай закрыт заодно: 600&nbsp;мА
+      стабилизатора хватает с запасом.</p>
     </div>
     <div class="note">
       <h3><span class="dot"></span> 2.4 ГГц и BLE — врозь</h3>

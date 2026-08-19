@@ -308,30 +308,31 @@
     </figcaption>
   </figure>
 
-  <h2>Принципиальная схема — CC1101 и XIAO</h2>
+  <h2>Принципиальная схема — весь узел на одном листе</h2>
   <p class="sub">
-    Полная разводка радиочасти: разъём Флиппера, обе микросхемы повыводно, развязка и
-    все цепи с номиналами. Транзисторный уровень ИК-бластера (R1..R8, C1..C4, LM393, IRLZ44N,
-    кольцо) уже разведён в <a href="ir-blaster.html" style="color:var(--ir)">ir-blaster.html</a>&nbsp;—
-    здесь он показан интерфейсным блоком (+5&nbsp;В, GND, без проводов к Флипперу).
+    Всё вместе и повыводно: разъём Флиппера, CC1101, XIAO, затем полный транзисторный тракт
+    ИК-бластера со всеми R, C и номиналами. Шины <b>+5&nbsp;В</b> и <b>GND</b> — сквозные
+    (один и тот же нет на обоих листах). Генерация +5&nbsp;В — на отдельном листе питания ниже.
   </p>
   <figure>
     <div class="legend" aria-hidden="true">
-      <span class="lg-sig"><i></i> сигналы SPI/UART</span>
+      <span class="lg-sig"><i></i> сигналы</span>
       <span class="lg-pwr"><i></i> питание / земля</span>
-      <span class="lg-ir"><i class="dash"></i> ИК-узел (отдельный лист)</span>
+      <span class="lg-ir"><i class="dash"></i> ИК-свет</span>
     </div>
     <div class="board">
-      <svg viewBox="0 0 1240 840" role="img"
-           aria-label="Принципиальная схема радиочасти. Слева разъём XS1 GPIO Флиппера, все 18 контактов подписаны. Шина +5 вольт сверху от узла питания, шина земли снизу сводится звездой. Отдельная линия +3.3 вольта идёт с контакта 9 Флиппера только на питание CC1101. Микросхема U1 CC1101 справа сверху: SCK с контакта 5, MOSI с 2, MISO на 3, CSN с 4, GDO0 на 7, VCC на 3.3 вольта, GND на землю, антенна четверть волны сверху. У VCC развязка: C10 100 нанофарад и C11 10 микрофарад на землю. Ниже U2 XIAO ESP32C5: пад 5 вольт на шину плюс 5, GND на землю, RXD с контакта 13 Флиппера, TXD на контакт 14, вывод 3.3 вольта не подключён. UART на 3.3 вольта напрямую, номера GPIO задаются в прошивке. Справа блок ИК-бластера — только +5 вольт и земля, полная схема в отдельном листе, проводов к Флипперу нет. Контакт 1 5 вольт Флиппера не подключён.">
-        <rect x="0" y="0" width="1240" height="840" fill="url(#dots2)" opacity="0.9"/>
-        <line x1="96" y1="90" x2="1180" y2="90" stroke="var(--power)" stroke-width="2.6"/>
-        <text x="96" y="78" fill="var(--power)" font-family="var(--font-mono)" font-size="13" font-weight="700">+5 В · от узла питания (LM2596)</text>
+      <svg viewBox="0 0 1240 1542" role="img"
+           aria-label="Единая принципиальная схема на одном листе. Верх — радиочасть: разъём XS1 GPIO Флиппера на 18 контактов, CC1101 повыводно со SPI, антенной и развязкой C10 100 нанофарад и C11 10 микрофарад у VCC, XIAO ESP32C5 с UART и питанием 5 вольт. Низ — полный транзисторный тракт ИК-бластера: фотодиод BPW34 с R1 10 килоом и C1 100 пикофарад, компаратор LM393 с подтяжкой R2 1 килоом, порогом на RV1 10 килоом и R5 10 килоом, развязкой C2 100 нанофарад, ключ IRLZ44N с затворным R3 100 ом и R4 100 килоом, кольцо из трёх веток по 22 ома и по два ИК-диода, локальные C3 100 нанофарад и C4 220 микрофарад. Шины плюс 5 вольт и земля общие для обоих листов.">
+        <defs><marker id="arwU" markerWidth="9" markerHeight="9" refX="7" refY="4.2" orient="auto"><path d="M0,0 L8,4.2 L0,8.4 Z" fill="currentColor"/></marker></defs>
+        <rect x="0" y="0" width="1240" height="820" fill="url(#dots2)" opacity="0.9"/>
+        <text x="40" y="40" font-family="var(--font-mono)" font-weight="700" font-size="14" fill="currentColor">ЛИСТ 1 · РАДИОЧАСТЬ — CC1101 + XIAO</text>
+        <line x1="96" y1="98" x2="1180" y2="98" stroke="var(--power)" stroke-width="2.6"/>
+        <text x="96" y="86" fill="var(--power)" font-family="var(--font-mono)" font-size="12" font-weight="700">+5 В (шина — с листа питания)</text>
         <line x1="96" y1="778" x2="1180" y2="778" stroke="var(--power)" stroke-width="2.6"/>
         <g stroke="var(--power)" stroke-width="2.4" fill="none"><line x1="150" y1="778" x2="150" y2="792"/><line x1="136" y1="792" x2="164" y2="792"/><line x1="141" y1="798" x2="159" y2="798"/><line x1="146" y1="804" x2="154" y2="804"/></g>
         <text x="176" y="798" fill="var(--power)" font-family="var(--font-mono)" font-size="12">GND — общая (звезда)</text>
-        <line x1="300" y1="124" x2="1120" y2="124" stroke="var(--power)" stroke-width="2.2" stroke-dasharray="1 0"/>
-        <text x="1120" y="118" text-anchor="end" fill="var(--power)" font-family="var(--font-mono)" font-size="12" font-weight="700">+3.3 В (от Флиппера, пин 9) — только CC1101</text>
+        <line x1="300" y1="132" x2="1120" y2="132" stroke="var(--power)" stroke-width="2.2"/>
+        <text x="1120" y="126" text-anchor="end" fill="var(--power)" font-family="var(--font-mono)" font-size="12" font-weight="700">+3.3 В (Флиппер пин 9) — только CC1101</text>
         <rect x="96" y="150" width="154" height="478" rx="8" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
         <text x="173.0" y="146" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="13" fill="currentColor">XS1 · GPIO Флиппера</text>
         <line x1="250" y1="168" x2="266" y2="168" stroke="var(--muted)" stroke-width="2"/>
@@ -406,106 +407,485 @@
         <circle cx="250" cy="610" r="3" fill="var(--power)"/>
         <text x="240" y="606" text-anchor="end" font-family="var(--font-mono)" font-size="10.5" fill="var(--power)">18</text>
         <text x="240" y="618" text-anchor="end" font-family="var(--font-mono)" font-size="9.5" fill="var(--muted)">GND</text>
-        <rect x="740" y="176" width="260" height="254" rx="8" fill="var(--panel)" stroke="var(--power)" stroke-width="2"/>
-        <text x="870.0" y="210" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="15" fill="var(--power)">U1 · CC1101</text>
-        <text x="870.0" y="230" text-anchor="middle" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">sub-GHz · SPI</text>
-        <line x1="724" y1="224" x2="740" y2="224" stroke="currentColor" stroke-width="2"/>
-        <text x="748" y="228" font-family="var(--font-mono)" font-size="10.5" fill="currentColor">SCK</text>
-        <line x1="724" y1="264" x2="740" y2="264" stroke="currentColor" stroke-width="2"/>
-        <text x="748" y="268" font-family="var(--font-mono)" font-size="10.5" fill="currentColor">MOSI</text>
-        <line x1="724" y1="304" x2="740" y2="304" stroke="currentColor" stroke-width="2"/>
-        <text x="748" y="308" font-family="var(--font-mono)" font-size="10.5" fill="currentColor">MISO</text>
-        <line x1="724" y1="344" x2="740" y2="344" stroke="currentColor" stroke-width="2"/>
-        <text x="748" y="348" font-family="var(--font-mono)" font-size="10.5" fill="currentColor">CSN</text>
-        <line x1="724" y1="384" x2="740" y2="384" stroke="currentColor" stroke-width="2"/>
-        <text x="748" y="388" font-family="var(--font-mono)" font-size="10.5" fill="currentColor">GDO0</text>
-        <line x1="870" y1="176" x2="870" y2="124" stroke="var(--power)" stroke-width="2.2"/>
-        <circle cx="870" cy="124" r="3.2" fill="var(--power)"/>
-        <text x="878" y="170" font-family="var(--font-mono)" font-size="10.5" fill="var(--power)">VCC</text>
-        <line x1="870" y1="430" x2="870" y2="778" stroke="var(--power)" stroke-width="2.2"/>
-        <circle cx="870" cy="778" r="3.2" fill="var(--power)"/>
-        <text x="878" y="446" font-family="var(--font-mono)" font-size="10.5" fill="var(--power)">GND</text>
-        <line x1="770" y1="176" x2="770" y2="150" stroke="var(--power)" stroke-width="2"/>
-        <line x1="770" y1="150" x2="710" y2="110" stroke="var(--power)" stroke-width="2"/>
-        <g stroke="var(--power)" stroke-width="2" fill="none"><line x1="710" y1="110" x2="734" y2="96"/><line x1="700" y1="122" x2="724" y2="108"/></g>
-        <text x="694" y="92" text-anchor="end" font-family="var(--font-mono)" font-size="10" fill="var(--power)">ANT λ/4</text>
-        <polyline points="266,272 540,272 540,224 724,224" fill="none" stroke="currentColor" stroke-width="2"/>
+        <rect x="740" y="184" width="260" height="254" rx="8" fill="var(--panel)" stroke="var(--power)" stroke-width="2"/>
+        <text x="870.0" y="218" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="15" fill="var(--power)">U2 · CC1101</text>
+        <text x="870.0" y="238" text-anchor="middle" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">sub-GHz · SPI</text>
+        <line x1="724" y1="232" x2="740" y2="232" stroke="currentColor" stroke-width="2"/>
+        <text x="748" y="236" font-family="var(--font-mono)" font-size="10.5" fill="currentColor">SCK</text>
+        <line x1="724" y1="272" x2="740" y2="272" stroke="currentColor" stroke-width="2"/>
+        <text x="748" y="276" font-family="var(--font-mono)" font-size="10.5" fill="currentColor">MOSI</text>
+        <line x1="724" y1="312" x2="740" y2="312" stroke="currentColor" stroke-width="2"/>
+        <text x="748" y="316" font-family="var(--font-mono)" font-size="10.5" fill="currentColor">MISO</text>
+        <line x1="724" y1="352" x2="740" y2="352" stroke="currentColor" stroke-width="2"/>
+        <text x="748" y="356" font-family="var(--font-mono)" font-size="10.5" fill="currentColor">CSN</text>
+        <line x1="724" y1="392" x2="740" y2="392" stroke="currentColor" stroke-width="2"/>
+        <text x="748" y="396" font-family="var(--font-mono)" font-size="10.5" fill="currentColor">GDO0</text>
+        <line x1="870" y1="184" x2="870" y2="132" stroke="var(--power)" stroke-width="2.2"/><circle cx="870" cy="132" r="3.2" fill="var(--power)"/>
+        <text x="878" y="178" font-family="var(--font-mono)" font-size="10.5" fill="var(--power)">VCC</text>
+        <line x1="870" y1="438" x2="870" y2="778" stroke="var(--power)" stroke-width="2.2"/><circle cx="870" cy="778" r="3.2" fill="var(--power)"/>
+        <text x="878" y="454" font-family="var(--font-mono)" font-size="10.5" fill="var(--power)">GND</text>
+        <line x1="770" y1="184" x2="770" y2="158" stroke="var(--power)" stroke-width="2"/>
+        <line x1="770" y1="158" x2="710" y2="118" stroke="var(--power)" stroke-width="2"/>
+        <g stroke="var(--power)" stroke-width="2" fill="none"><line x1="710" y1="118" x2="734" y2="104"/><line x1="700" y1="130" x2="724" y2="116"/></g>
+        <text x="694" y="100" text-anchor="end" font-family="var(--font-mono)" font-size="10" fill="var(--power)">ANT λ/4</text>
+        <polyline points="266,272 540,272 540,232 724,232" fill="none" stroke="currentColor" stroke-width="2"/>
         <text x="272" y="268" font-family="var(--font-mono)" font-size="9.5" fill="var(--muted)">SCK</text>
-        <polyline points="266,194 560,194 560,264 724,264" fill="none" stroke="currentColor" stroke-width="2"/>
+        <polyline points="266,194 560,194 560,272 724,272" fill="none" stroke="currentColor" stroke-width="2"/>
         <text x="272" y="190" font-family="var(--font-mono)" font-size="9.5" fill="var(--muted)">MOSI</text>
-        <polyline points="266,246 604,246 604,344 724,344" fill="none" stroke="currentColor" stroke-width="2"/>
+        <polyline points="266,246 600,246 600,352 724,352" fill="none" stroke="currentColor" stroke-width="2"/>
         <text x="272" y="242" font-family="var(--font-mono)" font-size="9.5" fill="var(--muted)">CSN</text>
-        <polyline points="266,220 582,220 582,304 724,304" fill="none" stroke="currentColor" stroke-width="2"/>
+        <polyline points="266,220 582,220 582,312 724,312" fill="none" stroke="currentColor" stroke-width="2"/>
         <text x="272" y="216" font-family="var(--font-mono)" font-size="9.5" fill="var(--muted)">MISO</text>
-        <polyline points="266,324 622,324 622,384 724,384" fill="none" stroke="currentColor" stroke-width="2"/>
+        <polyline points="266,324 622,324 622,392 724,392" fill="none" stroke="currentColor" stroke-width="2"/>
         <text x="272" y="320" font-family="var(--font-mono)" font-size="9.5" fill="var(--muted)">GDO0</text>
-        <polyline points="266,376 300,376 300,124" fill="none" stroke="var(--power)" stroke-width="2.2"/>
-        <circle cx="300" cy="124" r="3.2" fill="var(--power)"/>
+        <polyline points="266,376 300,376 300,132" fill="none" stroke="var(--power)" stroke-width="2.2"/><circle cx="300" cy="132" r="3.2" fill="var(--power)"/>
         <text x="308" y="372" font-family="var(--font-mono)" font-size="9.5" fill="var(--power)">3V3</text>
-        <polyline points="266,350 340,350 340,778" fill="none" stroke="var(--power)" stroke-width="2"/>
-        <circle cx="340" cy="778" r="3" fill="var(--power)"/>
-        <polyline points="266,428 340,428 340,778" fill="none" stroke="var(--power)" stroke-width="2"/>
-        <circle cx="340" cy="778" r="3" fill="var(--power)"/>
-        <polyline points="266,610 340,610 340,778" fill="none" stroke="var(--power)" stroke-width="2"/>
-        <circle cx="340" cy="778" r="3" fill="var(--power)"/>
-        <line x1="1040" y1="124" x2="1040" y2="300" stroke="var(--power)" stroke-width="2"/>
-        <circle cx="1040" cy="124" r="2.6" fill="var(--power)"/>
-        <line x1="1027" y1="300" x2="1053" y2="300" stroke="currentColor" stroke-width="2.2"/>
-        <line x1="1027" y1="308" x2="1053" y2="308" stroke="currentColor" stroke-width="2.2"/>
-        <line x1="1040" y1="308" x2="1040" y2="778" stroke="var(--power)" stroke-width="2"/>
-        <circle cx="1040" cy="778" r="2.6" fill="var(--power)"/>
-        <text x="1056" y="288" font-family="var(--font-mono)" font-size="10" fill="currentColor">C10</text>
-        <text x="1056" y="302" font-family="var(--font-mono)" font-size="9.5" fill="var(--muted)">100 нФ</text>
-        <line x1="1090" y1="124" x2="1090" y2="300" stroke="var(--power)" stroke-width="2"/>
-        <circle cx="1090" cy="124" r="2.6" fill="var(--power)"/>
-        <line x1="1077" y1="300" x2="1103" y2="300" stroke="currentColor" stroke-width="2.4"/>
-        <path d="M1077,312 Q1090,305 1103,312" fill="none" stroke="currentColor" stroke-width="2"/>
-        <line x1="1090" y1="312" x2="1090" y2="778" stroke="var(--power)" stroke-width="2"/>
-        <circle cx="1090" cy="778" r="2.6" fill="var(--power)"/>
-        <text x="1106" y="288" font-family="var(--font-mono)" font-size="10" fill="currentColor">C11</text>
-        <text x="1106" y="302" font-family="var(--font-mono)" font-size="9.5" fill="var(--muted)">10 мкФ</text>
-        <text x="1065" y="352" text-anchor="middle" font-family="var(--font-sans)" font-size="10" fill="var(--muted)">развязка у VCC CC1101</text>
+        <polyline points="266,350 340,350 340,778" fill="none" stroke="var(--power)" stroke-width="2"/><circle cx="340" cy="778" r="3" fill="var(--power)"/>
+        <polyline points="266,428 340,428 340,778" fill="none" stroke="var(--power)" stroke-width="2"/><circle cx="340" cy="778" r="3" fill="var(--power)"/>
+        <polyline points="266,610 340,610 340,778" fill="none" stroke="var(--power)" stroke-width="2"/><circle cx="340" cy="778" r="3" fill="var(--power)"/>
+        <line x1="1040" y1="132" x2="1040" y2="308" stroke="var(--power)" stroke-width="2"/><circle cx="1040" cy="132" r="2.6" fill="var(--power)"/>
+        <line x1="1027" y1="308" x2="1053" y2="308" stroke="currentColor" stroke-width="2.2"/><line x1="1027" y1="316" x2="1053" y2="316" stroke="currentColor" stroke-width="2.2"/><line x1="1040" y1="316" x2="1040" y2="778" stroke="var(--power)" stroke-width="2"/>
+        <circle cx="1040" cy="778" r="2.6" fill="var(--power)"/><text x="1056" y="296" font-family="var(--font-mono)" font-size="10" fill="currentColor">C10</text><text x="1056" y="310" font-family="var(--font-mono)" font-size="9.5" fill="var(--muted)">100 нФ</text>
+        <line x1="1090" y1="132" x2="1090" y2="308" stroke="var(--power)" stroke-width="2"/><circle cx="1090" cy="132" r="2.6" fill="var(--power)"/>
+        <line x1="1077" y1="308" x2="1103" y2="308" stroke="currentColor" stroke-width="2.4"/><path d="M1077,320 Q1090,313 1103,320" fill="none" stroke="currentColor" stroke-width="2"/><line x1="1090" y1="320" x2="1090" y2="778" stroke="var(--power)" stroke-width="2"/>
+        <circle cx="1090" cy="778" r="2.6" fill="var(--power)"/><text x="1106" y="296" font-family="var(--font-mono)" font-size="10" fill="currentColor">C11</text><text x="1106" y="310" font-family="var(--font-mono)" font-size="9.5" fill="var(--muted)">10 мкФ</text>
+        <text x="1065" y="360" text-anchor="middle" font-family="var(--font-sans)" font-size="10" fill="var(--muted)">развязка у VCC CC1101</text>
         <rect x="740" y="560" width="240" height="160" rx="8" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
-        <text x="860.0" y="594" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="15" fill="currentColor">U2 · XIAO ESP32C5</text>
+        <text x="860.0" y="594" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="15" fill="currentColor">U3 · XIAO ESP32C5</text>
         <text x="860.0" y="614" text-anchor="middle" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">BLE · USB-C и LDO на борту</text>
-        <line x1="800" y1="560" x2="800" y2="90" stroke="var(--power)" stroke-width="2.2"/>
-        <circle cx="800" cy="90" r="3.2" fill="var(--power)"/>
-        <text x="808" y="554" font-family="var(--font-mono)" font-size="10.5" fill="var(--power)">5V</text>
-        <line x1="800" y1="720" x2="800" y2="778" stroke="var(--power)" stroke-width="2.2"/>
-        <circle cx="800" cy="778" r="3.2" fill="var(--power)"/>
-        <text x="808" y="736" font-family="var(--font-mono)" font-size="10.5" fill="var(--power)">GND</text>
-        <line x1="724" y1="600" x2="740" y2="600" stroke="currentColor" stroke-width="2"/>
-        <text x="748" y="604" font-family="var(--font-mono)" font-size="10.5" fill="currentColor">RXD</text>
-        <line x1="724" y1="640" x2="740" y2="640" stroke="currentColor" stroke-width="2"/>
-        <text x="748" y="644" font-family="var(--font-mono)" font-size="10.5" fill="currentColor">TXD</text>
-        <line x1="724" y1="680" x2="740" y2="680" stroke="var(--muted)" stroke-width="2" stroke-dasharray="5 4"/>
-        <text x="748" y="684" font-family="var(--font-mono)" font-size="10" fill="var(--muted)">3V3 — выход LDO, н/п</text>
-        <polyline points="266,480 470,480 470,600 724,600" fill="none" stroke="currentColor" stroke-width="2"/>
-        <text x="272" y="476" font-family="var(--font-mono)" font-size="9.5" fill="var(--muted)">TX→RXD</text>
-        <polyline points="266,506 500,506 500,640 724,640" fill="none" stroke="currentColor" stroke-width="2"/>
-        <text x="272" y="518" font-family="var(--font-mono)" font-size="9.5" fill="var(--muted)">RX←TXD</text>
+        <line x1="800" y1="560" x2="800" y2="98" stroke="var(--power)" stroke-width="2.2"/><circle cx="800" cy="98" r="3.2" fill="var(--power)"/><text x="808" y="554" font-family="var(--font-mono)" font-size="10.5" fill="var(--power)">5V</text>
+        <line x1="800" y1="720" x2="800" y2="778" stroke="var(--power)" stroke-width="2.2"/><circle cx="800" cy="778" r="3.2" fill="var(--power)"/><text x="808" y="736" font-family="var(--font-mono)" font-size="10.5" fill="var(--power)">GND</text>
+        <line x1="724" y1="600" x2="740" y2="600" stroke="currentColor" stroke-width="2"/><text x="748" y="604" font-family="var(--font-mono)" font-size="10.5" fill="currentColor">RXD</text>
+        <line x1="724" y1="640" x2="740" y2="640" stroke="currentColor" stroke-width="2"/><text x="748" y="644" font-family="var(--font-mono)" font-size="10.5" fill="currentColor">TXD</text>
+        <line x1="724" y1="680" x2="740" y2="680" stroke="var(--muted)" stroke-width="2" stroke-dasharray="5 4"/><text x="748" y="684" font-family="var(--font-mono)" font-size="10" fill="var(--muted)">3V3 — выход LDO, н/п</text>
+        <polyline points="266,480 470,480 470,600 724,600" fill="none" stroke="currentColor" stroke-width="2"/><text x="272" y="476" font-family="var(--font-mono)" font-size="9.5" fill="var(--muted)">TX→RXD</text>
+        <polyline points="266,506 500,506 500,640 724,640" fill="none" stroke="currentColor" stroke-width="2"/><text x="272" y="518" font-family="var(--font-mono)" font-size="9.5" fill="var(--muted)">RX←TXD</text>
         <text x="740" y="712" font-family="var(--font-sans)" font-size="9.5" fill="var(--muted)">UART 3.3 В прямо, номера GPIO задать в прошивке</text>
-        <rect x="1030" y="470" width="150" height="250" rx="10" fill="var(--ir-soft)" stroke="var(--ir)" stroke-width="1.6"/>
-        <text x="1105" y="500" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="12" fill="var(--ir)">ИК-БЛАСТЕР</text>
-        <text x="1105" y="520" text-anchor="middle" font-family="var(--font-sans)" font-size="10" fill="var(--muted)">D1·U3·Q1·кольцо</text>
-        <text x="1105" y="540" text-anchor="middle" font-family="var(--font-sans)" font-size="10" fill="var(--muted)">R1..R8·C1..C4</text>
-        <text x="1105" y="566" text-anchor="middle" font-family="var(--font-sans)" font-size="9.5" fill="var(--ir)">полная схема —</text>
-        <text x="1105" y="580" text-anchor="middle" font-family="var(--font-sans)" font-size="9.5" fill="var(--ir)">ir-blaster.html</text>
-        <text x="1105" y="612" text-anchor="middle" font-family="var(--font-sans)" font-size="9.5" fill="var(--muted)">к Флипперу проводов</text>
-        <text x="1105" y="626" text-anchor="middle" font-family="var(--font-sans)" font-size="9.5" fill="var(--muted)">нет — только оптика</text>
-        <line x1="1105" y1="470" x2="1105" y2="90" stroke="var(--power)" stroke-width="2.2"/>
-        <circle cx="1105" cy="90" r="3.2" fill="var(--power)"/>
-        <text x="1113" y="462" font-family="var(--font-mono)" font-size="10" fill="var(--power)">+5V</text>
-        <line x1="1150" y1="720" x2="1150" y2="778" stroke="var(--power)" stroke-width="2.2"/>
-        <circle cx="1150" cy="778" r="3.2" fill="var(--power)"/>
-        <text x="1158" y="742" font-family="var(--font-mono)" font-size="10" fill="var(--power)">GND</text>
+        <line x1="40" y1="832" x2="1200" y2="832" stroke="var(--muted)" stroke-width="1.2" stroke-dasharray="3 5"/><text x="40" y="870" font-family="var(--font-mono)" font-weight="700" font-size="14" fill="var(--ir)">ЛИСТ 2 · ИК-БЛАСТЕР — транзисторный уровень (те же цепи +5 В и GND)</text>
+        <g transform="translate(0,884)">
+        <defs>
+          <marker id="arw" markerWidth="9" markerHeight="9" refX="7" refY="4.2" orient="auto">
+            <path d="M0,0 L8,4.2 L0,8.4 Z" fill="currentColor"/>
+          </marker>
+          <marker id="arwC" markerWidth="9" markerHeight="9" refX="7" refY="4.2" orient="auto">
+            <path d="M0,0 L8,4.2 L0,8.4 Z" fill="var(--ir)"/>
+          </marker>
+          <marker id="arwT" markerWidth="9" markerHeight="9" refX="7" refY="4.2" orient="auto">
+            <path d="M0,0 L8,4.2 L0,8.4 Z" fill="var(--power)"/>
+          </marker>
+          <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="var(--ir)" stop-opacity=".55"/>
+            <stop offset="100%" stop-color="var(--ir)" stop-opacity="0"/>
+          </radialGradient>
+          <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse">
+            <circle cx="1.4" cy="1.4" r="1.1" fill="var(--grid-dot)"/>
+          </pattern>
+        </defs>
+
+        <!-- сетка макетной платы -->
+        <rect x="0" y="0" width="1240" height="662" fill="url(#dots)" opacity="0.9"/>
+
+        <!-- =========== ШИНЫ ПИТАНИЯ =========== -->
+        <g stroke="var(--power)" stroke-width="2.4" fill="none">
+          <line x1="108" y1="72" x2="1210" y2="72"/>
+          <line x1="108" y1="602" x2="1210" y2="602"/>
+        </g>
+        <text x="108" y="60" fill="var(--power)" font-family="var(--font-mono)" font-size="13" font-weight="700">+5 В</text>
+        <!-- знак земли слева на шине GND -->
+        <g stroke="var(--power)" stroke-width="2.4" fill="none">
+          <line x1="150" y1="602" x2="150" y2="616"/>
+          <line x1="136" y1="616" x2="164" y2="616"/>
+          <line x1="141" y1="622" x2="159" y2="622"/>
+          <line x1="146" y1="628" x2="154" y2="628"/>
+        </g>
+        <text x="176" y="622" fill="var(--power)" font-family="var(--font-mono)" font-size="12">GND — общий 0 В</text>
+
+        <!-- =========== УЗЕЛ 1 · ФЛИППЕР =========== -->
+        <g>
+          <rect x="60" y="250" width="120" height="212" rx="18" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
+          <text x="120" y="322" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="16" fill="currentColor">FLIPPER</text>
+          <text x="120" y="344" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="16" fill="currentColor">ZERO</text>
+          <text x="120" y="430" text-anchor="middle" font-family="var(--font-sans)" font-size="11.5" fill="var(--muted)">без GPIO</text>
+          <text x="120" y="447" text-anchor="middle" font-family="var(--font-sans)" font-size="11.5" fill="var(--muted)">без прошивки</text>
+          <!-- штатный ИК-диод у правого края -->
+          <g stroke="var(--ir)" stroke-width="2" fill="none">
+            <path d="M180,300 h10" />
+            <path d="M190,292 v16 l12,-8 z" fill="var(--ir)" stroke="none"/>
+          </g>
+          <text x="150" y="243" text-anchor="middle" font-family="var(--font-mono)" font-size="10.5" fill="var(--ir)">внутр. ИК-диод</text>
+        </g>
+
+        <!-- полезный луч: излучение Флиппера идёт на фотодиод -->
+        <line class="ir-beam" x1="212" y1="298" x2="295" y2="201"
+              stroke="var(--ir)" stroke-width="2.6" fill="none" marker-end="url(#arwC)"/>
+        <text x="205" y="262" font-family="var(--font-mono)" font-size="11" fill="var(--ir)">940 нм</text>
+
+        <!-- =========== УЗЕЛ 2 · ВХОД С ФОТОДИОДА =========== -->
+        <g>
+          <text x="300" y="128" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="13" fill="currentColor">D1 · BPW34</text>
+          <text x="300" y="144" text-anchor="middle" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">фотодиод · обр. смещение</text>
+
+          <!-- опуск +5 В на катод -->
+          <line x1="300" y1="72" x2="300" y2="164" stroke="var(--power)" stroke-width="2.2"/>
+          <circle cx="300" cy="72" r="3.2" fill="var(--power)"/>
+          <!-- диод: полоса катода сверху, треугольник вверх, анод вниз -->
+          <g stroke="currentColor" stroke-width="2" fill="none">
+            <line x1="284" y1="164" x2="316" y2="164"/>            <!-- полоса катода -->
+            <path d="M300,196 L286,164 L314,164 Z" fill="var(--panel)"/> <!-- треугольник вверх -->
+            <line x1="300" y1="196" x2="300" y2="300"/>            <!-- анод на узел A -->
+          </g>
+          <!-- узел A -->
+          <circle cx="300" cy="300" r="3.4" fill="currentColor"/>
+          <!-- узел A на вход + компаратора (y=286 обходит корпус подстроечника) -->
+          <polyline points="300,300 300,286 500,286" stroke="currentColor" stroke-width="2" fill="none"/>
+
+          <!-- нагрузка R1 на GND -->
+          <line x1="300" y1="300" x2="300" y2="352" stroke="currentColor" stroke-width="2"/>
+          <rect x="289" y="352" width="22" height="46" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
+          <line x1="300" y1="398" x2="300" y2="602" stroke="currentColor" stroke-width="2"/>
+          <circle cx="300" cy="602" r="3.2" fill="var(--power)"/>
+          <text x="320" y="372" font-family="var(--font-mono)" font-size="11.5" fill="currentColor">R1</text>
+          <text x="320" y="388" font-family="var(--font-mono)" font-size="11.5" fill="var(--muted)">10k</text>
+
+          <!-- C1 на GND -->
+          <line x1="356" y1="286" x2="356" y2="360" stroke="currentColor" stroke-width="2"/>
+          <circle cx="356" cy="286" r="3" fill="currentColor"/>
+          <g stroke="currentColor" stroke-width="2">
+            <line x1="344" y1="360" x2="368" y2="360"/>
+            <line x1="344" y1="368" x2="368" y2="368"/>
+          </g>
+          <line x1="356" y1="368" x2="356" y2="602" stroke="currentColor" stroke-width="2"/>
+          <circle cx="356" cy="602" r="3.2" fill="var(--power)"/>
+          <text x="376" y="360" font-family="var(--font-mono)" font-size="11.5" fill="var(--muted)">C1 100p</text>
+
+          <!-- оптический экран: отсекает собственные 940 нм кольца от D1 -->
+          <g>
+            <line x1="378" y1="150" x2="343" y2="177" stroke="var(--ir)" stroke-width="1.8"
+                  stroke-dasharray="5 4" fill="none"/>
+            <!-- перегородка -->
+            <line x1="332" y1="166" x2="350" y2="188" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+            <text x="358" y="188" font-family="var(--font-mono)" font-size="10" fill="var(--ir)">✕ экран</text>
+          </g>
+        </g>
+
+        <!-- =========== УЗЕЛ 3 · КОМПАРАТОР LM393 =========== -->
+        <g>
+          <text x="552" y="240" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="13" fill="currentColor">U1 · LM393</text>
+          <text x="610" y="270" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">откр. коллектор</text>
+
+          <!-- треугольник -->
+          <path d="M500,254 L500,346 L602,300 Z" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
+          <text x="516" y="291" font-family="var(--font-mono)" font-size="14" fill="currentColor">+</text>
+          <text x="516" y="330" font-family="var(--font-mono)" font-size="14" fill="currentColor">–</text>
+          <!-- вход + уже заведён с узла A на y=286 -->
+          <line x1="500" y1="286" x2="500" y2="286" stroke="currentColor" stroke-width="2"/>
+          <!-- вход − с движка подстроечника -->
+          <polyline points="472,410 490,410 490,322 500,322" stroke="currentColor" stroke-width="2" fill="none"/>
+
+          <!-- выход -->
+          <line x1="602" y1="300" x2="676" y2="300" stroke="currentColor" stroke-width="2"/>
+          <!-- подтяжка R2 на +5 В -->
+          <circle cx="632" cy="300" r="3.4" fill="currentColor"/>
+          <line x1="632" y1="300" x2="632" y2="164" stroke="currentColor" stroke-width="2"/>
+          <rect x="621" y="118" width="22" height="46" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
+          <line x1="632" y1="118" x2="632" y2="72" stroke="var(--power)" stroke-width="2.2"/>
+          <circle cx="632" cy="72" r="3.2" fill="var(--power)"/>
+          <text x="652" y="140" font-family="var(--font-mono)" font-size="11.5" fill="currentColor">R2 1k</text>
+          <text x="652" y="156" font-family="var(--font-mono)" font-size="11" fill="var(--muted)">подтяжка</text>
+
+          <!-- R5 + RV1: ограничиваем диапазон порога примерно до 0…2.5 В -->
+          <g>
+            <!-- R5 от +5 В к верхнему выводу RV1 -->
+            <line x1="460" y1="72" x2="460" y2="112" stroke="var(--power)" stroke-width="2.2"/>
+            <circle cx="460" cy="72" r="3.2" fill="var(--power)"/>
+            <rect x="449" y="112" width="22" height="46" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
+            <text x="436" y="128" text-anchor="end" font-family="var(--font-mono)" font-size="11.5" fill="currentColor">R5</text>
+            <text x="436" y="145" text-anchor="end" font-family="var(--font-mono)" font-size="11" fill="var(--muted)">10k</text>
+            <!-- опорный узел ~2.5 В; мостик над сигнальным проводом узла A -->
+            <path d="M460,158 L460,279 A6.5,6.5 0 0 0 460,292 L460,360" stroke="var(--power)" stroke-width="2.2" fill="none"/>
+            <circle cx="460" cy="184" r="3.0" fill="var(--power)"/>
+            <text x="474" y="188" font-family="var(--font-mono)" font-size="10.5" fill="var(--power)">≈2.5 В REF</text>
+            <!-- корпус подстроечника -->
+            <rect x="448" y="360" width="24" height="64" rx="3" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
+            <!-- стрелка движка -->
+            <line x1="490" y1="410" x2="473" y2="398" stroke="currentColor" stroke-width="2" marker-end="url(#arw)"/>
+            <!-- нижний вывод на шину GND -->
+            <line x1="460" y1="424" x2="460" y2="602" stroke="var(--power)" stroke-width="2.2"/>
+            <circle cx="460" cy="602" r="3.2" fill="var(--power)"/>
+            <text x="436" y="378" text-anchor="end" font-family="var(--font-mono)" font-size="11.5" fill="currentColor">RV1</text>
+            <text x="436" y="394" text-anchor="end" font-family="var(--font-mono)" font-size="11" fill="var(--muted)">10k</text>
+            <text x="436" y="410" text-anchor="end" font-family="var(--font-mono)" font-size="11" fill="var(--muted)">3296W</text>
+            <text x="436" y="426" text-anchor="end" font-family="var(--font-sans)" font-size="10.5" fill="var(--ir)">порог 0…≈2.5 В</text>
+          </g>
+        </g>
+
+        <!-- =========== УЗЕЛ 4 · КЛЮЧ IRLZ44N =========== -->
+        <g>
+          <text x="792" y="219" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="13" fill="currentColor">Q1 · IRLZ44N</text>
+          <text x="792" y="234" text-anchor="middle" font-family="var(--font-sans)" font-size="10.5" fill="var(--muted)">N-MOSFET · имеющийся, Qg высокий</text>
+
+          <!-- последовательный R3 в затворе -->
+          <line x1="676" y1="300" x2="694" y2="300" stroke="currentColor" stroke-width="2"/>
+          <rect x="694" y="289" width="46" height="22" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
+          <line x1="740" y1="300" x2="770" y2="300" stroke="currentColor" stroke-width="2"/>
+          <text x="717" y="283" text-anchor="middle" font-family="var(--font-mono)" font-size="11" fill="var(--muted)">R3 100Ω</text>
+
+          <!-- подтяжка затвора вниз R4 -->
+          <circle cx="756" cy="300" r="3.4" fill="currentColor"/>
+          <line x1="756" y1="300" x2="756" y2="360" stroke="currentColor" stroke-width="2"/>
+          <rect x="745" y="360" width="22" height="46" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
+          <line x1="756" y1="406" x2="756" y2="602" stroke="currentColor" stroke-width="2"/>
+          <circle cx="756" cy="602" r="3.2" fill="var(--power)"/>
+          <text x="726" y="440" text-anchor="end" font-family="var(--font-mono)" font-size="11" fill="var(--muted)">R4 100k</text>
+
+          <!-- символ MOSFET -->
+          <g stroke="currentColor" stroke-width="2" fill="none">
+            <line x1="770" y1="278" x2="770" y2="322"/>          <!-- затвор -->
+            <line x1="782" y1="272" x2="782" y2="328"/>          <!-- канал -->
+            <!-- сток (сверху) -->
+            <line x1="782" y1="282" x2="806" y2="282"/>
+            <line x1="806" y1="282" x2="806" y2="240"/>
+            <!-- исток (снизу) -->
+            <line x1="782" y1="318" x2="806" y2="318"/>
+            <line x1="806" y1="318" x2="806" y2="602"/>
+            <!-- стрелка подложки (N-канал) -->
+            <line x1="806" y1="300" x2="782" y2="300"/>
+            <path d="M782,300 L794,294 L794,306 Z" fill="currentColor" stroke="none"/>
+          </g>
+          <circle cx="806" cy="602" r="3.2" fill="var(--power)"/>
+          <text x="812" y="256" font-family="var(--font-mono)" font-size="10.5" fill="var(--muted)">D</text>
+          <text x="812" y="326" font-family="var(--font-mono)" font-size="10.5" fill="var(--muted)">S</text>
+          <text x="748" y="292" font-family="var(--font-mono)" font-size="10.5" fill="var(--muted)">G</text>
+          <!-- трасса стока к низу веток кольца -->
+          <polyline points="806,240 806,240 880,240 880,486 908,486" stroke="currentColor" stroke-width="2" fill="none"/>
+        </g>
+
+        <!-- =========== УЗЕЛ 5 · КОЛЬЦО ИК-ДИОДОВ =========== -->
+        <g>
+          <!-- свечение за диодами -->
+          <circle class="glow" cx="1000" cy="330" r="130" fill="url(#glow)"/>
+
+          <!-- верх веток на +5 В -->
+          <line x1="908" y1="150" x2="1092" y2="150" stroke="var(--power)" stroke-width="2.2"/>
+          <line x1="1000" y1="150" x2="1000" y2="72" stroke="var(--power)" stroke-width="2.2"/>
+          <circle cx="1000" cy="72" r="3.2" fill="var(--power)"/>
+          <!-- низ веток (узел стока) -->
+          <line x1="908" y1="486" x2="1092" y2="486" stroke="currentColor" stroke-width="2"/>
+          <circle cx="908" cy="486" r="3.4" fill="currentColor"/>
+
+          <!-- три одинаковые ветки: 22 Ом + 2 диода; около 90–120 мА на ветку при 5 В в зависимости от Vf -->
+          <!-- ветка повторена трижды: x=940, 1000, 1060 -->
+          <g stroke="currentColor" stroke-width="2" fill="none">
+            <!-- x=940 -->
+            <line x1="940" y1="150" x2="940" y2="176"/>
+            <rect x="929" y="176" width="22" height="40" fill="var(--panel)"/>
+            <line x1="940" y1="216" x2="940" y2="238"/>
+            <path d="M926,238 L954,238 L940,266 Z" fill="var(--ir)" fill-opacity=".18"/>
+            <line x1="926" y1="266" x2="954" y2="266"/>
+            <line x1="940" y1="266" x2="940" y2="300"/>
+            <path d="M926,300 L954,300 L940,328 Z" fill="var(--ir)" fill-opacity=".18"/>
+            <line x1="926" y1="328" x2="954" y2="328"/>
+            <line x1="940" y1="328" x2="940" y2="486"/>
+            <!-- x=1000 -->
+            <line x1="1000" y1="150" x2="1000" y2="176"/>
+            <rect x="989" y="176" width="22" height="40" fill="var(--panel)"/>
+            <line x1="1000" y1="216" x2="1000" y2="238"/>
+            <path d="M986,238 L1014,238 L1000,266 Z" fill="var(--ir)" fill-opacity=".18"/>
+            <line x1="986" y1="266" x2="1014" y2="266"/>
+            <line x1="1000" y1="266" x2="1000" y2="300"/>
+            <path d="M986,300 L1014,300 L1000,328 Z" fill="var(--ir)" fill-opacity=".18"/>
+            <line x1="986" y1="328" x2="1014" y2="328"/>
+            <line x1="1000" y1="328" x2="1000" y2="486"/>
+            <!-- x=1060 -->
+            <line x1="1060" y1="150" x2="1060" y2="176"/>
+            <rect x="1049" y="176" width="22" height="40" fill="var(--panel)"/>
+            <line x1="1060" y1="216" x2="1060" y2="238"/>
+            <path d="M1046,238 L1074,238 L1060,266 Z" fill="var(--ir)" fill-opacity=".18"/>
+            <line x1="1046" y1="266" x2="1074" y2="266"/>
+            <line x1="1060" y1="266" x2="1060" y2="300"/>
+            <path d="M1046,300 L1074,300 L1060,328 Z" fill="var(--ir)" fill-opacity=".18"/>
+            <line x1="1046" y1="328" x2="1074" y2="328"/>
+            <line x1="1060" y1="328" x2="1060" y2="486"/>
+          </g>
+          <!-- штрихи излучения -->
+          <g stroke="var(--ir)" stroke-width="1.6" fill="none">
+            <line x1="957" y1="246" x2="969" y2="238" marker-end="url(#arwC)"/>
+            <line x1="1017" y1="308" x2="1029" y2="300" marker-end="url(#arwC)"/>
+            <line x1="1077" y1="246" x2="1089" y2="238" marker-end="url(#arwC)"/>
+          </g>
+
+          <text x="1104" y="200" font-family="var(--font-mono)" font-size="11.5" fill="currentColor">R6–R8 · 22 Ω ×3</text>
+          <text x="1104" y="216" font-family="var(--font-mono)" font-size="11" fill="var(--muted)">0.5 Вт</text>
+          <text x="1104" y="300" font-family="var(--font-mono)" font-size="11.5" fill="currentColor">IR-5238C</text>
+          <text x="1104" y="316" font-family="var(--font-mono)" font-size="11" fill="var(--muted)">940 нм ×6</text>
+
+          <!-- локальная развязка питания кольца: ставить физически рядом с Q1/LED -->
+          <g>
+            <!-- C3 100 нФ -->
+            <line x1="1150" y1="72" x2="1150" y2="390" stroke="var(--power)" stroke-width="2"/>
+            <g stroke="currentColor" stroke-width="2">
+              <line x1="1138" y1="390" x2="1162" y2="390"/>
+              <line x1="1138" y1="398" x2="1162" y2="398"/>
+            </g>
+            <line x1="1150" y1="398" x2="1150" y2="602" stroke="var(--power)" stroke-width="2"/>
+            <text x="1132" y="382" text-anchor="end" font-family="var(--font-mono)" font-size="10.5" fill="currentColor">C3 100n</text>
+            <!-- C4 220 мкФ -->
+            <line x1="1200" y1="72" x2="1200" y2="438" stroke="var(--power)" stroke-width="2"/>
+            <line x1="1188" y1="438" x2="1212" y2="438" stroke="currentColor" stroke-width="2"/>
+            <path d="M1188,448 Q1200,442 1212,448" stroke="currentColor" stroke-width="2" fill="none"/>
+            <text x="1182" y="432" text-anchor="end" font-family="var(--font-mono)" font-size="10.5" fill="currentColor">C4</text>
+            <text x="1182" y="447" text-anchor="end" font-family="var(--font-mono)" font-size="10" fill="var(--muted)">220µ</text>
+            <line x1="1200" y1="448" x2="1200" y2="602" stroke="var(--power)" stroke-width="2"/>
+            <text x="1198" y="475" text-anchor="end" font-family="var(--font-sans)" font-size="10" fill="var(--muted)">локально у кольца</text>
+          </g>
+
+          <!-- значок кругового покрытия -->
+          <g transform="translate(1000,556)">
+            <circle r="24" fill="none" stroke="currentColor" stroke-width="2"/>
+            <g stroke="var(--ir)" stroke-width="2" fill="none" marker-end="url(#arwC)">
+              <line x1="0" y1="-24" x2="0" y2="-42"/>
+              <line x1="21" y1="-12" x2="36" y2="-21"/>
+              <line x1="21" y1="12" x2="36" y2="21"/>
+              <line x1="0" y1="24" x2="0" y2="42"/>
+              <line x1="-21" y1="12" x2="-36" y2="21"/>
+              <line x1="-21" y1="-12" x2="-36" y2="-21"/>
+            </g>
+            <text x="0" y="4" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="currentColor">360°</text>
+          </g>
+          <text x="1080" y="560" font-family="var(--font-sans)" font-size="11" fill="var(--muted)">6 диодов в кольце</text>
+          <text x="1080" y="576" font-family="var(--font-sans)" font-size="11" fill="var(--muted)">→ во все стороны</text>
+        </g>
+
+      </g>
       </svg>
     </div>
     <figcaption>
-      Каждая линия SPI подписана и заведена на свой вывод CC1101; питание приёмника&nbsp;—
-      <b>только 3.3&nbsp;В с Флиппера</b> (пин&nbsp;9) с развязкой C10/C11 у VCC. XIAO берёт
-      +5&nbsp;В с батарейной шины, UART идёт напрямую (оба конца 3.3&nbsp;В). Контакт&nbsp;1
-      (5&nbsp;В Флиппера) не подключён&nbsp;— батарейные 5&nbsp;В в Флиппер не заходят.
+      Один лист — весь тракт: слева разъём и радиомодули с развязкой, ниже ИК-бластер
+      транзисторного уровня со всеми номиналами (R1..R8, C1..C4, LM393, IRLZ44N, кольцо).
+      К Флипперу от бластера проводов нет — связь оптическая; общими остаются только
+      <b>+5&nbsp;В и земля</b>. Питание этих шин — на листе ниже.
+    </figcaption>
+  </figure>
+
+  <h2>Лист питания — распределение и земля</h2>
+  <p class="sub">
+    Откуда берётся <b>+5&nbsp;В</b> с верхнего листа: две банки 18650 последовательно (2S) →
+    BMS → понижающий LM2596 на 5.00&nbsp;В. Отдельно показано, что CC1101 питается
+    <b>3.3&nbsp;В от самого Флиппера</b>, а батарейные 5&nbsp;В в разъём Флиппера не заходят.
+  </p>
+  <figure>
+    <div class="legend" aria-hidden="true">
+      <span class="lg-pwr"><i></i> питание / земля</span>
+      <span class="lg-ir"><i class="dash"></i> барьер</span>
+    </div>
+    <div class="board">
+      <svg viewBox="0 0 1240 700" role="img"
+           aria-label="Схема питания. Слева две банки 18650 последовательно, 2S, 8.4 вольта заряд. Средняя точка и полюса идут в плату BMS 2S защиты. С выхода P плюс через выключатель SW1 и предохранитель F1 3 ампера на понижающий преобразователь LM2596, входной и выходной конденсаторы по 220 микрофарад, подстроечником выставлено 5.00 вольта. Выход поднимается на силовую шину плюс 5 вольт, от неё питаются XIAO по входу 5 вольт и ИК-бластер импульсным током около 0.3 ампера. Все возвраты сведены в одну точку — звезду земли. Отдельным блоком: CC1101 питается 3.3 вольта только от Флиппера через пин 9, общая с остальной системой лишь земля; батарейные 5 вольт в пин 1 Флиппера подавать нельзя.">
+        <rect x="0" y="0" width="1240" height="700" fill="url(#dots2)" opacity="0.9"/>
+        <text x="40" y="38" font-family="var(--font-mono)" font-weight="700" font-size="14" fill="var(--power)">ПИТАНИЕ · 2S 18650 → BMS → LM2596 → +5 В</text>
+        <line x1="600" y1="140" x2="1190" y2="140" stroke="var(--power)" stroke-width="2.8"/>
+        <text x="600" y="128" font-family="var(--font-mono)" font-size="12" font-weight="700" fill="var(--power)">+5.00 В — силовая шина</text>
+        <line x1="120" y1="430" x2="1190" y2="430" stroke="var(--power)" stroke-width="2.8"/>
+        <circle cx="360" cy="430" r="4.5" fill="var(--power)"/>
+        <g stroke="var(--power)" stroke-width="2.4" fill="none"><line x1="360" y1="430" x2="360" y2="448"/><line x1="344" y1="448" x2="376" y2="448"/><line x1="349" y1="455" x2="371" y2="455"/><line x1="354" y1="462" x2="366" y2="462"/></g>
+        <text x="386" y="452" font-family="var(--font-mono)" font-size="12" fill="var(--power)">GND — одна точка (звезда): P−, VIN−, VOUT−, возвраты нагрузок, земля CC1101</text>
+        <text x="180" y="180" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="12.5" fill="currentColor">BT1 · BT2</text>
+        <text x="180" y="196" text-anchor="middle" font-family="var(--font-sans)" font-size="10" fill="var(--muted)">2× 18650 (2S)</text>
+        <line x1="180" y1="206" x2="180" y2="214" stroke="var(--power)" stroke-width="2.2"/>
+        <line x1="158" y1="214" x2="202" y2="214" stroke="currentColor" stroke-width="2.2"/>
+        <line x1="169" y1="226" x2="191" y2="226" stroke="currentColor" stroke-width="4"/>
+        <line x1="158" y1="258" x2="202" y2="258" stroke="currentColor" stroke-width="2.2"/>
+        <line x1="169" y1="270" x2="191" y2="270" stroke="currentColor" stroke-width="4"/>
+        <line x1="180" y1="226" x2="180" y2="258" stroke="var(--power)" stroke-width="2.2"/>
+        <circle cx="180" cy="242" r="3" fill="var(--power)"/><line x1="180" y1="242" x2="248" y2="242" stroke="var(--power)" stroke-width="2"/>
+        <text x="150" y="246" text-anchor="end" font-family="var(--font-mono)" font-size="9.5" fill="var(--muted)">сред. точка</text>
+        <circle cx="180" cy="214" r="3" fill="var(--power)"/><line x1="180" y1="214" x2="248" y2="214" stroke="var(--power)" stroke-width="2"/>
+        <text x="150" y="218" text-anchor="end" font-family="var(--font-mono)" font-size="9.5" fill="var(--power)">+ 8.4 В</text>
+        <line x1="180" y1="270" x2="180" y2="290" stroke="var(--power)" stroke-width="2.2"/>
+        <circle cx="180" cy="290" r="3" fill="var(--power)"/><line x1="180" y1="290" x2="248" y2="290" stroke="var(--power)" stroke-width="2"/>
+        <text x="150" y="294" text-anchor="end" font-family="var(--font-mono)" font-size="9.5" fill="var(--muted)">−</text>
+        <rect x="250" y="196" width="160" height="124" rx="8" fill="var(--panel)" stroke="var(--power)" stroke-width="2"/>
+        <text x="330.0" y="220" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="13" fill="var(--power)">BMS 2S</text>
+        <text x="330.0" y="236" text-anchor="middle" font-family="var(--font-sans)" font-size="9.5" fill="var(--muted)">защита 2S</text>
+        <text x="258" y="218" font-family="var(--font-mono)" font-size="10" fill="currentColor">B+</text>
+        <text x="258" y="246" font-family="var(--font-mono)" font-size="10" fill="currentColor">BM</text>
+        <text x="258" y="294" font-family="var(--font-mono)" font-size="10" fill="currentColor">B−</text>
+        <line x1="410" y1="230" x2="428" y2="230" stroke="var(--power)" stroke-width="2.2"/><text x="402" y="234" text-anchor="end" font-family="var(--font-mono)" font-size="10" fill="var(--power)">P+</text>
+        <line x1="410" y1="300" x2="428" y2="300" stroke="var(--power)" stroke-width="2.2"/><text x="402" y="304" text-anchor="end" font-family="var(--font-mono)" font-size="10" fill="var(--power)">P−</text>
+        <polyline points="428,300 450,300 450,430" fill="none" stroke="var(--power)" stroke-width="2.2"/><circle cx="450" cy="430" r="3" fill="var(--power)"/>
+        <line x1="428" y1="230" x2="465" y2="230" stroke="var(--power)" stroke-width="2.2"/>
+        <circle cx="468" cy="230" r="3" fill="var(--power)"/><line x1="468" y1="230" x2="492" y2="216" stroke="var(--power)" stroke-width="2.2"/><circle cx="495" cy="230" r="3" fill="var(--power)"/>
+        <text x="482" y="256" text-anchor="middle" font-family="var(--font-mono)" font-size="10.5" fill="currentColor">SW1</text><text x="482" y="270" text-anchor="middle" font-family="var(--font-sans)" font-size="9" fill="var(--muted)">выкл</text>
+        <line x1="495" y1="230" x2="520" y2="230" stroke="var(--power)" stroke-width="2.2"/>
+        <rect x="520" y="219" width="46" height="22" rx="4" fill="var(--panel)" stroke="var(--power)" stroke-width="2"/>
+        <text x="543" y="213" text-anchor="middle" font-family="var(--font-mono)" font-size="10.5" fill="currentColor">F1</text><text x="543" y="258" text-anchor="middle" font-family="var(--font-sans)" font-size="9" fill="var(--muted)">3 A</text>
+        <line x1="566" y1="230" x2="620" y2="230" stroke="var(--power)" stroke-width="2.2"/>
+        <rect x="620" y="196" width="220" height="164" rx="8" fill="var(--panel)" stroke="var(--power)" stroke-width="2"/>
+        <text x="730.0" y="222" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="13" fill="var(--power)">LM2596 · buck</text>
+        <text x="730.0" y="238" text-anchor="middle" font-family="var(--font-sans)" font-size="9.5" fill="var(--muted)">только вниз · выставить 5.00 В</text>
+        <text x="628" y="234" font-family="var(--font-mono)" font-size="10" fill="currentColor">VIN+</text>
+        <text x="628" y="304" font-family="var(--font-mono)" font-size="10" fill="currentColor">VIN−</text>
+        <text x="832" y="234" text-anchor="end" font-family="var(--font-mono)" font-size="10" fill="currentColor">VOUT+</text>
+        <text x="832" y="304" text-anchor="end" font-family="var(--font-mono)" font-size="10" fill="currentColor">VOUT−</text>
+        <line x1="620" y1="300" x2="600" y2="300" stroke="var(--power)" stroke-width="2.2"/><polyline points="600,300 600,430" fill="none" stroke="var(--power)" stroke-width="2.2"/><circle cx="600" cy="430" r="3" fill="var(--power)"/>
+        <line x1="730.0" y1="196" x2="730.0" y2="176" stroke="var(--power)" stroke-width="2"/>
+        <rect x="716.0" y="160" width="28" height="16" rx="3" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
+        <line x1="748.0" y1="152" x2="732.0" y2="164" stroke="currentColor" stroke-width="2" marker-end="url(#arwU)"/>
+        <text x="756.0" y="164" font-family="var(--font-mono)" font-size="9.5" fill="var(--muted)">R_adj → 5.00 В</text>
+        <line x1="620" y1="230" x2="620" y2="230" stroke="var(--power)" stroke-width="2.2"/>
+        <circle cx="600" cy="230" r="3" fill="var(--power)"/><line x1="600" y1="230" x2="620" y2="230" stroke="var(--power)" stroke-width="2.2"/>
+        <line x1="600" y1="230" x2="600" y2="352" stroke="var(--power)" stroke-width="2"/>
+        <line x1="588" y1="352" x2="612" y2="352" stroke="currentColor" stroke-width="2.4"/><path d="M588,364 Q600,357 612,364" fill="none" stroke="currentColor" stroke-width="2"/>
+        <line x1="600" y1="364" x2="600" y2="430" stroke="var(--power)" stroke-width="2"/>
+        <text x="556" y="340" font-family="var(--font-mono)" font-size="10" fill="currentColor">C_in</text><text x="556" y="354" font-family="var(--font-mono)" font-size="9" fill="var(--muted)">220 мкФ</text>
+        <circle cx="880" cy="230" r="3" fill="var(--power)"/>
+        <line x1="840" y1="230" x2="900" y2="230" stroke="var(--power)" stroke-width="2.2"/>
+        <line x1="880" y1="230" x2="880" y2="352" stroke="var(--power)" stroke-width="2"/>
+        <line x1="868" y1="352" x2="892" y2="352" stroke="currentColor" stroke-width="2.4"/><path d="M868,364 Q880,357 892,364" fill="none" stroke="currentColor" stroke-width="2"/>
+        <line x1="880" y1="364" x2="880" y2="430" stroke="var(--power)" stroke-width="2"/><circle cx="880" cy="430" r="3" fill="var(--power)"/>
+        <text x="898" y="356" font-family="var(--font-mono)" font-size="10" fill="currentColor">C_out</text><text x="898" y="370" font-family="var(--font-mono)" font-size="9" fill="var(--muted)">220 мкФ</text>
+        <line x1="900" y1="230" x2="900" y2="140" stroke="var(--power)" stroke-width="2.4"/><circle cx="900" cy="140" r="3.2" fill="var(--power)"/>
+        <line x1="840" y1="300" x2="860" y2="300" stroke="var(--power)" stroke-width="0"/>
+        <polyline points="840,300 856,300 856,430" fill="none" stroke="var(--power)" stroke-width="2.2"/><circle cx="856" cy="430" r="3" fill="var(--power)"/>
+        <line x1="1040.0" y1="140" x2="1040.0" y2="176" stroke="var(--power)" stroke-width="2.2"/><circle cx="1040.0" cy="140" r="3" fill="var(--power)"/>
+        <rect x="980" y="176" width="120" height="64" rx="8" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
+        <text x="1040.0" y="200" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="12" fill="currentColor">U3 · XIAO</text>
+        <text x="1040.0" y="216" text-anchor="middle" font-family="var(--font-sans)" font-size="9.5" fill="var(--muted)">5V (LDO на борту)</text>
+        <text x="1040.0" y="230" text-anchor="middle" font-family="var(--font-mono)" font-size="9.5" fill="var(--power)">~0.1 А</text>
+        <line x1="1040.0" y1="240" x2="1040.0" y2="430" stroke="var(--power)" stroke-width="2"/><circle cx="1040.0" cy="430" r="3" fill="var(--power)"/>
+        <line x1="1175.0" y1="140" x2="1175.0" y2="176" stroke="var(--power)" stroke-width="2.2"/><circle cx="1175.0" cy="140" r="3" fill="var(--power)"/>
+        <rect x="1120" y="176" width="110" height="64" rx="8" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
+        <text x="1175.0" y="200" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="12" fill="currentColor">ИК-бластер</text>
+        <text x="1175.0" y="216" text-anchor="middle" font-family="var(--font-sans)" font-size="9.5" fill="var(--muted)">кольцо + LM393</text>
+        <text x="1175.0" y="230" text-anchor="middle" font-family="var(--font-mono)" font-size="9.5" fill="var(--power)">имп. ≈0.3 А</text>
+        <line x1="1175.0" y1="240" x2="1175.0" y2="430" stroke="var(--power)" stroke-width="2"/><circle cx="1175.0" cy="430" r="3" fill="var(--power)"/>
+        <text x="1000" y="270" font-family="var(--font-sans)" font-size="10" fill="var(--muted)">буфер C4 220 мкФ у кольца — на листе ИК; сглаживает импульсы 940 нм</text>
+        <line x1="40" y1="500" x2="1200" y2="500" stroke="var(--muted)" stroke-width="1.2" stroke-dasharray="3 5"/>
+        <text x="40" y="528" font-family="var(--font-mono)" font-weight="700" font-size="13" fill="var(--power)">ОТДЕЛЬНО · 3.3 В для CC1101 — от Флиппера, не от батареи</text>
+        <rect x="150" y="556" width="150" height="96" rx="8" fill="var(--panel)" stroke="currentColor" stroke-width="2"/>
+        <text x="225" y="578" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="12" fill="currentColor">XS1 · Флиппер</text>
+        <text x="300" y="600" text-anchor="end" font-family="var(--font-mono)" font-size="10" fill="var(--power)">пин 9 · 3V3</text>
+        <line x1="300" y1="596" x2="360" y2="596" stroke="var(--power)" stroke-width="2.2"/>
+        <text x="300" y="636" text-anchor="end" font-family="var(--font-mono)" font-size="10" fill="var(--power)">8/11/18 · GND</text>
+        <polyline points="300,632 330,632 330,430" fill="none" stroke="var(--power)" stroke-width="2"/><circle cx="330" cy="430" r="3" fill="var(--power)"/>
+        <rect x="360" y="560" width="150" height="88" rx="8" fill="var(--panel)" stroke="var(--power)" stroke-width="2"/>
+        <text x="435" y="586" text-anchor="middle" font-family="var(--font-mono)" font-weight="700" font-size="12" fill="var(--power)">U2 · CC1101</text>
+        <text x="368" y="600" font-family="var(--font-mono)" font-size="10" fill="var(--power)">VCC</text>
+        <text x="502" y="638" text-anchor="end" font-family="var(--font-mono)" font-size="10" fill="var(--power)">GND</text>
+        <polyline points="470,644 470,672 330,672" fill="none" stroke="var(--power)" stroke-width="2"/>
+        <circle cx="435" cy="596" r="3" fill="var(--power)"/>
+        <text x="540" y="596" font-family="var(--font-sans)" font-size="10" fill="var(--muted)">развязка C10 100 нФ + C11 10 мкФ — на верхнем листе</text>
+        <rect x="720" y="556" width="470" height="96" rx="10" fill="var(--panel)" stroke="var(--ir)" stroke-width="2" stroke-dasharray="7 5"/>
+        <text x="740" y="584" font-family="var(--font-mono)" font-weight="700" font-size="13" fill="var(--ir)">⚠ Барьер питания</text>
+        <text x="740" y="606" font-family="var(--font-sans)" font-size="11.5" fill="currentColor">Батарейные +5 В в пин 1 Флиппера НЕ подавать.</text>
+        <text x="740" y="626" font-family="var(--font-sans)" font-size="11.5" fill="currentColor">CC1101 питается 3.3 В только от Флиппера; общая</text>
+        <text x="740" y="644" font-family="var(--font-sans)" font-size="11.5" fill="currentColor">у систем лишь земля (сведена в звезду выше).</text>
+      </svg>
+    </div>
+    <figcaption>
+      Полный путь питания с номиналами: 2S 18650 → BMS → LM2596 (C_in/C_out 220&nbsp;мкФ,
+      подстройка на 5.00&nbsp;В) → шина +5&nbsp;В на XIAO и ИК-бластер. Земля сведена в
+      звезду. CC1101 сидит на 3.3&nbsp;В Флиппера — с батареей у них общая только земля.
     </figcaption>
   </figure>
 
